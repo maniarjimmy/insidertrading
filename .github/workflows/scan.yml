@@ -52,12 +52,15 @@ jobs:
             Hi,
 
             Today's insider activity scan has completed.
-            Please find the HTML report attached.
+            Please find attached:
+            - HTML scan report
+            - Suspicious stocks master CSV (cumulative)
+            - News-driven movers master CSV (cumulative)
 
             — Insider Scanner Bot 🤖
           to: ${{ secrets.EMAIL_TO }}
           from: ${{ secrets.GMAIL_ADDRESS }}
-          attachments: ${{ steps.find_report.outputs.report_path }}
+          attachments: ${{ steps.find_report.outputs.report_path }},output/suspicious_master.csv,output/news_driven_master.csv
 
       - name: Upload reports as artifact
         uses: actions/upload-artifact@v4

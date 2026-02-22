@@ -30,7 +30,7 @@ def run_scan(min_pct: float = None, max_pct: float = None,
     from universe import load_universe
     from scanner import scan_stocks, filter_movers
     from news import classify_stocks
-    from report import generate_report, save_csv
+    from report import generate_report, save_csv, append_to_master_csv
 
     min_pct = min_pct or MIN_PCT_CHANGE
     max_pct = max_pct or MAX_PCT_CHANGE
@@ -75,6 +75,9 @@ def run_scan(min_pct: float = None, max_pct: float = None,
             DataFrame(), DataFrame(),
             total_scanned, 0, timestamp
         )
+        # Append empty rows to master CSVs
+        append_to_master_csv(DataFrame(), "suspicious_master", timestamp)
+        append_to_master_csv(DataFrame(), "news_driven_master", timestamp)
         print(f"\n📊 Report (empty): {report_path}")
         return
     print()
@@ -91,11 +94,15 @@ def run_scan(min_pct: float = None, max_pct: float = None,
         total_scanned, total_flagged, timestamp
     )
 
-    # Save CSVs
+    # Save per-run CSVs
     if not suspicious.empty:
         save_csv(suspicious, "suspicious", timestamp)
     if not news_driven.empty:
         save_csv(news_driven, "news_driven", timestamp)
+
+    # Append to master CSVs (accumulates across runs)
+    append_to_master_csv(suspicious, "suspicious_master", timestamp)
+    append_to_master_csv(news_driven, "news_driven_master", timestamp)
 
     # ── Summary ─────────────────────────────────────────────────────────
     print()

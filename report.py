@@ -350,3 +350,58 @@ def save_csv(df: pd.DataFrame, label: str, timestamp: datetime = None) -> str:
     df[export_cols].to_csv(csv_path, index=False, encoding="utf-8")
     print(f"[Report] ✅ CSV saved: {csv_path}")
     return csv_path
+
+
+def append_to_master_csv(df: pd.DataFrame, filename: str,
+                         timestamp: datetime = None) -> str:
+    """
+    Append scan results to a persistent master CSV file.
+
+    - Adds a scan_timestamp column to every row.
+    - If df is empty, appends a single row with timestamp and company=NONE.
+    - If the file exists, appends without writing headers.
+    - If the file doesn't exist, creates it with headers.
+
+    Returns the file path of the master CSV.
+    """
+    if timestamp is None:
+        timestamp = datetime.now()
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    csv_path = os.path.join(OUTPUT_DIR, f"{filename}.csv")
+
+    # Define columns for the master CSV
+    master_cols = [
+        "scan_timestamp", "rank", "symbol", "company", "industry",
+        "current_price", "prev_close", "pct_change",
+        "current_volume", "avg_volume_20d", "volume_ratio",
+        "has_catalyst_news", "classification", "headlines", "news_source"
+    ]
+
+    ts_str = timestamp.strftime("%Y-%m-%d %H:%M")
+
+    if df.empty:
+        # No records — write a placeholder row
+        row = {col: "" for col in master_cols}
+        row["scan_timestamp"] = ts_str
+        row["company"] = "NONE"
+        append_df = pd.DataFrame([row])
+    else:
+        # Build DataFrame with only the columns that exist
+        append_df = pd.DataFrame()
+        append_df["scan_timestamp"] = [ts_str] * len(df)
+        for col in master_cols[1:]:  # skip scan_timestamp, already added
+            if col in df.columns:
+                append_df[col] = df[col].values
+            else:
+                append_df[col] = ""
+
+    # Append or create
+    file_exists = os.path.isfile(csv_path)
+    append_df.to_csv(csv_path, mode="a", header=not file_exists,
+                     index=False, encoding="utf-8")
+
+    action = "appended to" if file_exists else "created"
+    print(f"[Report] ✅ Master CSV {action}: {csv_path} "
+          f"({len(append_df)} rows)")
+    return csv_path
