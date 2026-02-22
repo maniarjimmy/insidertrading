@@ -30,6 +30,35 @@ jobs:
       - name: Run insider scan
         run: python main.py
 
+      - name: Find latest HTML report
+        id: find_report
+        run: |
+          REPORT=$(ls -t output/scan_*.html 2>/dev/null | head -1)
+          echo "report_path=$REPORT" >> $GITHUB_OUTPUT
+          echo "report_name=$(basename $REPORT)" >> $GITHUB_OUTPUT
+          echo "Found report: $REPORT"
+
+      - name: Email scan report
+        if: steps.find_report.outputs.report_path != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "📊 Insider Scan Report — ${{ github.event.repository.name }} — $(date -u +%Y-%m-%d)"
+          body: |
+            Hi,
+
+            Today's insider activity scan has completed.
+            Please find the HTML report attached.
+
+            — Insider Scanner Bot 🤖
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.GMAIL_ADDRESS }}
+          attachments: ${{ steps.find_report.outputs.report_path }}
+
       - name: Upload reports as artifact
         uses: actions/upload-artifact@v4
         if: always()
