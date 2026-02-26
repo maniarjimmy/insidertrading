@@ -1,0 +1,3 @@
+rank,symbol,company,industry,current_price,prev_close,pct_change,current_volume,avg_volume_20d,volume_ratio,has_catalyst_news,classification,headlines,news_source
+282,KSB,KSB Ltd.,Capital Goods,782.35,717.1,9.1,229177,71885,3.19,True,catalyst,KSB Declares Rs 4.4 Final Dividend — Check Record Date - NDTV Profit,Markets Mojo | Business Standard | Markets Mojo | NDTV Profit | scanx.trade
+318,MANKIND,Mankind Pharma Ltd.,Healthcare,2280.6,2155.7,5.79,802399,350404,2.29,True,catalyst,"Buy, Sell Or Hold: Infosys, ONGC, Mankind Pharma, TCS, HCL Tech, And More — Ask Profit - NDTV Profit",Markets Mojo | NDTV Profit | Markets Mojo | The Economic Times | Markets Mojo
