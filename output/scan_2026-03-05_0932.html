@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insider Activity Scanner — 05 Mar 2026, 09:32 AM IST</title>
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --surface: #1a1a2e;
+            --surface-2: #16213e;
+            --accent-red: #e74c3c;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-amber: #f39c12;
+            --text: #ecf0f1;
+            --text-muted: #95a5a6;
+            --border: #2c3e50;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 24px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            min-width: 160px;
+        }
+        .stat-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+        .stat-card.suspicious .value { color: var(--accent-red); }
+        .stat-card.newsdriven .value { color: var(--accent-green); }
+        .stat-card.scanned .value { color: var(--accent-blue); }
+        .stat-card.flagged .value { color: var(--accent-amber); }
+
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .badge-red { background: rgba(231, 76, 60, 0.2); color: var(--accent-red); }
+        .badge-green { background: rgba(46, 204, 113, 0.2); color: var(--accent-green); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        thead th {
+            background: var(--surface-2);
+            padding: 12px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        tbody td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        tbody tr:hover { background: rgba(52, 152, 219, 0.08); }
+        tbody tr:last-child td { border-bottom: none; }
+
+        .positive { color: var(--accent-green); font-weight: 600; }
+        .high-vol { color: var(--accent-amber); font-weight: 600; }
+        .news-cell { font-size: 12px; color: var(--text-muted); max-width: 350px; }
+
+        .disclaimer {
+            margin-top: 40px;
+            padding: 16px;
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--accent-amber);
+        }
+        .empty { text-align: center; padding: 40px; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .stats-bar { flex-direction: column; }
+            table { font-size: 12px; }
+            thead th, tbody td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Insider Activity Scanner</h1>
+        <p class="subtitle">
+            Scan Date: 05 Mar 2026, 09:32 AM IST &nbsp;|&nbsp;
+            Universe: Rank 210–500 &nbsp;|&nbsp;
+            Filters: ≥4.0% price, ≥2.0x volume
+        </p>
+
+        <div class="stats-bar">
+            <div class="stat-card scanned">
+                <div class="label">Scanned</div>
+                <div class="value">290</div>
+            </div>
+            <div class="stat-card flagged">
+                <div class="label">Price+Vol Alert</div>
+                <div class="value">3</div>
+            </div>
+            <div class="stat-card suspicious">
+                <div class="label">Suspicious</div>
+                <div class="value">0</div>
+            </div>
+            <div class="stat-card newsdriven">
+                <div class="label">News Driven</div>
+                <div class="value">3</div>
+            </div>
+        </div>
+
+        <!-- Suspicious Stocks -->
+        <div class="section">
+            <h2>🔴 Suspicious Stocks — No Catalyst News <span class="badge badge-red">0</span></h2>
+            
+            <div class="empty">No suspicious stocks found today. All movers have catalyst news explaining the move.</div>
+            
+        </div>
+
+        <!-- News-Driven Movers -->
+        <div class="section">
+            <h2>🟢 News-Driven Movers — Move Explained <span class="badge badge-green">3</span></h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Symbol</th>
+                        <th>Company</th>
+                        <th>Change %</th>
+                        <th>Vol Ratio</th>
+                        <th>Headlines</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td><strong>PETRONET</strong></td>
+                        <td>Petronet LNG Ltd.</td>
+                        <td class="positive">+4.68%</td>
+                        <td class="high-vol">7.27x</td>
+                        <td class="news-cell">GAIL's LNG acquisition from Petronet cut to zero amid Strait of Hormuz restrictions - The Economic T</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td><strong>LT</strong></td>
+                        <td>Larsen & Toubro Ltd.</td>
+                        <td class="positive">+4.62%</td>
+                        <td class="high-vol">3.28x</td>
+                        <td class="news-cell">SENSEX surges 400 points, NIFTY50 reclaims 24,600 led by Reliance Industries, Larsen & Toubro - Upst</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td><strong>NATIONALUM</strong></td>
+                        <td>National Aluminium Co. Ltd.</td>
+                        <td class="positive">+5.96%</td>
+                        <td class="high-vol">2.76x</td>
+                        <td class="news-cell">National Aluminium Company (NALCO) shares surge 14% in three sessions, here is why - Upstox</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+        </div>
+
+        <div class="disclaimer">
+            ⚠️ <strong>Disclaimer:</strong> This scanner identifies stocks with unusual price and volume
+            moves without associated public news. It does NOT confirm insider trading. Always perform
+            your own due diligence. Not investment advice. Use at your own risk.
+        </div>
+    </div>
+</body>
+</html>
