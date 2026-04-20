@@ -1,0 +1,3 @@
+rank,symbol,company,industry,current_price,prev_close,pct_change,current_volume,avg_volume_20d,volume_ratio,has_catalyst_news,classification,headlines,news_source
+467,TRITURBINE,Triveni Turbine Ltd.,Capital Goods,576.2,517.8,11.28,6236306,822533,7.58,True,catalyst,Volumes soar at Triveni Turbine Ltd counter - Business Standard,Markets Mojo | Business Standard | Markets Mojo | Business Standard | Markets Mojo
+390,RADICO,Radico Khaitan Ltd,Fast Moving Consumer Goods,3340.1,3186.9,4.81,1189319,498409,2.39,True,catalyst,Volumes soar at Sterling & Wilson Renewable Energy Ltd counter - Business Standard,Markets Mojo | Markets Mojo | CNBC TV18 | News18 | Business Standard
