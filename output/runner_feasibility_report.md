@@ -1,34 +1,37 @@
 # Phase 0 Extended: Runner Feasibility & Data Quality Report
 **Environment**: GitHub-Hosted Runner (ubuntu-latest)
-**Run Timestamp**: 2026-11-18 09:37:37 UTC
-**Total Tested**: 17 | **Passed**: 16 | **Expected Unready / Failed**: 1
+**Run Timestamp**: 2026-11-18 11:55:09 UTC
+**Total Tested**: 20 | **Passed**: 16 | **Expected Unready / Failed**: 4
 
 | Category | Endpoint / Source | Status | Format Valid? | Items/Rows | Required Fields | Latency |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| 1. NSE Index Lists | NSE Index - NIFTY 100 | ✅ `200` | ✅ Yes | 100 | All Present | 417.3 ms |
-| 1. NSE Index Lists | NSE Index - Midcap 150 | ✅ `200` | ✅ Yes | 150 | All Present | 358.7 ms |
-| 1. NSE Index Lists | NSE Index - Smallcap 250 | ✅ `200` | ✅ Yes | 251 | All Present | 345.2 ms |
-| 1. NSE Index Lists | NSE Index - NIFTY 500 | ✅ `200` | ✅ Yes | 501 | All Present | 307.1 ms |
-| 2. Bhavcopy Timing | NSE Bhavcopy TODAY (2026-11-18) | ⚠️ `404` | ❌ No | 0 | N/A | 320.9 ms |
-| 2. Bhavcopy Timing | NSE Bhavcopy YESTERDAY (2026-11-17) | ✅ `200` | ✅ Yes | 3572 | All Present | 557.9 ms |
-| 3. Deals & Surveillance | NSE Bulk Deals CSV | ✅ `200` | ✅ Yes | 122 | All Present | 283.7 ms |
-| 3. Deals & Surveillance | NSE Block Deals CSV | ✅ `200` | ✅ Yes | 61 | All Present | 298.3 ms |
-| 3. Deals & Surveillance | NSE Securities List (Bands, ASM/GSM & T2T) | ✅ `200` | ✅ Yes | 3609 | All Present | 375.4 ms |
-| 4. NSE Dynamic APIs | NSE Announcements by Symbol & Date Range (T-10..T) | ✅ `200` | ✅ Yes | 14 | All Present | 458.4 ms |
-| 4. NSE Dynamic APIs | NSE Event Calendar (7-Day Forward Window) | ✅ `200` | ✅ Yes | 17 | All Present | 429.4 ms |
-| 4. NSE Dynamic APIs | NSE Corporate Actions API | ✅ `200` | ✅ Yes | 20 | All Present | 335.1 ms |
-| 4. NSE Dynamic APIs | NSE Trading Holidays Master | ✅ `200` | ✅ Yes | 12 | All Present | 61.2 ms |
-| 5. BSE Dynamic APIs | BSE Announcements Multi-Day by Scrip (500440) | ✅ `200` | ✅ Yes | 2 | All Present | 462.9 ms |
-| 5. BSE Dynamic APIs | BSE Announcements Pagination (Page 2) | ✅ `200` | ✅ Yes | 2 | All Present | 330.1 ms |
-| 6. News & Fallback Feeds | Google News RSS (Reliance 1d) | ✅ `200` | ✅ Yes | 0 | N/A | 368.8 ms |
-| 7. Market Data Fallback | yfinance (RELIANCE.NS fast_info & history) | ✅ `200` | ✅ Yes | 3 | last_price, history candles | 1422.5 ms |
+| 1. NSE Index Lists | NSE Index - NIFTY 100 | ✅ `200` | ✅ Yes | 100 | All Present | 614.1 ms |
+| 1. NSE Index Lists | NSE Index - Midcap 150 | ✅ `200` | ✅ Yes | 150 | All Present | 358.4 ms |
+| 1. NSE Index Lists | NSE Index - Smallcap 250 | ✅ `200` | ✅ Yes | 251 | All Present | 352.3 ms |
+| 1. NSE Index Lists | NSE Index - NIFTY 500 | ✅ `200` | ✅ Yes | 501 | All Present | 361.4 ms |
+| 2. Bhavcopy Timing | NSE UDDiP Bhavcopy TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 453.5 ms |
+| 2. Bhavcopy Timing | NSE MTO Delivery TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 379.5 ms |
+| 2. Bhavcopy Timing | NSE sec_bhavdata_full TODAY (2026-11-18) | ⚠️ `404` | ❌ No | 0 | N/A | 362.6 ms |
+| 2. Bhavcopy Timing | NSE sec_bhavdata_full YESTERDAY (2026-11-17) | ✅ `200` | ✅ Yes | 3572 | All Present | 539.1 ms |
+| 3. Deals & Surveillance | NSE Bulk Deals CSV | ✅ `200` | ✅ Yes | 122 | All Present | 365.0 ms |
+| 3. Deals & Surveillance | NSE Block Deals CSV | ✅ `200` | ✅ Yes | 61 | All Present | 368.5 ms |
+| 3. Deals & Surveillance | NSE Securities List (Bands, ASM/GSM & T2T) | ✅ `200` | ✅ Yes | 3609 | All Present | 582.5 ms |
+| 3. Deals & Surveillance | Dedicated ASM List File (Shortterm_ASM) | ⚠️ `404` | ❌ No | 0 | N/A | 354.6 ms |
+| 4. NSE Dynamic APIs | NSE Announcements by Symbol & Date Range (T-10..T) | ✅ `200` | ✅ Yes | 14 | All Present | 421.3 ms |
+| 4. NSE Dynamic APIs | NSE Event Calendar (7-Day Forward Window) | ✅ `200` | ✅ Yes | 18 | All Present | 329.4 ms |
+| 4. NSE Dynamic APIs | NSE Corporate Actions API | ✅ `200` | ✅ Yes | 20 | All Present | 261.6 ms |
+| 4. NSE Dynamic APIs | NSE Trading Holidays Master | ✅ `200` | ✅ Yes | 12 | All Present | 527.7 ms |
+| 5. BSE Dynamic APIs | BSE Announcements Multi-Day by Scrip (500440) | ✅ `200` | ✅ Yes | 2 | All Present | 434.1 ms |
+| 5. BSE Dynamic APIs | BSE Announcements Pagination (Page 2) | ✅ `200` | ✅ Yes | 2 | All Present | 431.0 ms |
+| 6. News & Fallback Feeds | Google News RSS (Reliance 1d) | ✅ `200` | ✅ Yes | 0 | N/A | 619.4 ms |
+| 7. Market Data Fallback | yfinance (RELIANCE.NS fast_info & history) | ✅ `200` | ✅ Yes | 3 | last_price, history candles | 1084.1 ms |
 
 ---
 ## Deep-Dive Verification Findings
 
 ### A. Bhavcopy Publication Timing Analysis
-* **Today's Bhavcopy (2026-11-18)**: Status `404` (Not published yet during trading hours).
-* **Yesterday's Bhavcopy (2026-11-17)**: Status `200` with **3572 rows** containing delivery volumes and prices.
+* **Today's Bhavcopy (2026-11-18)**: Status `None` (Not published yet during trading hours).
+* **Yesterday's Bhavcopy (None)**: Status `200` with **None rows** containing delivery volumes and prices.
 * **Implication**: NSE generates `sec_bhavdata_full` between **18:00 and 19:30 IST**. At 17:00 IST, it returns 404. Therefore, the EOD job should either run at 19:30 IST or poll with exponential backoff up to 19:30 IST, falling back to yfinance for price data.
 
 ### B. Surveillance (ASM / GSM) & Price Band Verification
@@ -103,32 +106,32 @@
 ```json
 [
   {
-    "NEWSID": "e741e8ed-f101-43a8-bd8a-0ff64f918adf",
-    "SCRIP_CD": 543257,
-    "XML_NAME": "ANN_543257_E741E8ED-F101-43A8-BD8A-0FF64F918ADF",
-    "NEWSSUB": "Indian Railway Finance Corporation Ltd - 543257 - Announcement Under Regulation - 30 (LODR)",
-    "DT_TM": "2026-11-18T13:51:56.907",
-    "NEWS_DT": "2026-11-18T13:51:56.907",
-    "CRITICALNEWS": "0",
+    "NEWSID": "6004810a-011d-4ba5-b4f4-fad5d069456b",
+    "SCRIP_CD": 500493,
+    "XML_NAME": "ANN_500493_6004810A-011D-4BA5-B4F4-FAD5D069456B",
+    "NEWSSUB": "Bharat Forge Ltd - 500493 - Announcement under Regulation 30 (LODR)-Updates on Acquisition",
+    "DT_TM": "2026-11-18T16:49:00.43",
+    "NEWS_DT": "2026-11-18T16:49:00.43",
+    "CRITICALNEWS": "1",
     "ANNOUNCEMENT_TYPE": "A",
     "QUARTER_ID": null,
     "FILESTATUS": "N    ",
-    "ATTACHMENTNAME": "2e506620-aee7-43f0-a1b6-91132be64420.pdf",
+    "ATTACHMENTNAME": "dd2a65cc-ba24-4659-aa7e-474ec961975f.pdf",
     "MORE": "",
-    "HEADLINE": "Announcement under Regulation - 30 (LODR)",
+    "HEADLINE": "Acquisition",
     "CATEGORYNAME": "Company Update",
     "OLD": 1,
     "RN": 1,
     "PDFFLAG": 0,
-    "NSURL": "https://www.bseindia.com/stock-share-price/indian-railway-finance-corporation-ltd/irfc/543257/",
-    "SLONGNAME": "Indian Railway Finance Corporation Ltd",
-    "AGENDA_ID": 1,
-    "TotalPageCnt": 5,
-    "News_submission_dt": "2026-11-18T13:51:56",
-    "DissemDT": "2026-11-18T13:51:56.907",
+    "NSURL": "https://www.bseindia.com/stock-share-price/bharat-forge-ltd/bharatforg/500493/",
+    "SLONGNAME": "Bharat Forge Ltd",
+    "AGENDA_ID": 2,
+    "TotalPageCnt": 9,
+    "News_submission_dt": "2026-11-18T16:49:00",
+    "DissemDT": "2026-11-18T16:49:00.43",
     "TimeDiff": "00:00:00",
-    "Fld_Attachsize": 766272,
-    "SUBCATNAME": "General",
+    "Fld_Attachsize": 312539,
+    "SUBCATNAME": "Acquisition",
     "BSENEWSID": null,
     "INVESTOR_PRESENTATION": null,
     "RECORDID": null,
@@ -136,31 +139,31 @@
     "AUDIO_VIDEO_FILE": null
   },
   {
-    "NEWSID": "61c618d4-955c-43db-bda4-0aecc1bc8385",
-    "SCRIP_CD": 531233,
-    "XML_NAME": "ANN_531233_61C618D4-955C-43DB-BDA4-0AECC1BC8385",
-    "NEWSSUB": "Rasi Electrodes Ltd - 531233 - Announcement under Regulation 30 (LODR)-Newspaper Publication",
-    "DT_TM": "2026-11-18T13:51:12.857",
-    "NEWS_DT": "2026-11-18T13:51:12.857",
+    "NEWSID": "b23dabad-e803-4497-944a-85cb0796579c",
+    "SCRIP_CD": 509732,
+    "XML_NAME": "ANN_509732_B23DABAD-E803-4497-944A-85CB0796579C",
+    "NEWSSUB": "Kothari Industrial Corporation Ltd - 509732 - Announcement under Regulation 30 (LODR)-Newspaper Publication",
+    "DT_TM": "2026-11-18T16:48:46.687",
+    "NEWS_DT": "2026-11-18T16:48:46.687",
     "CRITICALNEWS": "0",
     "ANNOUNCEMENT_TYPE": "A",
     "QUARTER_ID": null,
     "FILESTATUS": "N    ",
-    "ATTACHMENTNAME": "26f3f2f9-5891-4c55-9a50-dbd1b39ce487.pdf",
+    "ATTACHMENTNAME": "42f67d32-b4ab-4404-9344-66f22163f99d.pdf",
     "MORE": "",
-    "HEADLINE": "Copy of Advt in newspapers relating to Unaudited Results FQE 30.09.2026 and Notice",
+    "HEADLINE": "newspaper",
     "CATEGORYNAME": "Company Update",
     "OLD": 1,
     "RN": 1,
     "PDFFLAG": 0,
-    "NSURL": "https://www.bseindia.com/stock-share-price/rasi-electrodes-ltd/rasielec/531233/",
-    "SLONGNAME": "Rasi Electrodes Ltd",
+    "NSURL": "https://www.bseindia.com/stock-share-price/kothari-industrial-corporation-ltd/kotic/509732/",
+    "SLONGNAME": "Kothari Industrial Corporation Ltd",
     "AGENDA_ID": 144,
-    "TotalPageCnt": 5,
-    "News_submission_dt": "2026-11-18T13:51:12",
-    "DissemDT": "2026-11-18T13:51:12.857",
+    "TotalPageCnt": 9,
+    "News_submission_dt": "2026-11-18T16:48:46",
+    "DissemDT": "2026-11-18T16:48:46.687",
     "TimeDiff": "00:00:00",
-    "Fld_Attachsize": 4470667,
+    "Fld_Attachsize": 2915159,
     "SUBCATNAME": "Newspaper Publication",
     "BSENEWSID": null,
     "INVESTOR_PRESENTATION": null,
