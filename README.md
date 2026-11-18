@@ -24,6 +24,9 @@ flowchart TD
 - **`holidays.py`**: Official NSE trading holiday calendar providing accurate trading-day arithmetic ($T+N$) and skipping market holidays.
 - **`db.py`**: SQLite database engine (`output/scanner.db`) operating with WAL mode, foreign keys, and idempotent upserts. Generates text `.dump` (`output/scanner.sql`) for diffable history.
 - **`tracker.py`**: Evaluates flags from 1 to 15 trading days old. Forward returns are calculated strictly from **next-day open** ($T+1$ Open) to evaluate real-world tradability. Benchmarks returns against Nifty Midcap 150 (`NIFTYMIDCAP150.NS`) and tracks both random controls and turnover/volatility matched controls to measure statistical **lift**.
+- **`corporate_actions.py`**: Corporate actions ingestion and ex-date proximity detector (+/- 2 trading days) to identify and adjust price drops/jumps from stock splits, bonus issues, and rights.
+- **`bhavcopy.py`**: Official NSE UDDiP Bhavcopy (`BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip`) and Security Delivery Position (`MTO_DDMMYYYY.DAT`) ingestion module with graceful fallback to `yfinance`.
+- **`data_quality.py`**: Market data validation layer that verifies candle consistency (detects missing candles, zero volume, inverted bounds, and unadjusted price discontinuities) and logs skipped symbols.
 - **`report.py`**: Generates visual dark-theme HTML reports and master CSV exports (`suspicious_master.csv`, `news_driven_master.csv`, `unexplained_master.csv`).
 - **`main.py`**: Central orchestrator and CLI entry point.
 

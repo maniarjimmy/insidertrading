@@ -49,27 +49,36 @@ def parse_date(d: Union[date, datetime, str]) -> date:
 
 
 def load_holidays_from_file(filepath: str = HOLIDAYS_FILE) -> Set[str]:
-    """Load holiday dates from static JSON file."""
-    if not os.path.isfile(filepath):
-        logger.debug("Holidays file not found at %s", filepath)
-        return set()
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        dates = set()
-        for item in data:
-            if "isoDate" in item:
-                dates.add(item["isoDate"])
-            elif "tradingDate" in item:
-                try:
-                    d = datetime.strptime(item["tradingDate"], "%d-%b-%Y").strftime("%Y-%m-%d")
-                    dates.add(d)
-                except ValueError:
-                    pass
-        return dates
-    except Exception as exc:
-        logger.error("Failed to read holidays file: %s", exc)
-        return set()
+    """Load holiday dates from static JSON files (2024, 2025, 2026)."""
+    dates = set()
+    data_dir = os.path.dirname(filepath) if os.path.isabs(filepath) else os.path.join(os.path.dirname(__file__), "data")
+
+    # Discover all year files (e.g. nse_holidays_2024.json, nse_holidays_2025.json, nse_holidays_2026.json)
+    target_files = set()
+    if os.path.isfile(filepath):
+        target_files.add(filepath)
+    if os.path.isdir(data_dir):
+        for fname in os.listdir(data_dir):
+            if fname.startswith("nse_holidays_") and fname.endswith(".json"):
+                target_files.add(os.path.join(data_dir, fname))
+
+    for fpath in target_files:
+        try:
+            with open(fpath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for item in data:
+                if "isoDate" in item:
+                    dates.add(item["isoDate"])
+                elif "tradingDate" in item:
+                    try:
+                        d = datetime.strptime(item["tradingDate"], "%d-%b-%Y").strftime("%Y-%m-%d")
+                        dates.add(d)
+                    except ValueError:
+                        pass
+        except Exception as exc:
+            logger.debug("Failed reading %s: %s", fpath, exc)
+
+    return dates
 
 
 def load_holidays_from_db(db_path: str = DB_PATH) -> Set[str]:
@@ -183,8 +192,8 @@ def get_holiday_set(db_path: str = DB_PATH, refresh: bool = False) -> Set[str]:
         return _HOLIDAY_CACHE
 
     holidays = load_holidays_from_db(db_path)
-    if not holidays:
-        holidays = load_holidays_from_file()
+    file_holidays = load_holidays_from_file()
+    holidays = holidays.union(file_holidays)
 
     _HOLIDAY_CACHE = holidays
     return _HOLIDAY_CACHE

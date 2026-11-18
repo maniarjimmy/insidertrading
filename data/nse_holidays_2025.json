@@ -1,0 +1,16 @@
+[
+  {"tradingDate": "26-Feb-2025", "isoDate": "2025-02-26", "weekDay": "Wednesday", "description": "Mahashivratri"},
+  {"tradingDate": "14-Mar-2025", "isoDate": "2025-03-14", "weekDay": "Friday", "description": "Holi"},
+  {"tradingDate": "31-Mar-2025", "isoDate": "2025-03-31", "weekDay": "Monday", "description": "Id-Ul-Fitr (Ramzan Id)"},
+  {"tradingDate": "10-Apr-2025", "isoDate": "2025-04-10", "weekDay": "Thursday", "description": "Shri Mahavir Jayanti"},
+  {"tradingDate": "14-Apr-2025", "isoDate": "2025-04-14", "weekDay": "Monday", "description": "Dr. Babasaheb Ambedkar Jayanti"},
+  {"tradingDate": "18-Apr-2025", "isoDate": "2025-04-18", "weekDay": "Friday", "description": "Good Friday"},
+  {"tradingDate": "01-May-2025", "isoDate": "2025-05-01", "weekDay": "Thursday", "description": "Maharashtra Day"},
+  {"tradingDate": "15-Aug-2025", "isoDate": "2025-08-15", "weekDay": "Friday", "description": "Independence Day"},
+  {"tradingDate": "27-Aug-2025", "isoDate": "2025-08-27", "weekDay": "Wednesday", "description": "Ganesh Chaturthi"},
+  {"tradingDate": "02-Oct-2025", "isoDate": "2025-10-02", "weekDay": "Thursday", "description": "Mahatma Gandhi Jayanti / Dussehra"},
+  {"tradingDate": "21-Oct-2025", "isoDate": "2025-10-21", "weekDay": "Tuesday", "description": "Diwali Laxmi Pujan (Muhurat Trading)"},
+  {"tradingDate": "22-Oct-2025", "isoDate": "2025-10-22", "weekDay": "Wednesday", "description": "Diwali Balipratipada"},
+  {"tradingDate": "05-Nov-2025", "isoDate": "2025-11-05", "weekDay": "Wednesday", "description": "Guru Nanak Jayanti"},
+  {"tradingDate": "25-Dec-2025", "isoDate": "2025-12-25", "weekDay": "Thursday", "description": "Christmas"}
+]

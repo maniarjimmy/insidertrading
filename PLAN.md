@@ -108,12 +108,16 @@ flowchart TD
 5. **Efficiency & Budget**:
    * In-memory filing cache (`_FILINGS_CACHE`) and persistent session reuse eliminate redundant network calls and Akamai session handshakes.
    * Request throttling (0.15s) respects rate limits and Actions runner budgets.
-6. **Matched Control Baseline & Statistical Edge**:
+6. **Matched Control Baseline & Statistical Findings**:
    * Nearest-neighbor quintile matching on 20-day average turnover and 60-day return volatility.
    * **Empirical Results & Lift Significance**:
-     - **All Material Catalysts (3-day pre-move window)**: Clean unexplained pairs $N = 118$. Flag precision: 27.12% (32/118), Control precision: 36.44% (43/118). Unpaired lift: 0.74x (95% CI: [0.51, 1.08]). Paired discordance: $n_{10} = 19$ (flag only), $n_{01} = 30$ (control only). Paired odds ratio = 0.63. McNemar stat = 2.04 ($p = 0.153$), exact binomial sign test $p = 0.1524$. Date-clustered bootstrap 95% CI includes 1.0. Conclusion: **No detectable edge over matched controls** (paired $p = 0.152$, CIs include 1.0).
-     - **Unscheduled-Material Catalysts Only (3-day pre-move window)**: Clean unexplained pairs $N = 118$. Flag precision: 13.56% (16/118), Control precision: 24.58% (29/118). Unpaired lift: 0.55x (95% CI: [0.32, 0.95]). Paired discordance: $n_{10} = 12$, $n_{01} = 25$. Paired odds ratio = 0.48. McNemar stat = 3.89 ($p = 0.0485$), exact binomial sign test $p = 0.0470$.
-     - **10-day Pre-Move Sensitivity Check**: Clean unexplained pairs $N = 78$. All material: flag precision 24.36% vs control 34.62% (lift 0.70x, $n_{10}=12, n_{01}=20$, odds=0.60, McNemar $p=0.216$, exact sign $p=0.2153$). Unscheduled: flag 12.82% vs control 25.64% (lift 0.50x, $n_{10}=7, n_{01}=17$, odds=0.41, McNemar $p=0.066$, exact sign $p=0.0639$).
+     - **All Material Catalysts (3-day pre-move window)**: Clean unexplained pairs $N = 118$. Flag precision: 27.12% (32/118), Control precision: 36.44% (43/118). Unpaired lift: 0.74x (95% CI: [0.51, 1.08]). Paired discordance: $n_{10} = 19$ (flag only), $n_{01} = 30$ (control only). Paired odds ratio = 0.63. McNemar stat = 2.04 ($p = 0.153$), exact binomial sign test $p = 0.1524$. Conclusion: **No evidence of a positive edge** over matched controls.
+     - **Unscheduled Deficit (Exploratory Only)**: Unscheduled-material precision was 13.56% for flags vs. 24.58% for controls ($p = 0.0470$ at 3-day; $p = 0.0639$ at 10-day). This deficit is reported as strictly **exploratory**, not a finding, due to multiple testing across horizons and category splits ($\ge 6$ comparisons, where Bonferroni-corrected threshold is $\alpha \approx 0.0083$).
+     - **Sensitivity Bounds**:
+       * *Baseline (UNCLEAR as non-material)*: $N=99$ clean pairs, Flag 30.3% vs Ctrl 38.4%, Lift 0.79x, Odds 0.69, $p=0.2912$.
+       * *Bound A (UNCLEAR as material - upper bound)*: $N=47$ clean pairs, Flag 63.8% vs Ctrl 61.7%, Lift 1.03x, Odds 1.11, $p=1.000$.
+       * *Strictly Unique Controls (sampled without replacement across all dates)*: $N=66$ clean pairs, Flag 31.8% vs Ctrl 31.8%, Lift 1.00x, Odds 1.00, $p=1.000$.
+     - **Sample Note**: The current 156 historical flags (Feb–May 2026) represent **development and tuning data only, not out-of-sample evidence**. Pre-move classification results represent "no material filing per our classifier (upper bound)".
 
 ---
 
@@ -146,12 +150,19 @@ flowchart TD
    * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
    * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
    * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
-3. **Rigorous Signal Evaluation & Design Requirements**:
-   * **Pre-Registered Hypothesis**: Unexplained volume and price anomalies in Indian mid/small-caps systematically precede forward unscheduled material corporate disclosures ($T+1..T+10$) with a statistically significant edge ($\text{Lift} > 1.25\text{x}$) over matched controls. Null hypothesis: $H_0: \text{Odds Ratio} \le 1.0$ (no detectable edge).
-   * **Point-in-Time Universe**: Universe reconstructed using historical semi-annual Nifty 500 reconstitution dates to eliminate survivorship bias.
+3. **Rigorous Signal Evaluation & Power Analysis**:
+   * **Pre-Registered Hypothesis**: Unexplained volume and price anomalies in Indian mid/small-caps systematically precede forward unscheduled material corporate disclosures ($T+1..T+10$) with a statistically significant edge ($\text{Lift} \ge 1.25\text{x}$) over matched controls. Null hypothesis: $H_0: \text{Lift} \le 1.0$.
+   * **Power Calculation (One-Sided Paired Test, $\alpha=0.05$, Power $=80\%$)**:
+     - Baseline control precision $P_0 = 36.4\%$, Target flag precision $P_1 = 45.5\%$ (effect size $\delta = 9.1\%$).
+     - Observed discordance rate $p_{\text{disc}} \approx 0.415$.
+     - Sample size required: $N_{\text{pairs}} \approx 308$ clean matched pairs.
+     - **Reachability Assessment**: Each 12-month period yields ~350–450 raw flags, resulting in ~280–340 clean unexplained pairs (borderline power ~75%–85% for a single 12-month split). The full 24-month backtest (~600 clean pairs) achieves $>96\%$ statistical power.
+   * **Point-in-Time Universe & Turnover-Rank Proxy**:
+     - Official semi-annual index reconstitution circulars are used where archived constituent files exist.
+     - Where continuous daily constituent archives are unavailable, the **Turnover-Rank Proxy** is used: on any historical scan date $T$, rank all active EQ/BE equities by 6-month rolling ADTV (Average Daily Turnover in INR) from UDDiP Bhavcopy; select stocks ranked 101–500. This provides a survivorship-bias-free, point-in-time universe.
    * **Time Split (Train/Test)**: In-sample development on the earlier 12 months (e.g. Nov 2024–Oct 2025) and strictly out-of-sample testing on the subsequent 12 months (Nov 2025–Nov 2026).
    * **Signal Evaluation (EOD vs 14:30 Intraday)**: Comparative backtest evaluating EOD signals (using final Bhavcopy & delivery) vs 14:30 IST snapshot signals to quantify alpha decay and false-positive rates of intraday alerting.
-   * **Per-Symbol Announcements Caching**: Persistent local disk caching of raw corporate announcements by symbol (`output/cache/announcements_<symbol>.json`) to eliminate redundant HTTP calls across repeated backtest runs.
+   * **Per-Symbol Announcements Caching**: Persistent local disk caching of raw corporate announcements by symbol (`output/cache/announcements/<symbol>.json`) to eliminate redundant HTTP calls across repeated backtest runs.
    * Filter pre-move filings strictly before each flag timestamp.
    * Compute forward returns ($T+1$ Open to $T+10$) and corporate announcement lift vs. liquidity/volatility quintile-matched controls.
    * Report both paired and unpaired lift disaggregated by scheduled vs. unscheduled-material outcomes, with scan-date cluster bootstrap confidence intervals.

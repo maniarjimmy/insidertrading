@@ -134,7 +134,8 @@ def test_classify_catalyst_edge_cases():
         st, mat, cat = classify_catalyst(
             desc="Action(s) taken or orders passed",
             text="intimation under Regulation 30",
-            url="https://nsearchives.nseindia.com/corporate/test.pdf"
+            url="https://nsearchives.nseindia.com/corporate/test.pdf",
+            parse_pdf=True
         )
         assert mat == 0
         assert st == "NONE"

@@ -238,14 +238,15 @@ def extract_pdf_first_page_text(url: str) -> str:
 def classify_catalyst(desc: Optional[str] = None,
                       text: Optional[str] = None,
                       source: str = "filing",
-                      url: Optional[str] = None) -> Tuple[str, int, str]:
+                      url: Optional[str] = None,
+                      parse_pdf: bool = False) -> Tuple[str, int, str]:
     """
     Unified classifier for corporate filings and news headlines.
     Rule Sequence:
       1. Priority 0: Explicit statutory routine exemptions (SAST 31/29).
       2. Priority 1: Exact / normalized exchange 'desc' category matching.
       3. Priority 2: Text pattern rules on desc + attchmntText.
-      4. Priority 2b: If status is UNCLEAR on a generic category, check first-page PDF text (cached).
+      4. Priority 2b: If status is UNCLEAR on a generic category, check first-page PDF text (cached, when parse_pdf=True).
       5. Output 3-valued catalyst state ("CATALYST" | "UNCLEAR" | "NONE"),
          materiality flag (1 | 0), and normalized category name.
     """
@@ -284,7 +285,7 @@ def classify_catalyst(desc: Optional[str] = None,
         if re.search(pattern, combined_text, re.IGNORECASE):
             return ("CATALYST", 1, cat_name)
 
-    # Priority 2b: First-page PDF inspection for generic categories with attached PDF
+    # Priority 2b: First-page PDF inspection for generic categories with attached PDF (opt-in parse_pdf)
     generic_descs = [
         "disclosure of material issue",
         "action(s) taken or orders passed",
@@ -295,7 +296,7 @@ def classify_catalyst(desc: Optional[str] = None,
         "intimation",
         "announcement",
     ]
-    if url and any(g in clean_desc.lower() for g in generic_descs):
+    if parse_pdf and url and any(g in clean_desc.lower() for g in generic_descs):
         pdf_text = extract_pdf_first_page_text(url)
         if pdf_text:
             pdf_combined = f"{clean_desc} {pdf_text}".lower()
@@ -374,6 +375,8 @@ def fetch_nse_announcements(symbol: str, from_date: date, to_date: date) -> List
                 announcements = []
                 for item in items:
                     raw_dt = item.get("sort_date") or item.get("an_dt") or item.get("exchdisstime")
+                    desc = item.get("desc", "")
+                    text = item.get("attchmntText", "")
                     att_url = item.get("attchmntFile", "")
                     state, is_mat, cat = classify_catalyst(desc=desc, text=text, source="filing", url=att_url)
                     announcements.append({

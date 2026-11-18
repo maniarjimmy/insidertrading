@@ -1,0 +1,19 @@
+[
+  {"tradingDate": "22-Jan-2024", "isoDate": "2024-01-22", "weekDay": "Monday", "description": "Special Holiday - Ram Mandir Pran Pratishtha"},
+  {"tradingDate": "26-Jan-2024", "isoDate": "2024-01-26", "weekDay": "Friday", "description": "Republic Day"},
+  {"tradingDate": "08-Mar-2024", "isoDate": "2024-03-08", "weekDay": "Friday", "description": "Mahashivratri"},
+  {"tradingDate": "25-Mar-2024", "isoDate": "2024-03-25", "weekDay": "Monday", "description": "Holi"},
+  {"tradingDate": "29-Mar-2024", "isoDate": "2024-03-29", "weekDay": "Friday", "description": "Good Friday"},
+  {"tradingDate": "11-Apr-2024", "isoDate": "2024-04-11", "weekDay": "Thursday", "description": "Id-Ul-Fitr (Ramzan Id)"},
+  {"tradingDate": "17-Apr-2024", "isoDate": "2024-04-17", "weekDay": "Wednesday", "description": "Shri Ram Navami"},
+  {"tradingDate": "01-May-2024", "isoDate": "2024-05-01", "weekDay": "Wednesday", "description": "Maharashtra Day"},
+  {"tradingDate": "20-May-2024", "isoDate": "2024-05-20", "weekDay": "Monday", "description": "General Parliamentary Elections - Mumbai"},
+  {"tradingDate": "17-Jun-2024", "isoDate": "2024-06-17", "weekDay": "Monday", "description": "Bakri Id"},
+  {"tradingDate": "17-Jul-2024", "isoDate": "2024-07-17", "weekDay": "Wednesday", "description": "Muharram"},
+  {"tradingDate": "15-Aug-2024", "isoDate": "2024-08-15", "weekDay": "Thursday", "description": "Independence Day"},
+  {"tradingDate": "02-Oct-2024", "isoDate": "2024-10-02", "weekDay": "Wednesday", "description": "Mahatma Gandhi Jayanti"},
+  {"tradingDate": "01-Nov-2024", "isoDate": "2024-11-01", "weekDay": "Friday", "description": "Diwali Laxmi Pujan (Muhurat Trading)"},
+  {"tradingDate": "15-Nov-2024", "isoDate": "2024-11-15", "weekDay": "Friday", "description": "Guru Nanak Jayanti"},
+  {"tradingDate": "20-Nov-2024", "isoDate": "2024-11-20", "weekDay": "Wednesday", "description": "Maharashtra Assembly General Election"},
+  {"tradingDate": "25-Dec-2024", "isoDate": "2024-12-25", "weekDay": "Wednesday", "description": "Christmas"}
+]

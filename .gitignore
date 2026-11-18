@@ -24,6 +24,7 @@ output/*.db-wal
 output/*.db-shm
 output/*.sql
 output/*.html
+output/*.log
 output/scan_*
 output/test_*
 output/cache/

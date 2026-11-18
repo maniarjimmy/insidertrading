@@ -7,6 +7,30 @@ and this project adheres to Semantic Versioning.
 
 ---
 
+## [Phase 5: Data Correctness, Corporate Actions & UDDiP Primary Source] - 2026-11-18
+
+### Added
+- **Corporate Actions Adjustment & Ex-Date Detection (`corporate_actions.py`)**:
+  - Ingestion of corporate actions from NSE public endpoint (`/api/corporates-corporateActions?index=equities`) with disk caching.
+  - Parsing of corporate action purpose strings (splits, bonuses, rights, dividends) and computation of exact structural adjustment ratios.
+  - Proximity detection: identifies whether a target date is within $\pm 2$ trading days of an ex-date.
+  - Backward historical price and volume adjustment engine for OHLCV candles.
+- **UDDiP Bhavcopy & Delivery Position Ingestion (`bhavcopy.py`)**:
+  - Primary EOD market data ingestion from official NSE UDDiP Bhavcopy (`BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip`).
+  - Official delivery quantity and percentage extraction from Security Delivery Position files (`MTO_DDMMYYYY.DAT`).
+  - Resilient graceful fallback to `yfinance` with Parquet/JSON caching.
+- **Data Quality & Validation Layer (`data_quality.py`)**:
+  - Validates candles for missing/zero close, inverted OHLC bounds, and zero volume on active trading days.
+  - Identifies extreme price discontinuities ($>25\%$) and cross-references against corporate actions to distinguish legitimate ex-date moves from bad data.
+  - Structured audit logging to `output/data_quality_audit.log`.
+- **Expanded Holiday Coverage (`holidays.py`, `data/nse_holidays_2024.json`, `data/nse_holidays_2025.json`)**:
+  - Added official NSE trading holidays for 2024 and 2025 to enable multi-year event studies.
+  - Updated `holidays.py` to union database and file-based holiday sets across all years.
+- **Unit Test Suite (`tests/test_corporate_actions.py`, `tests/test_bhavcopy_and_quality.py`)**:
+  - Added 9 new unit tests covering action purpose parsing, ex-date window detection, backward price adjustment, candle validation, extreme price move handling, and data auditing (35 total tests passing).
+
+---
+
 ## [Phase 2: Catalyst Detection from Exchange Filings] - 2026-11-18
 
 ### Added
