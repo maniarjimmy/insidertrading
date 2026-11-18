@@ -7,6 +7,30 @@ and this project adheres to Semantic Versioning.
 
 ---
 
+## [Phase 2: Catalyst Detection from Exchange Filings] - 2026-11-18
+
+### Added
+- **Corporate Filings Module (`filings.py`)**:
+  - Direct ingestion of corporate disclosures from the official NSE API (`/api/corporate-announcements`).
+  - Resilient secondary fallback to BSE API (`/BseIndiaAPI/api/AnnSubCategoryGetData/w`).
+  - Pre-generated symbol and ISIN mapping (`data/nse_to_bse_mapping.json`) mapping 495 Nifty 500 equities to BSE 6-digit scrip codes.
+  - Pre-announcement radar querying upcoming board meetings and corporate events within the next 7 days via `/api/event-calendar`.
+  - In-memory filing cache (`_FILINGS_CACHE`) and persistent session reuse to eliminate duplicate requests and respect rate limits.
+- **Unified Catalyst & Materiality Classifier (`classify_catalyst`)**:
+  - One standardized classifier function shared across detection pipeline (`scanner.py`, `news.py`) and tracker (`tracker.py`).
+  - Categorizes using NSE `desc` category first, with routine-priority regex pattern fallback for ambiguous descriptions.
+  - Three-valued output state: `CATALYST` / `UNCLEAR` / `NONE`, with `is_material` (1 | 0) and normalized category name.
+  - Fully decoupled catalyst state from the statistical anomaly score.
+- **Matched Control Group Evaluation (`scripts/generate_matched_controls.py`)**:
+  - Implemented nearest-neighbor quintile matching on 20-day average turnover and 60-day return volatility.
+  - Evaluated lift of unexplained flags vs both random controls (0.75x) and matched controls (0.62x).
+- **Benchmark Fixtures & Test Suite (`tests/test_filings.py` & `tests/fixtures/filings_fixtures.json`)**:
+  - Curated 50 real-world exchange disclosures split 50/50 into training and held-out evaluation sets.
+  - Achieved 100% precision, 100% recall on training set; 100% precision, 92.9% recall, 96.0% accuracy on strictly held-out set.
+  - Added unit tests for BSE symbol mapping, event-calendar radar, and caching.
+
+---
+
 ## [Phase 1: Outcome Tracking & Persistent Storage] - 2026-11-18
 
 ### Added

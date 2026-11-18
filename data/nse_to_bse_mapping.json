@@ -1,0 +1,2477 @@
+{
+  "ABB": {
+    "bse_scrip": "500002",
+    "isin": "INE117A01022",
+    "company": "ABB India Ltd."
+  },
+  "ADANIENSOL": {
+    "bse_scrip": "539254",
+    "isin": "INE931S01010",
+    "company": "Adani Energy Solutions Ltd."
+  },
+  "ADANIENT": {
+    "bse_scrip": "512599",
+    "isin": "INE423A01024",
+    "company": "Adani Enterprises Ltd."
+  },
+  "ADANIGREEN": {
+    "bse_scrip": "541450",
+    "isin": "INE364U01010",
+    "company": "Adani Green Energy Ltd."
+  },
+  "ADANIPORTS": {
+    "bse_scrip": "532921",
+    "isin": "INE742F01042",
+    "company": "Adani Ports and Special Economic Zone Ltd."
+  },
+  "ADANIPOWER": {
+    "bse_scrip": "533096",
+    "isin": "INE814H01029",
+    "company": "Adani Power Ltd."
+  },
+  "AMBUJACEM": {
+    "bse_scrip": "500425",
+    "isin": "INE079A01024",
+    "company": "Ambuja Cements Ltd."
+  },
+  "APOLLOHOSP": {
+    "bse_scrip": "508869",
+    "isin": "INE437A01024",
+    "company": "Apollo Hospitals Enterprise Ltd."
+  },
+  "ASIANPAINT": {
+    "bse_scrip": "500820",
+    "isin": "INE021A01026",
+    "company": "Asian Paints Ltd."
+  },
+  "DMART": {
+    "bse_scrip": "540376",
+    "isin": "INE192R01011",
+    "company": "Avenue Supermarts Ltd."
+  },
+  "AXISBANK": {
+    "bse_scrip": "532215",
+    "isin": "INE238A01034",
+    "company": "Axis Bank Ltd."
+  },
+  "BAJAJ-AUTO": {
+    "bse_scrip": "532977",
+    "isin": "INE917I01010",
+    "company": "Bajaj Auto Ltd."
+  },
+  "BAJFINANCE": {
+    "bse_scrip": "500034",
+    "isin": "INE296A01032",
+    "company": "Bajaj Finance Ltd."
+  },
+  "BAJAJFINSV": {
+    "bse_scrip": "532978",
+    "isin": "INE918I01026",
+    "company": "Bajaj Finserv Ltd."
+  },
+  "BAJAJHLDNG": {
+    "bse_scrip": "500490",
+    "isin": "INE118A01012",
+    "company": "Bajaj Holdings & Investment Ltd."
+  },
+  "BANKBARODA": {
+    "bse_scrip": "532134",
+    "isin": "INE028A01039",
+    "company": "Bank of Baroda"
+  },
+  "BEL": {
+    "bse_scrip": "500049",
+    "isin": "INE263A01024",
+    "company": "Bharat Electronics Ltd."
+  },
+  "BPCL": {
+    "bse_scrip": "500547",
+    "isin": "INE029A01011",
+    "company": "Bharat Petroleum Corporation Ltd."
+  },
+  "BHARTIARTL": {
+    "bse_scrip": "532454",
+    "isin": "INE397D01024",
+    "company": "Bharti Airtel Ltd."
+  },
+  "BOSCHLTD": {
+    "bse_scrip": "500530",
+    "isin": "INE323A01026",
+    "company": "Bosch Ltd."
+  },
+  "BRITANNIA": {
+    "bse_scrip": "500825",
+    "isin": "INE216A01030",
+    "company": "Britannia Industries Ltd."
+  },
+  "CGPOWER": {
+    "bse_scrip": "500093",
+    "isin": "INE067A01029",
+    "company": "CG Power and Industrial Solutions Ltd."
+  },
+  "CANBK": {
+    "bse_scrip": "532483",
+    "isin": "INE476A01022",
+    "company": "Canara Bank"
+  },
+  "CHOLAFIN": {
+    "bse_scrip": "511243",
+    "isin": "INE121A01024",
+    "company": "Cholamandalam Investment and Finance Company Ltd."
+  },
+  "CIPLA": {
+    "bse_scrip": "500087",
+    "isin": "INE059A01026",
+    "company": "Cipla Ltd."
+  },
+  "COALINDIA": {
+    "bse_scrip": "533278",
+    "isin": "INE522F01014",
+    "company": "Coal India Ltd."
+  },
+  "CUMMINSIND": {
+    "bse_scrip": "500480",
+    "isin": "INE298A01020",
+    "company": "Cummins India Ltd."
+  },
+  "DLF": {
+    "bse_scrip": "532868",
+    "isin": "INE271C01023",
+    "company": "DLF Ltd."
+  },
+  "DIVISLAB": {
+    "bse_scrip": "532488",
+    "isin": "INE361B01024",
+    "company": "Divi's Laboratories Ltd."
+  },
+  "DRREDDY": {
+    "bse_scrip": "500124",
+    "isin": "INE089A01031",
+    "company": "Dr. Reddy's Laboratories Ltd."
+  },
+  "EICHERMOT": {
+    "bse_scrip": "505200",
+    "isin": "INE066A01021",
+    "company": "Eicher Motors Ltd."
+  },
+  "ETERNAL": {
+    "bse_scrip": "543320",
+    "isin": "INE758T01015",
+    "company": "Eternal Ltd."
+  },
+  "GAIL": {
+    "bse_scrip": "532155",
+    "isin": "INE129A01019",
+    "company": "GAIL (India) Ltd."
+  },
+  "GODREJCP": {
+    "bse_scrip": "532424",
+    "isin": "INE102D01028",
+    "company": "Godrej Consumer Products Ltd."
+  },
+  "GRASIM": {
+    "bse_scrip": "500300",
+    "isin": "INE047A01021",
+    "company": "Grasim Industries Ltd."
+  },
+  "HCLTECH": {
+    "bse_scrip": "532281",
+    "isin": "INE860A01027",
+    "company": "HCL Technologies Ltd."
+  },
+  "HDFCAMC": {
+    "bse_scrip": "541729",
+    "isin": "INE127D01025",
+    "company": "HDFC Asset Management Company Ltd."
+  },
+  "HDFCBANK": {
+    "bse_scrip": "500180",
+    "isin": "INE040A01034",
+    "company": "HDFC Bank Ltd."
+  },
+  "HDFCLIFE": {
+    "bse_scrip": "540777",
+    "isin": "INE795G01014",
+    "company": "HDFC Life Insurance Company Ltd."
+  },
+  "HINDALCO": {
+    "bse_scrip": "500440",
+    "isin": "INE038A01020",
+    "company": "Hindalco Industries Ltd."
+  },
+  "HAL": {
+    "bse_scrip": "541154",
+    "isin": "INE066F01020",
+    "company": "Hindustan Aeronautics Ltd."
+  },
+  "HINDUNILVR": {
+    "bse_scrip": "500696",
+    "isin": "INE030A01027",
+    "company": "Hindustan Unilever Ltd."
+  },
+  "HINDZINC": {
+    "bse_scrip": "500188",
+    "isin": "INE267A01025",
+    "company": "Hindustan Zinc Ltd."
+  },
+  "POWERINDIA": {
+    "bse_scrip": "543187",
+    "isin": "INE07Y701011",
+    "company": "Hitachi Energy India Ltd."
+  },
+  "HYUNDAI": {
+    "bse_scrip": "544274",
+    "isin": "INE0V6F01027",
+    "company": "Hyundai Motor India Ltd."
+  },
+  "ICICIBANK": {
+    "bse_scrip": "532174",
+    "isin": "INE090A01021",
+    "company": "ICICI Bank Ltd."
+  },
+  "ITC": {
+    "bse_scrip": "500875",
+    "isin": "INE154A01025",
+    "company": "ITC Ltd."
+  },
+  "IOC": {
+    "bse_scrip": "530965",
+    "isin": "INE242A01010",
+    "company": "Indian Oil Corporation Ltd."
+  },
+  "IRFC": {
+    "bse_scrip": "543257",
+    "isin": "INE053F01010",
+    "company": "Indian Railway Finance Corporation Ltd."
+  },
+  "INFY": {
+    "bse_scrip": "500209",
+    "isin": "INE009A01021",
+    "company": "Infosys Ltd."
+  },
+  "INDIGO": {
+    "bse_scrip": "539448",
+    "isin": "INE646L01027",
+    "company": "InterGlobe Aviation Ltd."
+  },
+  "JSWSTEEL": {
+    "bse_scrip": "500228",
+    "isin": "INE019A01038",
+    "company": "JSW Steel Ltd."
+  },
+  "JINDALSTEL": {
+    "bse_scrip": "532286",
+    "isin": "INE749A01030",
+    "company": "Jindal Steel Ltd."
+  },
+  "JIOFIN": {
+    "bse_scrip": "543940",
+    "isin": "INE758E01017",
+    "company": "Jio Financial Services Ltd."
+  },
+  "KOTAKBANK": {
+    "bse_scrip": "500247",
+    "isin": "INE237A01036",
+    "company": "Kotak Mahindra Bank Ltd."
+  },
+  "LTM": {
+    "bse_scrip": "540005",
+    "isin": "INE214T01019",
+    "company": "LTM Ltd."
+  },
+  "LT": {
+    "bse_scrip": "500510",
+    "isin": "INE018A01030",
+    "company": "Larsen & Toubro Ltd."
+  },
+  "M&M": {
+    "bse_scrip": "500520",
+    "isin": "INE101A01026",
+    "company": "Mahindra & Mahindra Ltd."
+  },
+  "MARUTI": {
+    "bse_scrip": "532500",
+    "isin": "INE585B01010",
+    "company": "Maruti Suzuki India Ltd."
+  },
+  "MAXHEALTH": {
+    "bse_scrip": "543220",
+    "isin": "INE027H01010",
+    "company": "Max Healthcare Institute Ltd."
+  },
+  "MAZDOCK": {
+    "bse_scrip": "543237",
+    "isin": "INE249Z01020",
+    "company": "Mazagoan Dock Shipbuilders Ltd."
+  },
+  "MUTHOOTFIN": {
+    "bse_scrip": "533398",
+    "isin": "INE414G01012",
+    "company": "Muthoot Finance Ltd."
+  },
+  "NTPC": {
+    "bse_scrip": "532555",
+    "isin": "INE733E01010",
+    "company": "NTPC Ltd."
+  },
+  "NESTLEIND": {
+    "bse_scrip": "500790",
+    "isin": "INE239A01024",
+    "company": "Nestle India Ltd."
+  },
+  "ONGC": {
+    "bse_scrip": "500312",
+    "isin": "INE213A01029",
+    "company": "Oil & Natural Gas Corporation Ltd."
+  },
+  "PIDILITIND": {
+    "bse_scrip": "500331",
+    "isin": "INE318A01026",
+    "company": "Pidilite Industries Ltd."
+  },
+  "POLYCAB": {
+    "bse_scrip": "542652",
+    "isin": "INE455K01017",
+    "company": "Polycab India Ltd."
+  },
+  "PFC": {
+    "bse_scrip": "532810",
+    "isin": "INE134E01011",
+    "company": "Power Finance Corporation Ltd."
+  },
+  "POWERGRID": {
+    "bse_scrip": "532898",
+    "isin": "INE752E01010",
+    "company": "Power Grid Corporation of India Ltd."
+  },
+  "PNB": {
+    "bse_scrip": "532461",
+    "isin": "INE160A01022",
+    "company": "Punjab National Bank"
+  },
+  "RELIANCE": {
+    "bse_scrip": "500325",
+    "isin": "INE002A01018",
+    "company": "Reliance Industries Ltd."
+  },
+  "SBILIFE": {
+    "bse_scrip": "540719",
+    "isin": "INE123W01016",
+    "company": "SBI Life Insurance Company Ltd."
+  },
+  "MOTHERSON": {
+    "bse_scrip": "517334",
+    "isin": "INE775A01035",
+    "company": "Samvardhana Motherson International Ltd."
+  },
+  "SHRIRAMFIN": {
+    "bse_scrip": "511218",
+    "isin": "INE721A01047",
+    "company": "Shriram Finance Ltd."
+  },
+  "ENRIN": {
+    "bse_scrip": "544390",
+    "isin": "INE1NPP01017",
+    "company": "Siemens Energy India Ltd."
+  },
+  "SIEMENS": {
+    "bse_scrip": "500550",
+    "isin": "INE003A01024",
+    "company": "Siemens Ltd."
+  },
+  "SOLARINDS": {
+    "bse_scrip": "532725",
+    "isin": "INE343H01029",
+    "company": "Solar Industries India Ltd."
+  },
+  "SBIN": {
+    "bse_scrip": "500112",
+    "isin": "INE062A01020",
+    "company": "State Bank of India"
+  },
+  "SUNPHARMA": {
+    "bse_scrip": "524715",
+    "isin": "INE044A01036",
+    "company": "Sun Pharmaceutical Industries Ltd."
+  },
+  "TVSMOTOR": {
+    "bse_scrip": "532343",
+    "isin": "INE494B01023",
+    "company": "TVS Motor Company Ltd."
+  },
+  "TATACAP": {
+    "bse_scrip": "544574",
+    "isin": "INE976I01016",
+    "company": "Tata Capital Ltd."
+  },
+  "TCS": {
+    "bse_scrip": "532540",
+    "isin": "INE467B01029",
+    "company": "Tata Consultancy Services Ltd."
+  },
+  "TATACONSUM": {
+    "bse_scrip": "500800",
+    "isin": "INE192A01025",
+    "company": "Tata Consumer Products Ltd."
+  },
+  "TMCV": {
+    "bse_scrip": "544569",
+    "isin": "INE1TAE01010",
+    "company": "Tata Motors Ltd."
+  },
+  "TMPV": {
+    "bse_scrip": "500570",
+    "isin": "INE155A01022",
+    "company": "Tata Motors Passenger Vehicles Ltd."
+  },
+  "TATAPOWER": {
+    "bse_scrip": "500400",
+    "isin": "INE245A01021",
+    "company": "Tata Power Co. Ltd."
+  },
+  "TATASTEEL": {
+    "bse_scrip": "500470",
+    "isin": "INE081A01020",
+    "company": "Tata Steel Ltd."
+  },
+  "TECHM": {
+    "bse_scrip": "532755",
+    "isin": "INE669C01036",
+    "company": "Tech Mahindra Ltd."
+  },
+  "TITAN": {
+    "bse_scrip": "500114",
+    "isin": "INE280A01028",
+    "company": "Titan Company Ltd."
+  },
+  "TORNTPHARM": {
+    "bse_scrip": "500420",
+    "isin": "INE685A01028",
+    "company": "Torrent Pharmaceuticals Ltd."
+  },
+  "TRENT": {
+    "bse_scrip": "500251",
+    "isin": "INE849A01020",
+    "company": "Trent Ltd."
+  },
+  "ULTRACEMCO": {
+    "bse_scrip": "532538",
+    "isin": "INE481G01011",
+    "company": "UltraTech Cement Ltd."
+  },
+  "UNIONBANK": {
+    "bse_scrip": "532477",
+    "isin": "INE692A01016",
+    "company": "Union Bank of India"
+  },
+  "VBL": {
+    "bse_scrip": "540180",
+    "isin": "INE200M01039",
+    "company": "Varun Beverages Ltd."
+  },
+  "VAML": {
+    "bse_scrip": "544780",
+    "isin": "INE1CDF01017",
+    "company": "Vedanta Aluminium Metal Ltd."
+  },
+  "VEDL": {
+    "bse_scrip": "500295",
+    "isin": "INE205A01025",
+    "company": "Vedanta Ltd."
+  },
+  "IDEA": {
+    "bse_scrip": "532822",
+    "isin": "INE669E01016",
+    "company": "Vodafone Idea Ltd."
+  },
+  "WIPRO": {
+    "bse_scrip": "507685",
+    "isin": "INE075A01022",
+    "company": "Wipro Ltd."
+  },
+  "ZYDUSLIFE": {
+    "bse_scrip": "532321",
+    "isin": "INE010B01027",
+    "company": "Zydus Lifesciences Ltd."
+  },
+  "360ONE": {
+    "bse_scrip": "542772",
+    "isin": "INE466L01038",
+    "company": "360 ONE WAM Ltd."
+  },
+  "AIAENG": {
+    "bse_scrip": "532683",
+    "isin": "INE212H01026",
+    "company": "AIA Engineering Ltd."
+  },
+  "APLAPOLLO": {
+    "bse_scrip": "533758",
+    "isin": "INE702C01027",
+    "company": "APL Apollo Tubes Ltd."
+  },
+  "AUBANK": {
+    "bse_scrip": "540611",
+    "isin": "INE949L01017",
+    "company": "AU Small Finance Bank Ltd."
+  },
+  "ABBOTINDIA": {
+    "bse_scrip": "500488",
+    "isin": "INE358A01014",
+    "company": "Abbott India Ltd."
+  },
+  "ATGL": {
+    "bse_scrip": "542066",
+    "isin": "INE399L01023",
+    "company": "Adani Total Gas Ltd."
+  },
+  "ABCAPITAL": {
+    "bse_scrip": "540691",
+    "isin": "INE674K01013",
+    "company": "Aditya Birla Capital Ltd."
+  },
+  "AJANTPHARM": {
+    "bse_scrip": "532331",
+    "isin": "INE031B01049",
+    "company": "Ajanta Pharmaceuticals Ltd."
+  },
+  "ALKEM": {
+    "bse_scrip": "539523",
+    "isin": "INE540L01014",
+    "company": "Alkem Laboratories Ltd."
+  },
+  "ANTHEM": {
+    "bse_scrip": "544449",
+    "isin": "INE0CZ201020",
+    "company": "Anthem Biosciences Ltd."
+  },
+  "APARINDS": {
+    "bse_scrip": "532259",
+    "isin": "INE372A01015",
+    "company": "Apar Industries Ltd."
+  },
+  "ASHOKLEY": {
+    "bse_scrip": "500477",
+    "isin": "INE208A01029",
+    "company": "Ashok Leyland Ltd."
+  },
+  "ASTERDM": {
+    "bse_scrip": "540975",
+    "isin": "INE914M01019",
+    "company": "Aster DM Quality Care Ltd."
+  },
+  "ASTRAL": {
+    "bse_scrip": "532830",
+    "isin": "INE006I01046",
+    "company": "Astral Ltd."
+  },
+  "AUROPHARMA": {
+    "bse_scrip": "524804",
+    "isin": "INE406A01037",
+    "company": "Aurobindo Pharma Ltd."
+  },
+  "AIIL": {
+    "bse_scrip": "539177",
+    "isin": "INE206F01022",
+    "company": "Authum Investment & Infrastructure Ltd."
+  },
+  "BAJAJHFL": {
+    "bse_scrip": "544252",
+    "isin": "INE377Y01014",
+    "company": "Bajaj Housing Finance Ltd."
+  },
+  "BALKRISIND": {
+    "bse_scrip": "502355",
+    "isin": "INE787D01026",
+    "company": "Balkrishna Industries Ltd."
+  },
+  "BANKINDIA": {
+    "bse_scrip": "532149",
+    "isin": "INE084A01016",
+    "company": "Bank of India"
+  },
+  "MAHABANK": {
+    "bse_scrip": "532525",
+    "isin": "INE457A01014",
+    "company": "Bank of Maharashtra"
+  },
+  "BERGEPAINT": {
+    "bse_scrip": "509480",
+    "isin": "INE463A01038",
+    "company": "Berger Paints India Ltd."
+  },
+  "BDL": {
+    "bse_scrip": "541143",
+    "isin": "INE171Z01026",
+    "company": "Bharat Dynamics Ltd."
+  },
+  "BHARATFORG": {
+    "bse_scrip": "500493",
+    "isin": "INE465A01025",
+    "company": "Bharat Forge Ltd."
+  },
+  "BHEL": {
+    "bse_scrip": "500103",
+    "isin": "INE257A01026",
+    "company": "Bharat Heavy Electricals Ltd."
+  },
+  "BHARTIHEXA": {
+    "bse_scrip": "544162",
+    "isin": "INE343G01021",
+    "company": "Bharti Hexacom Ltd."
+  },
+  "GROWW": {
+    "bse_scrip": "544603",
+    "isin": "INE0HOQ01053",
+    "company": "Billionbrains Garage Ventures Ltd."
+  },
+  "BIOCON": {
+    "bse_scrip": "532523",
+    "isin": "INE376G01013",
+    "company": "Biocon Ltd."
+  },
+  "BLUESTARCO": {
+    "bse_scrip": "500067",
+    "isin": "INE472A01039",
+    "company": "Blue Star Ltd."
+  },
+  "CRISIL": {
+    "bse_scrip": "500092",
+    "isin": "INE007A01025",
+    "company": "CRISIL Ltd."
+  },
+  "COCHINSHIP": {
+    "bse_scrip": "540678",
+    "isin": "INE704P01025",
+    "company": "Cochin Shipyard Ltd."
+  },
+  "COFORGE": {
+    "bse_scrip": "532541",
+    "isin": "INE591G01025",
+    "company": "Coforge Ltd."
+  },
+  "COLPAL": {
+    "bse_scrip": "500830",
+    "isin": "INE259A01022",
+    "company": "Colgate Palmolive (India) Ltd."
+  },
+  "CONCOR": {
+    "bse_scrip": "531344",
+    "isin": "INE111A01025",
+    "company": "Container Corporation of India Ltd."
+  },
+  "COROMANDEL": {
+    "bse_scrip": "506395",
+    "isin": "INE169A01031",
+    "company": "Coromandel International Ltd."
+  },
+  "DABUR": {
+    "bse_scrip": "500096",
+    "isin": "INE016A01026",
+    "company": "Dabur India Ltd."
+  },
+  "DALBHARAT": {
+    "bse_scrip": "542216",
+    "isin": "INE00R701025",
+    "company": "Dalmia Bharat Ltd."
+  },
+  "DIXON": {
+    "bse_scrip": "540699",
+    "isin": "INE935N01020",
+    "company": "Dixon Technologies (India) Ltd."
+  },
+  "ENDURANCE": {
+    "bse_scrip": "540153",
+    "isin": "INE913H01037",
+    "company": "Endurance Technologies Ltd."
+  },
+  "ESCORTS": {
+    "bse_scrip": "500495",
+    "isin": "INE042A01014",
+    "company": "Escorts Kubota Ltd."
+  },
+  "EXIDEIND": {
+    "bse_scrip": "500086",
+    "isin": "INE302A01020",
+    "company": "Exide Industries Ltd."
+  },
+  "NYKAA": {
+    "bse_scrip": "543384",
+    "isin": "INE388Y01029",
+    "company": "FSN E-Commerce Ventures Ltd."
+  },
+  "FEDERALBNK": {
+    "bse_scrip": "500469",
+    "isin": "INE171A01029",
+    "company": "Federal Bank Ltd."
+  },
+  "FACT": {
+    "bse_scrip": "590024",
+    "isin": "INE188A01015",
+    "company": "Fertilisers and Chemicals Travancore Ltd."
+  },
+  "FORTIS": {
+    "bse_scrip": "532843",
+    "isin": "INE061F01013",
+    "company": "Fortis Healthcare Ltd."
+  },
+  "GVT&D": {
+    "bse_scrip": "522275",
+    "isin": "INE200A01026",
+    "company": "GE Vernova T&D India Ltd."
+  },
+  "GMRAIRPORT": {
+    "bse_scrip": "532754",
+    "isin": "INE776C01039",
+    "company": "GMR Airports Ltd."
+  },
+  "GICRE": {
+    "bse_scrip": "540755",
+    "isin": "INE481Y01014",
+    "company": "General Insurance Corporation of India"
+  },
+  "GLAXO": {
+    "bse_scrip": "500660",
+    "isin": "INE159A01016",
+    "company": "Glaxosmithkline Pharmaceuticals Ltd."
+  },
+  "GLENMARK": {
+    "bse_scrip": "532296",
+    "isin": "INE935A01035",
+    "company": "Glenmark Pharmaceuticals Ltd."
+  },
+  "MEDANTA": {
+    "bse_scrip": "543654",
+    "isin": "INE474Q01031",
+    "company": "Global Health Ltd."
+  },
+  "GODFRYPHLP": {
+    "bse_scrip": "500163",
+    "isin": "INE260B01028",
+    "company": "Godfrey Phillips India Ltd."
+  },
+  "GODREJIND": {
+    "bse_scrip": "500164",
+    "isin": "INE233A01035",
+    "company": "Godrej Industries Ltd."
+  },
+  "GODREJPROP": {
+    "bse_scrip": "533150",
+    "isin": "INE484J01027",
+    "company": "Godrej Properties Ltd."
+  },
+  "FLUOROCHEM": {
+    "bse_scrip": "542812",
+    "isin": "INE09N301011",
+    "company": "Gujarat Fluorochemicals Ltd."
+  },
+  "HDBFS": {
+    "bse_scrip": "544429",
+    "isin": "INE756I01012",
+    "company": "HDB Financial Services Ltd."
+  },
+  "HAVELLS": {
+    "bse_scrip": "517354",
+    "isin": "INE176B01034",
+    "company": "Havells India Ltd."
+  },
+  "HEROMOTOCO": {
+    "bse_scrip": "500182",
+    "isin": "INE158A01026",
+    "company": "Hero MotoCorp Ltd."
+  },
+  "HEXT": {
+    "bse_scrip": "544362",
+    "isin": "INE093A01041",
+    "company": "Hexaware Technologies Ltd."
+  },
+  "HINDCOPPER": {
+    "bse_scrip": "513599",
+    "isin": "INE531E01026",
+    "company": "Hindustan Copper Ltd."
+  },
+  "HINDPETRO": {
+    "bse_scrip": "500104",
+    "isin": "INE094A01015",
+    "company": "Hindustan Petroleum Corporation Ltd."
+  },
+  "HUDCO": {
+    "bse_scrip": "540530",
+    "isin": "INE031A01017",
+    "company": "Housing & Urban Development Corporation Ltd."
+  },
+  "ICICILIFE": {
+    "bse_scrip": "540133",
+    "isin": "INE726G01019",
+    "company": "ICICI Life Insurance Ltd."
+  },
+  "ICICIGI": {
+    "bse_scrip": "540716",
+    "isin": "INE765G01017",
+    "company": "ICICI Lombard General Insurance Company Ltd."
+  },
+  "ICICIAMC": {
+    "bse_scrip": "544658",
+    "isin": "INE346A01027",
+    "company": "ICICI Prudential Asset Management Company Ltd."
+  },
+  "IDFCFIRSTB": {
+    "bse_scrip": "539437",
+    "isin": "INE092T01019",
+    "company": "IDFC First Bank Ltd."
+  },
+  "ITCHOTELS": {
+    "bse_scrip": "544325",
+    "isin": "INE379A01028",
+    "company": "ITC Hotels Ltd."
+  },
+  "INDIANB": {
+    "bse_scrip": "532814",
+    "isin": "INE562A01011",
+    "company": "Indian Bank"
+  },
+  "INDHOTEL": {
+    "bse_scrip": "500850",
+    "isin": "INE053A01029",
+    "company": "Indian Hotels Co. Ltd."
+  },
+  "IOB": {
+    "bse_scrip": "532388",
+    "isin": "INE565A01014",
+    "company": "Indian Overseas Bank"
+  },
+  "IRCTC": {
+    "bse_scrip": "542830",
+    "isin": "INE335Y01020",
+    "company": "Indian Railway Catering And Tourism Corporation Ltd."
+  },
+  "IREDA": {
+    "bse_scrip": "544026",
+    "isin": "INE202E01016",
+    "company": "Indian Renewable Energy Development Agency Ltd."
+  },
+  "INDUSTOWER": {
+    "bse_scrip": "534816",
+    "isin": "INE121J01017",
+    "company": "Indus Towers Ltd."
+  },
+  "INDUSINDBK": {
+    "bse_scrip": "532187",
+    "isin": "INE095A01012",
+    "company": "IndusInd Bank Ltd."
+  },
+  "NAUKRI": {
+    "bse_scrip": "532777",
+    "isin": "INE663F01032",
+    "company": "Info Edge (India) Ltd."
+  },
+  "IPCALAB": {
+    "bse_scrip": "524494",
+    "isin": "INE571A01038",
+    "company": "Ipca Laboratories Ltd."
+  },
+  "JKCEMENT": {
+    "bse_scrip": "532644",
+    "isin": "INE823G01014",
+    "company": "J.K. Cement Ltd."
+  },
+  "JSWENERGY": {
+    "bse_scrip": "533148",
+    "isin": "INE121E01018",
+    "company": "JSW Energy Ltd."
+  },
+  "JSWINFRA": {
+    "bse_scrip": "543994",
+    "isin": "INE880J01026",
+    "company": "JSW Infrastructure Ltd."
+  },
+  "JSL": {
+    "bse_scrip": "532508",
+    "isin": "INE220G01021",
+    "company": "Jindal Stainless Ltd."
+  },
+  "JUBLFOOD": {
+    "bse_scrip": "533155",
+    "isin": "INE797F01020",
+    "company": "Jubilant Foodworks Ltd."
+  },
+  "KPRMILL": {
+    "bse_scrip": "532889",
+    "isin": "INE930H01031",
+    "company": "K.P.R. Mill Ltd."
+  },
+  "KEI": {
+    "bse_scrip": "517569",
+    "isin": "INE878B01027",
+    "company": "KEI Industries Ltd."
+  },
+  "KALYANKJIL": {
+    "bse_scrip": "543278",
+    "isin": "INE303R01014",
+    "company": "Kalyan Jewellers India Ltd."
+  },
+  "LTF": {
+    "bse_scrip": "533519",
+    "isin": "INE498L01015",
+    "company": "L&T Finance Ltd."
+  },
+  "LTTS": {
+    "bse_scrip": "540115",
+    "isin": "INE010V01017",
+    "company": "L&T Technology Services Ltd."
+  },
+  "LGEINDIA": {
+    "bse_scrip": "544576",
+    "isin": "INE324D01010",
+    "company": "LG Electronics India Ltd."
+  },
+  "LICHSGFIN": {
+    "bse_scrip": "500253",
+    "isin": "INE115A01026",
+    "company": "LIC Housing Finance Ltd."
+  },
+  "LAURUSLABS": {
+    "bse_scrip": "540222",
+    "isin": "INE947Q01028",
+    "company": "Laurus Labs Ltd."
+  },
+  "LENSKART": {
+    "bse_scrip": "544600",
+    "isin": "INE956O01016",
+    "company": "Lenskart Solutions Ltd."
+  },
+  "LICI": {
+    "bse_scrip": "543526",
+    "isin": "INE0J1Y01017",
+    "company": "Life Insurance Corporation of India"
+  },
+  "LINDEINDIA": {
+    "bse_scrip": "523457",
+    "isin": "INE473A01011",
+    "company": "Linde India Ltd."
+  },
+  "LLOYDSME": {
+    "bse_scrip": "512455",
+    "isin": "INE281B01032",
+    "company": "Lloyds Metals And Energy Ltd."
+  },
+  "LODHA": {
+    "bse_scrip": "543287",
+    "isin": "INE670K01029",
+    "company": "Lodha Developers Ltd."
+  },
+  "LUPIN": {
+    "bse_scrip": "500257",
+    "isin": "INE326A01037",
+    "company": "Lupin Ltd."
+  },
+  "MRF": {
+    "bse_scrip": "500290",
+    "isin": "INE883A01011",
+    "company": "MRF Ltd."
+  },
+  "M&MFIN": {
+    "bse_scrip": "532720",
+    "isin": "INE774D01024",
+    "company": "Mahindra & Mahindra Financial Services Ltd."
+  },
+  "MANKIND": {
+    "bse_scrip": "543904",
+    "isin": "INE634S01028",
+    "company": "Mankind Pharma Ltd."
+  },
+  "MARICO": {
+    "bse_scrip": "531642",
+    "isin": "INE196A01026",
+    "company": "Marico Ltd."
+  },
+  "MFSL": {
+    "bse_scrip": "500271",
+    "isin": "INE180A01020",
+    "company": "Max Financial Services Ltd."
+  },
+  "MEESHO": {
+    "bse_scrip": "544632",
+    "isin": "INE0VDM01015",
+    "company": "Meesho Ltd."
+  },
+  "MOTILALOFS": {
+    "bse_scrip": "532892",
+    "isin": "INE338I01027",
+    "company": "Motilal Oswal Financial Services Ltd."
+  },
+  "MPHASIS": {
+    "bse_scrip": "526299",
+    "isin": "INE356A01018",
+    "company": "MphasiS Ltd."
+  },
+  "MCX": {
+    "bse_scrip": "534091",
+    "isin": "INE745G01043",
+    "company": "Multi Commodity Exchange of India Ltd."
+  },
+  "NHPC": {
+    "bse_scrip": "533098",
+    "isin": "INE848E01016",
+    "company": "NHPC Ltd."
+  },
+  "NLCINDIA": {
+    "bse_scrip": "513683",
+    "isin": "INE589A01014",
+    "company": "NLC India Ltd."
+  },
+  "NMDC": {
+    "bse_scrip": "526371",
+    "isin": "INE584A01023",
+    "company": "NMDC Ltd."
+  },
+  "NTPCGREEN": {
+    "bse_scrip": "544289",
+    "isin": "INE0ONG01011",
+    "company": "NTPC Green Energy Ltd."
+  },
+  "NH": {
+    "bse_scrip": "539551",
+    "isin": "INE410P01011",
+    "company": "Narayana Hrudayalaya Ltd."
+  },
+  "NATIONALUM": {
+    "bse_scrip": "532234",
+    "isin": "INE139A01034",
+    "company": "National Aluminium Co. Ltd."
+  },
+  "NAM-INDIA": {
+    "bse_scrip": "540767",
+    "isin": "INE298J01013",
+    "company": "Nippon Life India Asset Management Ltd."
+  },
+  "OBEROIRLTY": {
+    "bse_scrip": "533273",
+    "isin": "INE093I01010",
+    "company": "Oberoi Realty Ltd."
+  },
+  "OIL": {
+    "bse_scrip": "533106",
+    "isin": "INE274J01014",
+    "company": "Oil India Ltd."
+  },
+  "PAYTM": {
+    "bse_scrip": "543396",
+    "isin": "INE982J01020",
+    "company": "One 97 Communications Ltd."
+  },
+  "OFSS": {
+    "bse_scrip": "532466",
+    "isin": "INE881D01027",
+    "company": "Oracle Financial Services Software Ltd."
+  },
+  "POLICYBZR": {
+    "bse_scrip": "543390",
+    "isin": "INE417T01026",
+    "company": "PB Fintech Ltd."
+  },
+  "PIIND": {
+    "bse_scrip": "523642",
+    "isin": "INE603J01030",
+    "company": "PI Industries Ltd."
+  },
+  "PAGEIND": {
+    "bse_scrip": "532827",
+    "isin": "INE761H01022",
+    "company": "Page Industries Ltd."
+  },
+  "PATANJALI": {
+    "bse_scrip": "500368",
+    "isin": "INE619A01035",
+    "company": "Patanjali Foods Ltd."
+  },
+  "PERSISTENT": {
+    "bse_scrip": "533179",
+    "isin": "INE262H01021",
+    "company": "Persistent Systems Ltd."
+  },
+  "PETRONET": {
+    "bse_scrip": "532522",
+    "isin": "INE347G01014",
+    "company": "Petronet LNG Ltd."
+  },
+  "PHOENIXLTD": {
+    "bse_scrip": "503100",
+    "isin": "INE211B01039",
+    "company": "Phoenix Mills Ltd."
+  },
+  "PIRAMALFIN": {
+    "bse_scrip": "544597",
+    "isin": "INE202B01038",
+    "company": "Piramal Finance Ltd."
+  },
+  "PREMIERENE": {
+    "bse_scrip": "544238",
+    "isin": "INE0BS701011",
+    "company": "Premier Energies Ltd."
+  },
+  "PRESTIGE": {
+    "bse_scrip": "533274",
+    "isin": "INE811K01011",
+    "company": "Prestige Estates Projects Ltd."
+  },
+  "RECLTD": {
+    "bse_scrip": "532955",
+    "isin": "INE020B01018",
+    "company": "REC Ltd."
+  },
+  "RADICO": {
+    "bse_scrip": "532497",
+    "isin": "INE944F01028",
+    "company": "Radico Khaitan Ltd"
+  },
+  "RVNL": {
+    "bse_scrip": "542649",
+    "isin": "INE415G01027",
+    "company": "Rail Vikas Nigam Ltd."
+  },
+  "SBICARD": {
+    "bse_scrip": "543066",
+    "isin": "INE018E01016",
+    "company": "SBI Cards and Payment Services Ltd."
+  },
+  "SRF": {
+    "bse_scrip": "503806",
+    "isin": "INE647A01010",
+    "company": "SRF Ltd."
+  },
+  "SCHAEFFLER": {
+    "bse_scrip": "505790",
+    "isin": "INE513A01022",
+    "company": "Schaeffler India Ltd."
+  },
+  "SHREECEM": {
+    "bse_scrip": "500387",
+    "isin": "INE070A01015",
+    "company": "Shree Cement Ltd."
+  },
+  "SAIL": {
+    "bse_scrip": "500113",
+    "isin": "INE114A01011",
+    "company": "Steel Authority of India Ltd."
+  },
+  "SUNDARMFIN": {
+    "bse_scrip": "590071",
+    "isin": "INE660A01013",
+    "company": "Sundaram Finance Ltd."
+  },
+  "SUPREMEIND": {
+    "bse_scrip": "509930",
+    "isin": "INE195A01028",
+    "company": "Supreme Industries Ltd."
+  },
+  "SUZLON": {
+    "bse_scrip": "532667",
+    "isin": "INE040H01021",
+    "company": "Suzlon Energy Ltd."
+  },
+  "SWIGGY": {
+    "bse_scrip": "544285",
+    "isin": "INE00H001014",
+    "company": "Swiggy Ltd."
+  },
+  "TATACOMM": {
+    "bse_scrip": "500483",
+    "isin": "INE151A01013",
+    "company": "Tata Communications Ltd."
+  },
+  "TATAINVEST": {
+    "bse_scrip": "501301",
+    "isin": "INE672A01026",
+    "company": "Tata Investment Corporation Ltd."
+  },
+  "THERMAX": {
+    "bse_scrip": "500411",
+    "isin": "INE152A01029",
+    "company": "Thermax Ltd."
+  },
+  "TORNTPOWER": {
+    "bse_scrip": "532779",
+    "isin": "INE813H01021",
+    "company": "Torrent Power Ltd."
+  },
+  "TIINDIA": {
+    "bse_scrip": "540762",
+    "isin": "INE974X01010",
+    "company": "Tube Investments of India Ltd."
+  },
+  "UNOMINDA": {
+    "bse_scrip": "532539",
+    "isin": "INE405E01023",
+    "company": "UNO Minda Ltd."
+  },
+  "UPL": {
+    "bse_scrip": "512070",
+    "isin": "INE628A01036",
+    "company": "UPL Ltd."
+  },
+  "UBL": {
+    "bse_scrip": "532478",
+    "isin": "INE686F01025",
+    "company": "United Breweries Ltd."
+  },
+  "UNITDSPR": {
+    "bse_scrip": "532432",
+    "isin": "INE854D01024",
+    "company": "United Spirits Ltd."
+  },
+  "VMM": {
+    "bse_scrip": "544307",
+    "isin": "INE01EA01019",
+    "company": "Vishal Mega Mart Ltd."
+  },
+  "VOLTAS": {
+    "bse_scrip": "500575",
+    "isin": "INE226A01021",
+    "company": "Voltas Ltd."
+  },
+  "WAAREEENER": {
+    "bse_scrip": "544277",
+    "isin": "INE377N01017",
+    "company": "Waaree Energies Ltd."
+  },
+  "YESBANK": {
+    "bse_scrip": "532648",
+    "isin": "INE528G01035",
+    "company": "Yes Bank Ltd."
+  },
+  "ACC": {
+    "bse_scrip": "500410",
+    "isin": "INE012A01025",
+    "company": "ACC Ltd."
+  },
+  "ACMESOLAR": {
+    "bse_scrip": "544283",
+    "isin": "INE622W01025",
+    "company": "ACME Solar Holdings Ltd."
+  },
+  "AWL": {
+    "bse_scrip": "543458",
+    "isin": "INE699H01024",
+    "company": "AWL Agri Business Ltd."
+  },
+  "AADHARHFC": {
+    "bse_scrip": "544176",
+    "isin": "INE883F01010",
+    "company": "Aadhar Housing Finance Ltd."
+  },
+  "AARTIIND": {
+    "bse_scrip": "524208",
+    "isin": "INE769A01020",
+    "company": "Aarti Industries Ltd."
+  },
+  "AAVAS": {
+    "bse_scrip": "541988",
+    "isin": "INE216P01012",
+    "company": "Aavas Financiers Ltd."
+  },
+  "ACE": {
+    "bse_scrip": "532762",
+    "isin": "INE731H01025",
+    "company": "Action Construction Equipment Ltd."
+  },
+  "ACUTAAS": {
+    "bse_scrip": "543349",
+    "isin": "INE00FF01025",
+    "company": "Acutaas Chemicals Ltd."
+  },
+  "ABREL": {
+    "bse_scrip": "500040",
+    "isin": "INE055A01016",
+    "company": "Aditya Birla Real Estate Ltd."
+  },
+  "ABSLAMC": {
+    "bse_scrip": "543374",
+    "isin": "INE404A01024",
+    "company": "Aditya Birla Sun Life AMC Ltd."
+  },
+  "CPPLUS": {
+    "bse_scrip": "544466",
+    "isin": "INE819V01029",
+    "company": "Aditya Infotech Ltd."
+  },
+  "AEGISLOG": {
+    "bse_scrip": "500003",
+    "isin": "INE208C01025",
+    "company": "Aegis Logistics Ltd."
+  },
+  "AEGISVOPAK": {
+    "bse_scrip": "544407",
+    "isin": "INE0INX01018",
+    "company": "Aegis Vopak Terminals Ltd."
+  },
+  "AETHER": {
+    "bse_scrip": "543534",
+    "isin": "INE0BWX01014",
+    "company": "Aether Industries Ltd."
+  },
+  "AFCONS": {
+    "bse_scrip": "544280",
+    "isin": "INE101I01011",
+    "company": "Afcons Infrastructure Ltd."
+  },
+  "AFFLE": {
+    "bse_scrip": "542752",
+    "isin": "INE00WC01027",
+    "company": "Affle 3i Ltd."
+  },
+  "ABDL": {
+    "bse_scrip": "544203",
+    "isin": "INE552Z01027",
+    "company": "Allied Blenders and Distillers Ltd."
+  },
+  "ARE&M": {
+    "bse_scrip": "500008",
+    "isin": "INE885A01032",
+    "company": "Amara Raja Energy & Mobility Ltd."
+  },
+  "AMBER": {
+    "bse_scrip": "540902",
+    "isin": "INE371P01015",
+    "company": "Amber Enterprises India Ltd."
+  },
+  "ANANDRATHI": {
+    "bse_scrip": "543415",
+    "isin": "INE463V01026",
+    "company": "Anand Rathi Wealth Ltd."
+  },
+  "ANANTRAJ": {
+    "bse_scrip": "515055",
+    "isin": "INE242C01024",
+    "company": "Anant Raj Ltd."
+  },
+  "ANGELONE": {
+    "bse_scrip": "543235",
+    "isin": "INE732I01021",
+    "company": "Angel One Ltd."
+  },
+  "ANURAS": {
+    "bse_scrip": "543275",
+    "isin": "INE930P01018",
+    "company": "Anupam Rasayan India Ltd."
+  },
+  "APOLLOTYRE": {
+    "bse_scrip": "500877",
+    "isin": "INE438A01022",
+    "company": "Apollo Tyres Ltd."
+  },
+  "APTUS": {
+    "bse_scrip": "543335",
+    "isin": "INE852O01025",
+    "company": "Aptus Value Housing Finance India Ltd."
+  },
+  "ASAHIINDIA": {
+    "bse_scrip": "515030",
+    "isin": "INE439A01020",
+    "company": "Asahi India Glass Ltd."
+  },
+  "ATHERENERG": {
+    "bse_scrip": "544397",
+    "isin": "INE0LEZ01016",
+    "company": "Ather Energy Ltd."
+  },
+  "ATUL": {
+    "bse_scrip": "500027",
+    "isin": "INE100A01010",
+    "company": "Atul Ltd."
+  },
+  "AVANTIFEED": {
+    "bse_scrip": "512573",
+    "isin": "INE871C01038",
+    "company": "Avanti Feeds Ltd."
+  },
+  "AZAD": {
+    "bse_scrip": "544061",
+    "isin": "INE02IJ01035",
+    "company": "Azad Engineering Ltd."
+  },
+  "BEML": {
+    "bse_scrip": "500048",
+    "isin": "INE258A01024",
+    "company": "BEML Ltd."
+  },
+  "BLS": {
+    "bse_scrip": "540073",
+    "isin": "INE153T01027",
+    "company": "BLS International Services Ltd."
+  },
+  "BALRAMCHIN": {
+    "bse_scrip": "500038",
+    "isin": "INE119A01028",
+    "company": "Balrampur Chini Mills Ltd."
+  },
+  "BANDHANBNK": {
+    "bse_scrip": "541153",
+    "isin": "INE545U01014",
+    "company": "Bandhan Bank Ltd."
+  },
+  "BATAINDIA": {
+    "bse_scrip": "500043",
+    "isin": "INE176A01028",
+    "company": "Bata India Ltd."
+  },
+  "BELRISE": {
+    "bse_scrip": "544405",
+    "isin": "INE894V01022",
+    "company": "Belrise Industries Ltd."
+  },
+  "BHARATCOAL": {
+    "bse_scrip": "544678",
+    "isin": "INE05XR01022",
+    "company": "Bharat Coking Coal Ltd."
+  },
+  "BSOFT": {
+    "bse_scrip": "532400",
+    "isin": "INE836A01035",
+    "company": "Birlasoft Ltd."
+  },
+  "BBOX": {
+    "bse_scrip": "500463",
+    "isin": "INE676A01027",
+    "company": "Black Box Ltd."
+  },
+  "FIRSTCRY": {
+    "bse_scrip": "544226",
+    "isin": "INE02RE01045",
+    "company": "Brainbees Solutions Ltd."
+  },
+  "BRIGADE": {
+    "bse_scrip": "532929",
+    "isin": "INE791I01019",
+    "company": "Brigade Enterprises Ltd."
+  },
+  "CCL": {
+    "bse_scrip": "519600",
+    "isin": "INE421D01022",
+    "company": "CCL Products (I) Ltd."
+  },
+  "CESC": {
+    "bse_scrip": "500084",
+    "isin": "INE486A01021",
+    "company": "CESC Ltd."
+  },
+  "CIEINDIA": {
+    "bse_scrip": "532756",
+    "isin": "INE536H01010",
+    "company": "CIE Automotive India Ltd."
+  },
+  "CANFINHOME": {
+    "bse_scrip": "511196",
+    "isin": "INE477A01020",
+    "company": "Can Fin Homes Ltd."
+  },
+  "CANHLIFE": {
+    "bse_scrip": "544583",
+    "isin": "INE01TY01017",
+    "company": "Canara HSBC Life Insurance Company Ltd."
+  },
+  "CAPLIPOINT": {
+    "bse_scrip": "524742",
+    "isin": "INE475E01026",
+    "company": "Caplin Point Laboratories Ltd."
+  },
+  "CGCL": {
+    "bse_scrip": "531595",
+    "isin": "INE180C01042",
+    "company": "Capri Global Capital Ltd."
+  },
+  "CARBORUNIV": {
+    "bse_scrip": "513375",
+    "isin": "INE120A01034",
+    "company": "Carborundum Universal Ltd."
+  },
+  "CARTRADE": {
+    "bse_scrip": "543333",
+    "isin": "INE290S01011",
+    "company": "Cartrade Tech Ltd."
+  },
+  "CASTROLIND": {
+    "bse_scrip": "500870",
+    "isin": "INE172A01027",
+    "company": "Castrol India Ltd."
+  },
+  "CEATLTD": {
+    "bse_scrip": "500878",
+    "isin": "INE482A01020",
+    "company": "Ceat Ltd."
+  },
+  "CEMPRO": {
+    "bse_scrip": "509496",
+    "isin": "INE686A01026",
+    "company": "Cemindia Projects Ltd."
+  },
+  "CENTRALBK": {
+    "bse_scrip": "532885",
+    "isin": "INE483A01010",
+    "company": "Central Bank of India"
+  },
+  "CMPDI": {
+    "bse_scrip": "544739",
+    "isin": "INE05HV01027",
+    "company": "Central Mine Planning & Design Institute Ltd."
+  },
+  "CHAMBLFERT": {
+    "bse_scrip": "500085",
+    "isin": "INE085A01013",
+    "company": "Chambal Fertilizers & Chemicals Ltd."
+  },
+  "CHENNPETRO": {
+    "bse_scrip": "500110",
+    "isin": "INE178A01016",
+    "company": "Chennai Petroleum Corporation Ltd."
+  },
+  "CHOICEIN": {
+    "bse_scrip": "531358",
+    "isin": "INE102B01014",
+    "company": "Choice International Ltd."
+  },
+  "CHOLAHLDNG": {
+    "bse_scrip": "504973",
+    "isin": "INE149A01033",
+    "company": "Cholamandalam Financial Holdings Ltd."
+  },
+  "CUB": {
+    "bse_scrip": "532210",
+    "isin": "INE491A01021",
+    "company": "City Union Bank Ltd."
+  },
+  "CLEANMAX": {
+    "bse_scrip": "544717",
+    "isin": "INE647U01026",
+    "company": "Clean Max Enviro Energy Solutions Ltd."
+  },
+  "CLEAN": {
+    "bse_scrip": "543318",
+    "isin": "INE227W01023",
+    "company": "Clean Science and Technology Ltd."
+  },
+  "COHANCE": {
+    "bse_scrip": "543064",
+    "isin": "INE03QK01018",
+    "company": "Cohance Lifesciences Ltd."
+  },
+  "CAMS": {
+    "bse_scrip": "543232",
+    "isin": "INE596I01020",
+    "company": "Computer Age Management Services Ltd."
+  },
+  "CONCORDBIO": {
+    "bse_scrip": "543960",
+    "isin": "INE338H01029",
+    "company": "Concord Biotech Ltd."
+  },
+  "CRAFTSMAN": {
+    "bse_scrip": "543276",
+    "isin": "INE00LO01017",
+    "company": "Craftsman Automation Ltd."
+  },
+  "CREDITACC": {
+    "bse_scrip": "541770",
+    "isin": "INE741K01010",
+    "company": "CreditAccess Grameen Ltd."
+  },
+  "CROMPTON": {
+    "bse_scrip": "539876",
+    "isin": "INE299U01018",
+    "company": "Crompton Greaves Consumer Electricals Ltd."
+  },
+  "CUPID": {
+    "bse_scrip": "530843",
+    "isin": "INE509F01029",
+    "company": "Cupid Ltd."
+  },
+  "CYIENT": {
+    "bse_scrip": "532175",
+    "isin": "INE136B01020",
+    "company": "Cyient Ltd."
+  },
+  "DOMS": {
+    "bse_scrip": "544045",
+    "isin": "INE321T01012",
+    "company": "DOMS Industries Ltd."
+  },
+  "DATAPATTNS": {
+    "bse_scrip": "543428",
+    "isin": "INE0IX101010",
+    "company": "Data Patterns (India) Ltd."
+  },
+  "DEEPAKFERT": {
+    "bse_scrip": "500645",
+    "isin": "INE501A01019",
+    "company": "Deepak Fertilisers & Petrochemicals Corp. Ltd."
+  },
+  "DEEPAKNTR": {
+    "bse_scrip": "506401",
+    "isin": "INE288B01029",
+    "company": "Deepak Nitrite Ltd."
+  },
+  "DELHIVERY": {
+    "bse_scrip": "543529",
+    "isin": "INE148O01028",
+    "company": "Delhivery Ltd."
+  },
+  "DEVYANI": {
+    "bse_scrip": "543330",
+    "isin": "INE872J01023",
+    "company": "Devyani International Ltd."
+  },
+  "LALPATHLAB": {
+    "bse_scrip": "539524",
+    "isin": "INE600L01024",
+    "company": "Dr. Lal Path Labs Ltd."
+  },
+  "EIDPARRY": {
+    "bse_scrip": "500125",
+    "isin": "INE126A01031",
+    "company": "E.I.D. Parry (India) Ltd."
+  },
+  "EIHOTEL": {
+    "bse_scrip": "500840",
+    "isin": "INE230A01023",
+    "company": "EIH Ltd."
+  },
+  "ELECON": {
+    "bse_scrip": "505700",
+    "isin": "INE205B01031",
+    "company": "Elecon Engineering Co. Ltd."
+  },
+  "ELGIEQUIP": {
+    "bse_scrip": "522074",
+    "isin": "INE285A01027",
+    "company": "Elgi Equipments Ltd."
+  },
+  "EMAMILTD": {
+    "bse_scrip": "531162",
+    "isin": "INE548C01032",
+    "company": "Emami Ltd."
+  },
+  "EMCURE": {
+    "bse_scrip": "544210",
+    "isin": "INE168P01015",
+    "company": "Emcure Pharmaceuticals Ltd."
+  },
+  "EMMVEE": {
+    "bse_scrip": "544608",
+    "isin": "INE1C6T01020",
+    "company": "Emmvee Photovoltaic Power Ltd."
+  },
+  "ENGINERSIN": {
+    "bse_scrip": "532178",
+    "isin": "INE510A01028",
+    "company": "Engineers India Ltd."
+  },
+  "FINCABLES": {
+    "bse_scrip": "500144",
+    "isin": "INE235A01022",
+    "company": "Finolex Cables Ltd."
+  },
+  "FSL": {
+    "bse_scrip": "532809",
+    "isin": "INE684F01012",
+    "company": "Firstsource Solutions Ltd."
+  },
+  "FIVESTAR": {
+    "bse_scrip": "543663",
+    "isin": "INE128S01021",
+    "company": "Five-Star Business Finance Ltd."
+  },
+  "FORCEMOT": {
+    "bse_scrip": "500033",
+    "isin": "INE451A01017",
+    "company": "Force Motors Ltd."
+  },
+  "FRACTAL": {
+    "bse_scrip": "544700",
+    "isin": "INE212S01015",
+    "company": "Fractal Analytics Ltd."
+  },
+  "GABRIEL": {
+    "bse_scrip": "505714",
+    "isin": "INE524A01029",
+    "company": "Gabriel India Ltd."
+  },
+  "GALLANTT": {
+    "bse_scrip": "532726",
+    "isin": "INE297H01019",
+    "company": "Gallantt Ispat Ltd."
+  },
+  "GRSE": {
+    "bse_scrip": "542011",
+    "isin": "INE382Z01011",
+    "company": "Garden Reach Shipbuilders & Engineers Ltd."
+  },
+  "GILLETTE": {
+    "bse_scrip": "507815",
+    "isin": "INE322A01010",
+    "company": "Gillette India Ltd."
+  },
+  "GLAND": {
+    "bse_scrip": "543245",
+    "isin": "INE068V01023",
+    "company": "Gland Pharma Ltd."
+  },
+  "GPIL": {
+    "bse_scrip": "532734",
+    "isin": "INE177H01039",
+    "company": "Godawari Power & Ispat Ltd."
+  },
+  "GRANULES": {
+    "bse_scrip": "532482",
+    "isin": "INE101D01020",
+    "company": "Granules India Ltd."
+  },
+  "GRAPHITE": {
+    "bse_scrip": "509488",
+    "isin": "INE371A01025",
+    "company": "Graphite India Ltd."
+  },
+  "GRAVITA": {
+    "bse_scrip": "533282",
+    "isin": "INE024L01027",
+    "company": "Gravita India Ltd."
+  },
+  "GESHIP": {
+    "bse_scrip": "500620",
+    "isin": "INE017A01032",
+    "company": "Great Eastern Shipping Co. Ltd."
+  },
+  "GMDCLTD": {
+    "bse_scrip": "532181",
+    "isin": "INE131A01031",
+    "company": "Gujarat Mineral Development Corporation Ltd."
+  },
+  "HBLENGINE": {
+    "bse_scrip": "517271",
+    "isin": "INE292B01021",
+    "company": "HBL Engineering Ltd."
+  },
+  "HEGAM": {
+    "bse_scrip": "509631",
+    "isin": "INE545A01024",
+    "company": "HEG Advanced Materials Ltd."
+  },
+  "HFCL": {
+    "bse_scrip": "500183",
+    "isin": "INE548A01028",
+    "company": "HFCL Ltd."
+  },
+  "HSCL": {
+    "bse_scrip": "500184",
+    "isin": "INE019C01026",
+    "company": "Himadri Speciality Chemical Ltd."
+  },
+  "HOMEFIRST": {
+    "bse_scrip": "543259",
+    "isin": "INE481N01025",
+    "company": "Home First Finance Company India Ltd."
+  },
+  "HONASA": {
+    "bse_scrip": "544014",
+    "isin": "INE0J5401028",
+    "company": "Honasa Consumer Ltd."
+  },
+  "HONAUT": {
+    "bse_scrip": "517174",
+    "isin": "INE671A01010",
+    "company": "Honeywell Automation India Ltd."
+  },
+  "IDBI": {
+    "bse_scrip": "500116",
+    "isin": "INE008A01015",
+    "company": "IDBI Bank Ltd."
+  },
+  "IFCI": {
+    "bse_scrip": "500106",
+    "isin": "INE039A01010",
+    "company": "IFCI Ltd."
+  },
+  "IIFL": {
+    "bse_scrip": "532636",
+    "isin": "INE530B01024",
+    "company": "IIFL Finance Ltd."
+  },
+  "INOXINDIA": {
+    "bse_scrip": "544046",
+    "isin": "INE616N01034",
+    "company": "INOX India Ltd."
+  },
+  "IRB": {
+    "bse_scrip": "532947",
+    "isin": "INE821I01022",
+    "company": "IRB Infrastructure Developers Ltd."
+  },
+  "IRCON": {
+    "bse_scrip": "541956",
+    "isin": "INE962Y01021",
+    "company": "IRCON International Ltd."
+  },
+  "ITI": {
+    "bse_scrip": "523610",
+    "isin": "INE248A01017",
+    "company": "ITI Ltd."
+  },
+  "INDIACEM": {
+    "bse_scrip": "530005",
+    "isin": "INE383A01012",
+    "company": "India Cements Ltd."
+  },
+  "INDIAMART": {
+    "bse_scrip": "542726",
+    "isin": "INE933S01016",
+    "company": "Indiamart Intermesh Ltd."
+  },
+  "IEX": {
+    "bse_scrip": "540750",
+    "isin": "INE022Q01020",
+    "company": "Indian Energy Exchange Ltd."
+  },
+  "IGL": {
+    "bse_scrip": "532514",
+    "isin": "INE203G01027",
+    "company": "Indraprastha Gas Ltd."
+  },
+  "INOXWIND": {
+    "bse_scrip": "539083",
+    "isin": "INE066P01011",
+    "company": "Inox Wind Ltd."
+  },
+  "INTELLECT": {
+    "bse_scrip": "538835",
+    "isin": "INE306R01017",
+    "company": "Intellect Design Arena Ltd."
+  },
+  "IGIL": {
+    "bse_scrip": "544311",
+    "isin": "INE0Q9301021",
+    "company": "International Gemological Institute Ltd."
+  },
+  "IKS": {
+    "bse_scrip": "544309",
+    "isin": "INE115Q01022",
+    "company": "Inventurus Knowledge Solutions Ltd."
+  },
+  "JBMA": {
+    "bse_scrip": "532605",
+    "isin": "INE927D01051",
+    "company": "JBM Auto Ltd."
+  },
+  "JKTYRE": {
+    "bse_scrip": "530007",
+    "isin": "INE573A01042",
+    "company": "JK Tyre & Industries Ltd."
+  },
+  "JMFINANCIL": {
+    "bse_scrip": "523405",
+    "isin": "INE780C01023",
+    "company": "JM Financial Ltd."
+  },
+  "JSWCEMENT": {
+    "bse_scrip": "544480",
+    "isin": "INE718I01012",
+    "company": "JSW Cement Ltd."
+  },
+  "JAINREC": {
+    "bse_scrip": "544537",
+    "isin": "INE0YD401026",
+    "company": "Jain Resource Recycling Ltd."
+  },
+  "JPPOWER": {
+    "bse_scrip": "532627",
+    "isin": "INE351F01018",
+    "company": "Jaiprakash Power Ventures Ltd."
+  },
+  "J&KBANK": {
+    "bse_scrip": "532209",
+    "isin": "INE168A01041",
+    "company": "Jammu & Kashmir Bank Ltd."
+  },
+  "JINDALSAW": {
+    "bse_scrip": "500378",
+    "isin": "INE324A01032",
+    "company": "Jindal Saw Ltd."
+  },
+  "JUBLINGREA": {
+    "bse_scrip": "543271",
+    "isin": "INE0BY001018",
+    "company": "Jubilant Ingrevia Ltd."
+  },
+  "JWL": {
+    "bse_scrip": "533272",
+    "isin": "INE209L01016",
+    "company": "Jupiter Wagons Ltd."
+  },
+  "JYOTICNC": {
+    "bse_scrip": "544081",
+    "isin": "INE980O01024",
+    "company": "Jyoti CNC Automation Ltd."
+  },
+  "KPITTECH": {
+    "bse_scrip": "542651",
+    "isin": "INE04I401011",
+    "company": "KPIT Technologies Ltd."
+  },
+  "KSB": {
+    "bse_scrip": "500249",
+    "isin": "INE999A01023",
+    "company": "KSB Ltd."
+  },
+  "KAJARIACER": {
+    "bse_scrip": "500233",
+    "isin": "INE217B01036",
+    "company": "Kajaria Ceramics Ltd."
+  },
+  "KPIL": {
+    "bse_scrip": "522287",
+    "isin": "INE220B01022",
+    "company": "Kalpataru Projects International Ltd."
+  },
+  "KARURVYSYA": {
+    "bse_scrip": "590003",
+    "isin": "INE036D01028",
+    "company": "Karur Vysya Bank Ltd."
+  },
+  "KAYNES": {
+    "bse_scrip": "543664",
+    "isin": "INE918Z01012",
+    "company": "Kaynes Technology India Ltd."
+  },
+  "KEC": {
+    "bse_scrip": "532714",
+    "isin": "INE389H01022",
+    "company": "Kec International Ltd."
+  },
+  "KFINTECH": {
+    "bse_scrip": "543720",
+    "isin": "INE138Y01010",
+    "company": "Kfin Technologies Ltd."
+  },
+  "KIRLOSBROS": {
+    "bse_scrip": "500241",
+    "isin": "INE732A01036",
+    "company": "Kirloskar Brothers Ltd."
+  },
+  "KIRLOSENG": {
+    "bse_scrip": "533293",
+    "isin": "INE146L01010",
+    "company": "Kirloskar Oil Eng Ltd."
+  },
+  "KIMS": {
+    "bse_scrip": "543308",
+    "isin": "INE967H01025",
+    "company": "Krishna Institute of Medical Sciences Ltd."
+  },
+  "LTFOODS": {
+    "bse_scrip": "532783",
+    "isin": "INE818H01020",
+    "company": "LT Foods Ltd."
+  },
+  "LEMONTREE": {
+    "bse_scrip": "541233",
+    "isin": "INE970X01018",
+    "company": "Lemon Tree Hotels Ltd."
+  },
+  "MMTC": {
+    "bse_scrip": "513377",
+    "isin": "INE123F01029",
+    "company": "MMTC Ltd."
+  },
+  "MTARTECH": {
+    "bse_scrip": "543270",
+    "isin": "INE864I01014",
+    "company": "MTAR Technologies Ltd."
+  },
+  "MGL": {
+    "bse_scrip": "539957",
+    "isin": "INE002S01010",
+    "company": "Mahanagar Gas Ltd."
+  },
+  "MANAPPURAM": {
+    "bse_scrip": "531213",
+    "isin": "INE522D01027",
+    "company": "Manappuram Finance Ltd."
+  },
+  "MRPL": {
+    "bse_scrip": "500109",
+    "isin": "INE103A01014",
+    "company": "Mangalore Refinery & Petrochemicals Ltd."
+  },
+  "MINDACORP": {
+    "bse_scrip": "538962",
+    "isin": "INE842C01021",
+    "company": "Minda Corporation Ltd."
+  },
+  "MSUMI": {
+    "bse_scrip": "543498",
+    "isin": "INE0FS801015",
+    "company": "Motherson Sumi Wiring India Ltd."
+  },
+  "NATCOPHARM": {
+    "bse_scrip": "524816",
+    "isin": "INE987B01026",
+    "company": "NATCO Pharma Ltd."
+  },
+  "NBCC": {
+    "bse_scrip": "534309",
+    "isin": "INE095N01031",
+    "company": "NBCC (India) Ltd."
+  },
+  "NCC": {
+    "bse_scrip": "500294",
+    "isin": "INE868B01028",
+    "company": "NCC Ltd."
+  },
+  "NSLNISP": {
+    "bse_scrip": "543768",
+    "isin": "INE0NNS01018",
+    "company": "NMDC Steel Ltd."
+  },
+  "NAVA": {
+    "bse_scrip": "513023",
+    "isin": "INE725A01030",
+    "company": "Nava Ltd."
+  },
+  "NAVINFLUOR": {
+    "bse_scrip": "532504",
+    "isin": "INE048G01026",
+    "company": "Navin Fluorine International Ltd."
+  },
+  "NETWEB": {
+    "bse_scrip": "543945",
+    "isin": "INE0NT901020",
+    "company": "Netweb Technologies India Ltd."
+  },
+  "NEULANDLAB": {
+    "bse_scrip": "524558",
+    "isin": "INE794A01010",
+    "company": "Neuland Laboratories Ltd."
+  },
+  "NUVAMA": {
+    "bse_scrip": "543988",
+    "isin": "INE531F01023",
+    "company": "Nuvama Wealth Management Ltd."
+  },
+  "NUVOCO": {
+    "bse_scrip": "543334",
+    "isin": "INE118D01016",
+    "company": "Nuvoco Vistas Corporation Ltd."
+  },
+  "OLAELEC": {
+    "bse_scrip": "544225",
+    "isin": "INE0LXG01040",
+    "company": "Ola Electric Mobility Ltd."
+  },
+  "OLECTRA": {
+    "bse_scrip": "532439",
+    "isin": "INE260D01016",
+    "company": "Olectra Greentech Ltd."
+  },
+  "ONESOURCE": {
+    "bse_scrip": "544292",
+    "isin": "INE013P01021",
+    "company": "Onesource Specialty Pharma Ltd."
+  },
+  "PCBL": {
+    "bse_scrip": "506590",
+    "isin": "INE602A01031",
+    "company": "PCBL Chemical Ltd."
+  },
+  "PGEL": {
+    "bse_scrip": "533581",
+    "isin": "INE457L01029",
+    "company": "PG Electroplast Ltd."
+  },
+  "PNBHOUSING": {
+    "bse_scrip": "540173",
+    "isin": "INE572E01012",
+    "company": "PNB Housing Finance Ltd."
+  },
+  "PTCIL": {
+    "bse_scrip": "539006",
+    "isin": "INE596F01018",
+    "company": "PTC Industries Ltd."
+  },
+  "PVRINOX": {
+    "bse_scrip": "532689",
+    "isin": "INE191H01014",
+    "company": "PVR INOX Ltd."
+  },
+  "PARADEEP": {
+    "bse_scrip": "543530",
+    "isin": "INE088F01024",
+    "company": "Paradeep Phosphates Ltd."
+  },
+  "PWL": {
+    "bse_scrip": "544609",
+    "isin": "INE0LP301011",
+    "company": "Physicswallah Ltd."
+  },
+  "PINELABS": {
+    "bse_scrip": "544606",
+    "isin": "INE15B701018",
+    "company": "Pine Labs Ltd."
+  },
+  "PPLPHARMA": {
+    "bse_scrip": "543635",
+    "isin": "INE0DK501011",
+    "company": "Piramal Pharma Ltd."
+  },
+  "POLYMED": {
+    "bse_scrip": "531768",
+    "isin": "INE205C01021",
+    "company": "Poly Medicure Ltd."
+  },
+  "POONAWALLA": {
+    "bse_scrip": "524000",
+    "isin": "INE511C01022",
+    "company": "Poonawalla Fincorp Ltd."
+  },
+  "PFOCUS": {
+    "bse_scrip": "532748",
+    "isin": "INE367G01038",
+    "company": "Prime Focus Ltd."
+  },
+  "PRIVISCL": {
+    "bse_scrip": "530117",
+    "isin": "INE959A01019",
+    "company": "Privi Speciality Chemicals Ltd."
+  },
+  "RRKABEL": {
+    "bse_scrip": "543981",
+    "isin": "INE777K01022",
+    "company": "R R Kabel Ltd."
+  },
+  "RBLBANK": {
+    "bse_scrip": "540065",
+    "isin": "INE976G01028",
+    "company": "RBL Bank Ltd."
+  },
+  "RHIM": {
+    "bse_scrip": "534076",
+    "isin": "INE743M01012",
+    "company": "RHI MAGNESITA INDIA LTD."
+  },
+  "RITES": {
+    "bse_scrip": "541556",
+    "isin": "INE320J01015",
+    "company": "RITES Ltd."
+  },
+  "RAILTEL": {
+    "bse_scrip": "543265",
+    "isin": "INE0DD101019",
+    "company": "Railtel Corporation Of India Ltd."
+  },
+  "RAINBOW": {
+    "bse_scrip": "543524",
+    "isin": "INE961O01016",
+    "company": "Rainbow Childrens Medicare Ltd."
+  },
+  "RKFORGE": {
+    "bse_scrip": "532527",
+    "isin": "INE399G01023",
+    "company": "Ramkrishna Forgings Ltd."
+  },
+  "REDINGTON": {
+    "bse_scrip": "532805",
+    "isin": "INE891D01026",
+    "company": "Redington Ltd."
+  },
+  "RPOWER": {
+    "bse_scrip": "532939",
+    "isin": "INE614G01033",
+    "company": "Reliance Power Ltd."
+  },
+  "RUBICON": {
+    "bse_scrip": "544578",
+    "isin": "INE506V01022",
+    "company": "Rubicon Research Ltd."
+  },
+  "SJVN": {
+    "bse_scrip": "533206",
+    "isin": "INE002L01015",
+    "company": "SJVN Ltd."
+  },
+  "SHRIPISTON": {
+    "bse_scrip": "544344",
+    "isin": "INE526E01018",
+    "company": "SPR Auto Technologies Ltd."
+  },
+  "SAGILITY": {
+    "bse_scrip": "544282",
+    "isin": "INE0W2G01015",
+    "company": "Sagility Ltd."
+  },
+  "SAILIFE": {
+    "bse_scrip": "544306",
+    "isin": "INE570L01029",
+    "company": "Sai Life Sciences Ltd."
+  },
+  "SAMMAANCAP": {
+    "bse_scrip": "535789",
+    "isin": "INE148I01020",
+    "company": "Sammaan Capital Ltd."
+  },
+  "SANSERA": {
+    "bse_scrip": "543358",
+    "isin": "INE953O01021",
+    "company": "Sansera Engineering Ltd."
+  },
+  "SARDAEN": {
+    "bse_scrip": "504614",
+    "isin": "INE385C01021",
+    "company": "Sarda Energy and Minerals Ltd."
+  },
+  "SCHNEIDER": {
+    "bse_scrip": "534139",
+    "isin": "INE839M01018",
+    "company": "Schneider Electric Infrastructure Ltd."
+  },
+  "SCI": {
+    "bse_scrip": "523598",
+    "isin": "INE109A01011",
+    "company": "Shipping Corporation of India Ltd."
+  },
+  "SHYAMMETL": {
+    "bse_scrip": "543299",
+    "isin": "INE810G01011",
+    "company": "Shyam Metalics and Energy Ltd."
+  },
+  "SIGNATURE": {
+    "bse_scrip": "543990",
+    "isin": "INE903U01023",
+    "company": "Signatureglobal (India) Ltd."
+  },
+  "SOBHA": {
+    "bse_scrip": "532784",
+    "isin": "INE671H01015",
+    "company": "Sobha Ltd."
+  },
+  "SONACOMS": {
+    "bse_scrip": "543300",
+    "isin": "INE073K01018",
+    "company": "Sona BLW Precision Forgings Ltd."
+  },
+  "STARHEALTH": {
+    "bse_scrip": "543412",
+    "isin": "INE575P01011",
+    "company": "Star Health and Allied Insurance Company Ltd."
+  },
+  "STLTECH": {
+    "bse_scrip": "532374",
+    "isin": "INE089C01029",
+    "company": "Sterlite Technologies Ltd."
+  },
+  "SUMICHEM": {
+    "bse_scrip": "542920",
+    "isin": "INE258G01013",
+    "company": "Sumitomo Chemical India Ltd."
+  },
+  "SUNTV": {
+    "bse_scrip": "532733",
+    "isin": "INE424H01027",
+    "company": "Sun TV Network Ltd."
+  },
+  "SWANCORP": {
+    "bse_scrip": "503310",
+    "isin": "INE665A01038",
+    "company": "Swan Corp Ltd."
+  },
+  "SYNGENE": {
+    "bse_scrip": "539268",
+    "isin": "INE398R01022",
+    "company": "Syngene International Ltd."
+  },
+  "SYRMA": {
+    "bse_scrip": "543573",
+    "isin": "INE0DYJ01015",
+    "company": "Syrma SGS Technology Ltd."
+  },
+  "TBOTEK": {
+    "bse_scrip": "544174",
+    "isin": "INE673O01025",
+    "company": "TBO Tek Ltd."
+  },
+  "TDPOWERSYS": {
+    "bse_scrip": "533553",
+    "isin": "INE419M01035",
+    "company": "TD Power Systems Ltd."
+  },
+  "TATACHEM": {
+    "bse_scrip": "500770",
+    "isin": "INE092A01019",
+    "company": "Tata Chemicals Ltd."
+  },
+  "TATAELXSI": {
+    "bse_scrip": "500408",
+    "isin": "INE670A01012",
+    "company": "Tata Elxsi Ltd."
+  },
+  "TATATECH": {
+    "bse_scrip": "544028",
+    "isin": "INE142M01025",
+    "company": "Tata Technologies Ltd."
+  },
+  "TTML": {
+    "bse_scrip": "532371",
+    "isin": "INE517B01013",
+    "company": "Tata Teleservices (Maharashtra) Ltd."
+  },
+  "TECHNOE": {
+    "bse_scrip": "542141",
+    "isin": "INE285K01026",
+    "company": "Techno Electric & Engineering Company Ltd."
+  },
+  "TEGA": {
+    "bse_scrip": "543413",
+    "isin": "INE011K01018",
+    "company": "Tega Industries Ltd."
+  },
+  "TEJASNET": {
+    "bse_scrip": "540595",
+    "isin": "INE010J01012",
+    "company": "Tejas Networks Ltd."
+  },
+  "TENNIND": {
+    "bse_scrip": "544612",
+    "isin": "INE19RI01016",
+    "company": "Tenneco Clean Air India Ltd."
+  },
+  "THANGAMAYL": {
+    "bse_scrip": "533158",
+    "isin": "INE085J01014",
+    "company": "Thangamayil Jewellery Ltd."
+  },
+  "NIACL": {
+    "bse_scrip": "540769",
+    "isin": "INE470Y01017",
+    "company": "The New India Assurance Company Ltd."
+  },
+  "RAMCOCEM": {
+    "bse_scrip": "500260",
+    "isin": "INE331A01037",
+    "company": "The Ramco Cements Ltd."
+  },
+  "TIMKEN": {
+    "bse_scrip": "522113",
+    "isin": "INE325A01013",
+    "company": "Timken India Ltd."
+  },
+  "TITAGARH": {
+    "bse_scrip": "532966",
+    "isin": "INE615H01020",
+    "company": "Titagarh Rail Systems Ltd."
+  },
+  "TARIL": {
+    "bse_scrip": "532928",
+    "isin": "INE763I01026",
+    "company": "Transformers And Rectifiers (India) Ltd."
+  },
+  "TRIDENT": {
+    "bse_scrip": "521064",
+    "isin": "INE064C01022",
+    "company": "Trident Ltd."
+  },
+  "TRITURBINE": {
+    "bse_scrip": "533655",
+    "isin": "INE152M01016",
+    "company": "Triveni Turbine Ltd."
+  },
+  "UCOBANK": {
+    "bse_scrip": "532505",
+    "isin": "INE691A01018",
+    "company": "UCO Bank"
+  },
+  "UTIAMC": {
+    "bse_scrip": "543238",
+    "isin": "INE094J01016",
+    "company": "UTI Asset Management Company Ltd."
+  },
+  "URBANCO": {
+    "bse_scrip": "544515",
+    "isin": "INE0CAZ01013",
+    "company": "Urban Company Ltd."
+  },
+  "USHAMART": {
+    "bse_scrip": "517146",
+    "isin": "INE228A01035",
+    "company": "Usha Martin Ltd."
+  },
+  "VTL": {
+    "bse_scrip": "502986",
+    "isin": "INE825A01020",
+    "company": "Vardhman Textiles Ltd."
+  },
+  "VISL": {
+    "bse_scrip": "544784",
+    "isin": "INE1CLE01013",
+    "company": "Vedanta Iron and Steel Ltd."
+  },
+  "VOGL": {
+    "bse_scrip": "544782",
+    "isin": "INE704J01044",
+    "company": "Vedanta Oil and Gas Ltd."
+  },
+  "VEDPOWER": {
+    "bse_scrip": "544781",
+    "isin": "INE694L01019",
+    "company": "Vedanta Power Ltd."
+  },
+  "VIJAYA": {
+    "bse_scrip": "543350",
+    "isin": "INE043W01024",
+    "company": "Vijaya Diagnostic Centre Ltd."
+  },
+  "WELCORP": {
+    "bse_scrip": "532144",
+    "isin": "INE191B01025",
+    "company": "Welspun Corp Ltd."
+  },
+  "WELSPUNLIV": {
+    "bse_scrip": "514162",
+    "isin": "INE192B01031",
+    "company": "Welspun Living Ltd."
+  },
+  "WHIRLPOOL": {
+    "bse_scrip": "500238",
+    "isin": "INE716A01013",
+    "company": "Whirlpool of India Ltd."
+  },
+  "WOCKPHARMA": {
+    "bse_scrip": "532300",
+    "isin": "INE049B01025",
+    "company": "Wockhardt Ltd."
+  },
+  "ZFCVINDIA": {
+    "bse_scrip": "533023",
+    "isin": "INE342J01019",
+    "company": "ZF Commercial Vehicle Control Systems India Ltd."
+  },
+  "ZEEL": {
+    "bse_scrip": "505537",
+    "isin": "INE256A01028",
+    "company": "Zee Entertainment Enterprises Ltd."
+  },
+  "ZENTEC": {
+    "bse_scrip": "533339",
+    "isin": "INE251B01027",
+    "company": "Zen Technologies Ltd."
+  },
+  "ZENSARTECH": {
+    "bse_scrip": "504067",
+    "isin": "INE520A01027",
+    "company": "Zensar Technolgies Ltd."
+  },
+  "ZYDUSWELL": {
+    "bse_scrip": "531335",
+    "isin": "INE768C01028",
+    "company": "Zydus Wellness Ltd."
+  },
+  "ECLERX": {
+    "bse_scrip": "532927",
+    "isin": "INE738I01010",
+    "company": "eClerx Services Ltd."
+  }
+}

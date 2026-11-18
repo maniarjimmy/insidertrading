@@ -287,10 +287,22 @@ HTML_TEMPLATE = Template("""<!DOCTYPE html>
                     <small style="color: var(--text-muted)">{{ hit_stats.control_catalysts }}/{{ hit_stats.control_evaluated }} random control</small>
                 </div>
                 <div class="stat-card lift">
-                    <div class="label">Statistical Lift</div>
+                    <div class="label">Lift vs Random Control</div>
                     <div class="value">{{ hit_stats.lift }}x</div>
-                    <small style="color: var(--text-muted)">Precision vs. Control</small>
+                    <small style="color: var(--text-muted)">Precision vs. Random</small>
                 </div>
+                {% if hit_stats.matched_control_evaluated %}
+                <div class="stat-card newsdriven">
+                    <div class="label">Matched Control Baseline</div>
+                    <div class="value">{{ hit_stats.matched_control_precision }}%</div>
+                    <small style="color: var(--text-muted)">{{ hit_stats.matched_control_catalysts }}/{{ hit_stats.matched_control_evaluated }} turnover/vol matched</small>
+                </div>
+                <div class="stat-card lift">
+                    <div class="label">Lift vs Matched Control</div>
+                    <div class="value">{{ hit_stats.matched_lift }}x</div>
+                    <small style="color: var(--text-muted)">Precision vs. Matched</small>
+                </div>
+                {% endif %}
                 <div class="stat-card scanned">
                     <div class="label">Avg 10D Fwd Return</div>
                     <div class="value {% if hit_stats.avg_fwd_ret_10d >= 0 %}positive{% else %}negative{% endif %}">

@@ -431,6 +431,10 @@ def get_hit_rate_stats(db_path: Optional[str] = None) -> Dict[str, Any]:
         "control_catalysts": 0,
         "control_precision": 0.0,
         "lift": 1.0,
+        "matched_control_evaluated": 0,
+        "matched_control_catalysts": 0,
+        "matched_control_precision": 0.0,
+        "matched_lift": 1.0,
         "avg_fwd_ret_10d": 0.0,
         "avg_excess_ret_10d": 0.0,
         "score_buckets": {},
@@ -482,10 +486,14 @@ def get_hit_rate_stats(db_path: Optional[str] = None) -> Dict[str, Any]:
                 if fwd_ret is not None:
                     score_bucket_data[bucket].append(fwd_ret)
 
-            else:
+            elif is_control == 1:
                 stats["control_evaluated"] += 1
                 if is_material == 1:
                     stats["control_catalysts"] += 1
+            elif is_control == 2:
+                stats["matched_control_evaluated"] += 1
+                if is_material == 1:
+                    stats["matched_control_catalysts"] += 1
 
         if stats["flagged_evaluated"] > 0:
             stats["flagged_precision"] = round(
@@ -499,6 +507,15 @@ def get_hit_rate_stats(db_path: Optional[str] = None) -> Dict[str, Any]:
                 stats["lift"] = round(stats["flagged_precision"] / stats["control_precision"], 2)
             else:
                 stats["lift"] = round(stats["flagged_precision"] / 1.0, 2) if stats["flagged_precision"] > 0 else 1.0
+
+        if stats["matched_control_evaluated"] > 0:
+            stats["matched_control_precision"] = round(
+                (stats["matched_control_catalysts"] / stats["matched_control_evaluated"]) * 100.0, 1
+            )
+            if stats["matched_control_precision"] > 0:
+                stats["matched_lift"] = round(stats["flagged_precision"] / stats["matched_control_precision"], 2)
+            else:
+                stats["matched_lift"] = round(stats["flagged_precision"] / 1.0, 2) if stats["flagged_precision"] > 0 else 1.0
 
         if flagged_rets:
             stats["avg_fwd_ret_10d"] = round(sum(flagged_rets) / len(flagged_rets), 2)

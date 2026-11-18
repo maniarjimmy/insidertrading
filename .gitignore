@@ -18,6 +18,7 @@ Thumbs.db
 
 # Test & runtime outputs
 .pytest_cache/
+*.pkl
 output/*.db
 output/*.db-wal
 output/*.db-shm

@@ -15,6 +15,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 from config import NEWS_LOOKBACK_HOURS, NEWS_SEARCH_DELAY, NEWS_MAX_RESULTS
+from filings import check_pre_announcement_radar, classify_catalyst, fetch_corporate_filings
 
 
 # ── Keywords that indicate REAL catalysts (news explains the move) ──────────
@@ -95,43 +96,22 @@ GENERIC_KEYWORDS = [
 
 def _is_catalyst_headline(headline: str) -> bool:
     """
-    Analyze a headline to determine if it describes a real catalyst.
-    Returns True if the headline contains catalyst-level information.
+    Analyze a headline using the unified classifier from filings.py.
     """
-    hl = headline.lower()
-
-    # First check if it's clearly a generic/noise headline
-    for pattern in GENERIC_KEYWORDS:
-        if re.search(pattern, hl, re.IGNORECASE):
-            return False
-
-    # Then check if it contains real catalyst keywords
-    for pattern in CATALYST_KEYWORDS:
-        if re.search(pattern, hl, re.IGNORECASE):
-            return True
-
-    return False
+    state, is_mat, cat = classify_catalyst(desc=None, text=headline, source="news")
+    return state == "CATALYST"
 
 
 def _classify_headline(headline: str) -> str:
     """
-    Classify a headline into categories:
-    - 'catalyst': Real news that explains price movement
-    - 'generic': Watchlist, technical analysis, or noise
-    - 'unclear': Cannot determine — treat as non-catalyst
+    Classify a headline into 'catalyst', 'generic', or 'unclear'
+    using the unified classifier from filings.py.
     """
-    hl = headline.lower()
-
-    # Check generic first (these override catalyst keywords)
-    for pattern in GENERIC_KEYWORDS:
-        if re.search(pattern, hl, re.IGNORECASE):
-            return "generic"
-
-    # Check catalyst
-    for pattern in CATALYST_KEYWORDS:
-        if re.search(pattern, hl, re.IGNORECASE):
-            return "catalyst"
-
+    state, is_mat, cat = classify_catalyst(desc=None, text=headline, source="news")
+    if state == "CATALYST":
+        return "catalyst"
+    elif state == "NONE":
+        return "generic"
     return "unclear"
 
 
@@ -261,9 +241,11 @@ def classify_stocks(flagged_df: pd.DataFrame) -> tuple:
         return flagged_df.copy(), flagged_df.copy()
 
     total = len(flagged_df)
-    print(f"[News] Checking news for {total} flagged stocks...")
+    print(f"[News] Verifying filings & news for {total} flagged stocks...")
 
     news_results = []
+    today_d = datetime.now().date()
+    lookback_d = today_d - timedelta(days=2)
 
     for idx, row in flagged_df.iterrows():
         symbol = row["symbol"]
@@ -272,11 +254,36 @@ def classify_stocks(flagged_df: pd.DataFrame) -> tuple:
 
         print(f"  [{count}/{total}] {symbol} ({company})...", end=" ")
 
+        # 1. Primary Check: Official Exchange Filings (NSE + BSE fallback)
+        filings = fetch_corporate_filings(symbol, lookback_d, today_d)
+        mat_filings = [f for f in filings if f.get("is_material") == 1]
+
+        # Check pre-announcement radar
+        radar = check_pre_announcement_radar(symbol, days_ahead=7)
+
+        if mat_filings:
+            best_f = mat_filings[0]
+            cat_desc = best_f.get("text", "")[:70]
+            source_lbl = f"{best_f.get('source', 'EXCHANGE')}_FILING"
+            print(f"CATALYST ({source_lbl}): {cat_desc}...")
+            news_results.append({
+                "yf_symbol": row.get("yf_symbol", f"{symbol}.NS"),
+                "has_catalyst_news": True,
+                "classification": "catalyst",
+                "headlines": best_f.get("text", ""),
+                "news_source": source_lbl,
+                "catalyst_count": len(mat_filings),
+                "generic_count": len(filings) - len(mat_filings),
+                "radar_event": radar.get("purpose", "") if radar else "",
+            })
+            continue
+
+        # 2. Secondary Check: Google News RSS
         news = check_news(company, symbol)
 
         if news["classification"] == "catalyst":
             preview = news["catalyst_headlines"][0][:70]
-            print(f"CATALYST: {preview}...")
+            print(f"CATALYST (NEWS): {preview}...")
         elif news["classification"] == "generic_only":
             preview = news["generic_headlines"][0][:70]
             print(f"GENERIC ONLY (suspicious): {preview}...")
@@ -288,9 +295,10 @@ def classify_stocks(flagged_df: pd.DataFrame) -> tuple:
             "has_catalyst_news": news["has_catalyst_news"],
             "classification": news["classification"],
             "headlines": " | ".join(news["catalyst_headlines"]) if news["catalyst_headlines"] else " | ".join(news["generic_headlines"]),
-            "news_source": " | ".join(news["source"]) if news["source"] else "",
+            "news_source": " | ".join(news["source"]) if news["source"] else "NO_NEWS",
             "catalyst_count": len(news["catalyst_headlines"]),
             "generic_count": len(news["generic_headlines"]),
+            "radar_event": radar.get("purpose", "") if radar else "",
         })
 
         if count < total:
@@ -310,12 +318,6 @@ def classify_stocks(flagged_df: pd.DataFrame) -> tuple:
     print(f"\n[News] Classification complete:")
     print(f"       SUSPICIOUS (no catalyst):  {len(suspicious)}")
     print(f"       NEWS-DRIVEN (catalyst):    {len(news_driven)}")
-
-    # Detail breakdown
-    no_news_count = len(merged[merged["classification"] == "no_news"])
-    generic_only_count = len(merged[merged["classification"] == "generic_only"])
-    print(f"         - No news at all:        {no_news_count}")
-    print(f"         - Generic mentions only:  {generic_only_count}")
 
     return suspicious, news_driven
 

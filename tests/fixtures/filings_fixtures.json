@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "symbol": "JUBLINGREA",
+    "desc": "Board Meeting",
+    "text": "Jubilant Ingrevia Limited has informed the Exchange regarding Outcome of Board Meeting held on May 26, 2026 to consider financial results and dividend.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Board Meeting",
+    "split": "training"
+  },
+  {
+    "id": 2,
+    "symbol": "NCC",
+    "desc": "Financial Results",
+    "text": "NCC Limited has submitted unaudited standalone and consolidated financial results for the quarter ended March 31, 2026.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Financial Results",
+    "split": "training"
+  },
+  {
+    "id": 3,
+    "symbol": "COCHINSHIP",
+    "desc": "Award of Order / Receipt of Order",
+    "text": "Cochin Shipyard bags contract worth Rs 1,182 Crore from Ministry of Defence for mid-life upgrade of naval vessels.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "training"
+  },
+  {
+    "id": 4,
+    "symbol": "SYRMA",
+    "desc": "Acquisition",
+    "text": "Update on disclosure under Regulation 30 - Joint Venture between Syrma SGS Technology Limited and Elemaster S.P.A.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Acquisition",
+    "split": "training"
+  },
+  {
+    "id": 5,
+    "symbol": "CHOICEIN",
+    "desc": "Fund Raising",
+    "text": "Board approves raising of funds through issuance of equity shares via Qualified Institutions Placement (QIP) up to Rs 400 Cr.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Fund Raising",
+    "split": "training"
+  },
+  {
+    "id": 6,
+    "symbol": "CRISIL",
+    "desc": "Credit Rating",
+    "text": "CRISIL upgrades long-term bank loan rating from AA to AA+ with Stable outlook.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Credit Rating",
+    "split": "training"
+  },
+  {
+    "id": 7,
+    "symbol": "AARTIPHARM",
+    "desc": "Regulatory Action",
+    "text": "USFDA issues Establishment Inspection Report (EIR) with Voluntary Action Indicated (VAI) for API facility.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Regulatory Approval",
+    "split": "training"
+  },
+  {
+    "id": 8,
+    "symbol": "CHOLAHLDNG",
+    "desc": "Newspaper Publication",
+    "text": "Cholamandalam Financial Holdings Limited has informed the Exchange about Copy of Newspaper Publication.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 9,
+    "symbol": "NAVA",
+    "desc": "Loss of Share Certificates / Issue of Duplicate Share Certificate",
+    "text": "Intimation under Regulation 39(3) regarding loss of share certificate and issuance of duplicate certificate.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 10,
+    "symbol": "AEGISVOPAK",
+    "desc": "Compliance Certificate",
+    "text": "Aegis Vopak Terminals Limited has informed the Exchange about Certificate under Regulation 74(5) of SEBI (Depositories and Participants) Regulations, 2018.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 11,
+    "symbol": "ZYDUSWELL",
+    "desc": "Clarification on Price Movement",
+    "text": "Clarification on Price Movement: Company clarifies that there is no undisclosed price-sensitive information or announcement pending.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 12,
+    "symbol": "PAGEIND",
+    "desc": "General",
+    "text": "Page Industries Limited has informed the Exchange about Transcript of earnings conference call held with analysts.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 13,
+    "symbol": "KFINTECH",
+    "desc": "General",
+    "text": "Kfin Technologies Limited has informed the Exchange regarding Allotment of 23030 Shares pursuant to ESOP Scheme.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 14,
+    "symbol": "IEX",
+    "desc": "Updates",
+    "text": "Indian Energy Exchange Limited has informed the Exchange about Schedule of institutional investor / analyst meet.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 15,
+    "symbol": "TATACOMM",
+    "desc": "General",
+    "text": "Tata Communications Limited has informed the Exchange about General Updates regarding subsidiary incorporation.",
+    "expected_state": "UNCLEAR",
+    "expected_material": 0,
+    "expected_category": "General Update",
+    "split": "training"
+  },
+  {
+    "id": 16,
+    "symbol": "INDGN",
+    "desc": "Updates",
+    "text": "Indegene Limited - Action(s) initiated or orders passed by tax authorities demanding payment of Rs 1.2 Lakh.",
+    "expected_state": "UNCLEAR",
+    "expected_material": 0,
+    "expected_category": "General Update",
+    "split": "training"
+  },
+  {
+    "id": 17,
+    "symbol": "BEL",
+    "desc": "Updates",
+    "text": "Bharat Electronics Limited secures export orders valued at USD 52 Million for supply of radar sub-systems.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "training"
+  },
+  {
+    "id": 18,
+    "symbol": "TITAGARH",
+    "desc": "Updates",
+    "text": "Titagarh Rail Systems enters into agreement for acquisition of 50% partnership interest in engineering firm.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Acquisition",
+    "split": "training"
+  },
+  {
+    "id": 19,
+    "symbol": "RADICO",
+    "desc": "General",
+    "text": "Radico Khaitan notifies closure of trading window for designated persons from April 1 until 48 hours after financial results.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 20,
+    "symbol": "BSE",
+    "desc": "Board Meeting",
+    "text": "Notice of Board Meeting to consider interim dividend for FY2026 and fix record date.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Board Meeting",
+    "split": "training"
+  },
+  {
+    "id": 21,
+    "symbol": "OLECTRA",
+    "desc": "Updates",
+    "text": "Receipt of Letter of Award for supply of 500 Electric Buses valued at approximately Rs 1,000 Crore.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "training"
+  },
+  {
+    "id": 22,
+    "symbol": "SOBHA",
+    "desc": "Newspaper Publication",
+    "text": "Sobha Limited has informed the Exchange about the Newspaper Publication regarding postal ballot.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 23,
+    "symbol": "PCBL",
+    "desc": "General",
+    "text": "PCBL Chemical Limited has informed the Exchange about Certificate under SEBI (Depositories and Participants) Regulations, 2018 for March 2026.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 24,
+    "symbol": "BDL",
+    "desc": "Financial Results",
+    "text": "Audited standalone financial results for year ended 31-Mar-2026 showing 35% growth in net profit.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Financial Results",
+    "split": "training"
+  },
+  {
+    "id": 25,
+    "symbol": "ANGELONE",
+    "desc": "Newspaper Publication",
+    "text": "Angel One Limited has informed the Exchange about Copy of Newspaper Publication of 30th Annual General Meeting.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "training"
+  },
+  {
+    "id": 26,
+    "symbol": "BHARATCOAL",
+    "desc": "Financial Results",
+    "text": "Bharat Coking Coal Limited has submitted to the Exchange, the financial results for the period ended March 31, 2026.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Financial Results",
+    "split": "held_out"
+  },
+  {
+    "id": 27,
+    "symbol": "PGEL",
+    "desc": "Board Meeting",
+    "text": "Outcome of Board Meeting held on March 24, 2026 approving issuance of convertible warrants on preferential basis.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Board Meeting",
+    "split": "held_out"
+  },
+  {
+    "id": 28,
+    "symbol": "CHAMBLFERT",
+    "desc": "Acquisition",
+    "text": "Adventz Finance Private Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of SAST Regulations.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Acquisition",
+    "split": "held_out"
+  },
+  {
+    "id": 29,
+    "symbol": "MMTC",
+    "desc": "General",
+    "text": "MMTC Limited has informed the Exchange about Certificate under 74(5) SEBI (Depositories and Participants) Regulations, 2018 for the quarter ended March 31, 2026.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 30,
+    "symbol": "MGL",
+    "desc": "Newspaper Publication",
+    "text": "Mahanagar Gas Limited has informed the Exchange about Copy of Newspaper Publication regarding notice of transfer of shares to IEPF.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 31,
+    "symbol": "JYOTHYLAB",
+    "desc": "Updates",
+    "text": "Analysts/Institutional Investor Meet/Con. Call Updates - Presentation copy submitted to exchange.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 32,
+    "symbol": "KAYNES",
+    "desc": "Award of Order / Receipt of Order",
+    "text": "Kaynes Technology India wins major electronics manufacturing contract worth Rs 280 Crore from European OEM.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "held_out"
+  },
+  {
+    "id": 33,
+    "symbol": "MAZDOCK",
+    "desc": "Board Meeting",
+    "text": "Mazagon Dock Shipbuilders intimates board meeting scheduled on Nov 05, 2026 to consider declaration of interim dividend.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Board Meeting",
+    "split": "held_out"
+  },
+  {
+    "id": 34,
+    "symbol": "APARINDS",
+    "desc": "Credit Rating",
+    "text": "ICRA reaffirms credit rating of AA for long term bank facilities and enhances credit limit.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Credit Rating",
+    "split": "held_out"
+  },
+  {
+    "id": 35,
+    "symbol": "CDSL",
+    "desc": "General",
+    "text": "Central Depository Services (India) Limited intimates loss of share certificate under Regulation 39(3).",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 36,
+    "symbol": "HUDCO",
+    "desc": "Fund Raising",
+    "text": "HUDCO executes borrowing program of Rs 2,500 Crore through private placement of unsecured taxable bonds.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Fund Raising",
+    "split": "held_out"
+  },
+  {
+    "id": 37,
+    "symbol": "GRSE",
+    "desc": "Updates",
+    "text": "Garden Reach Shipbuilders signs contract with German entity for construction of 4 multi-purpose cargo vessels.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "held_out"
+  },
+  {
+    "id": 38,
+    "symbol": "NATCOPHARM",
+    "desc": "Regulatory Action",
+    "text": "Natco Pharma receives tentative approval from USFDA for generic cancer treatment drug.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Regulatory Approval",
+    "split": "held_out"
+  },
+  {
+    "id": 39,
+    "symbol": "BLS",
+    "desc": "Updates",
+    "text": "BLS International enters into definitive agreement to acquire 100% equity in immigration services company.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Acquisition",
+    "split": "held_out"
+  },
+  {
+    "id": 40,
+    "symbol": "BOMDYEING",
+    "desc": "Clarification on Price Movement",
+    "text": "Reply to Clarification on Spurt in Volume: All events having bearing on company are promptly disclosed. No undisclosed news.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 41,
+    "symbol": "EXIDEIND",
+    "desc": "General",
+    "text": "Exide Industries Limited announces further investment of Rs 100 Crore in its wholly owned subsidiary Exide Energy Solutions.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Acquisition",
+    "split": "held_out"
+  },
+  {
+    "id": 42,
+    "symbol": "KPITTECH",
+    "desc": "General",
+    "text": "KPIT Technologies reports allotment of 45,000 equity shares under Employee Stock Option Plan.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 43,
+    "symbol": "IDFCFIRSTB",
+    "desc": "General",
+    "text": "Compliance certificate under Regulation 40(9) of SEBI (LODR) Regulations, 2015 for the financial year ended March 31, 2026.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 44,
+    "symbol": "CASTROLIND",
+    "desc": "Updates",
+    "text": "Castrol India launches new synthetic lubricant product range in commercial vehicle segment.",
+    "expected_state": "UNCLEAR",
+    "expected_material": 0,
+    "expected_category": "General Update",
+    "split": "held_out"
+  },
+  {
+    "id": 45,
+    "symbol": "SONACOMS",
+    "desc": "Updates",
+    "text": "Sona BLW Precision Forgings receives new order for EV traction motors from leading North American customer.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Order Win",
+    "split": "held_out"
+  },
+  {
+    "id": 46,
+    "symbol": "GLENMARK",
+    "desc": "Updates",
+    "text": "Glenmark Pharmaceuticals announces settlement of litigation with generic drug manufacturer in USA.",
+    "expected_state": "UNCLEAR",
+    "expected_material": 0,
+    "expected_category": "General Update",
+    "split": "held_out"
+  },
+  {
+    "id": 47,
+    "symbol": "POLYMED",
+    "desc": "Newspaper Publication",
+    "text": "Poly Medicure Limited submits newspaper cutting regarding transfer of equity shares to IEPF.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 48,
+    "symbol": "CENTRALBK",
+    "desc": "Financial Results",
+    "text": "Central Bank of India submits reviewed financial results along with limited review report for quarter ended Dec 31, 2025.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Financial Results",
+    "split": "held_out"
+  },
+  {
+    "id": 49,
+    "symbol": "FSL",
+    "desc": "General",
+    "text": "Firstsource Solutions confirms closure of trading window effective from end of quarter until results announcement.",
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "held_out"
+  },
+  {
+    "id": 50,
+    "symbol": "JBCHEPHARM",
+    "desc": "Board Meeting",
+    "text": "J.B. Chemicals & Pharmaceuticals intimates meeting of Board of Directors to consider proposal for buyback of equity shares.",
+    "expected_state": "CATALYST",
+    "expected_material": 1,
+    "expected_category": "Board Meeting",
+    "split": "held_out"
+  }
+]

@@ -85,20 +85,31 @@ flowchart TD
 
 ---
 
-### Phase 2: Catalyst Detection from Exchange Filings
+### Phase 2: Catalyst Detection from Exchange Filings (COMPLETED)
 **Objective**: Primary catalyst classification from exchange disclosures, supplemented by Google News.
 
-1. **Filing Ingestion (`filings.py`)**:
-   * NSE corporate announcements API (with BSE fallback validated in Phase 0).
-   * Categorization into Material Corporate Actions (Results, Board Intimations, Orders, Fund Raising, M&A, SAST/PIT).
-2. **Three-Valued Catalyst Classification**:
-   * State: `CATALYST` / `UNCLEAR` / `NONE`.
-   * Filings are primary; Google News is secondary.
-   * Catalyst state is kept as a separate classification field, not merged into the composite statistical score.
-3. **Testable Benchmark Fixture**:
-   * 40+ headline fixture file (`tests/fixtures/headlines.json`) with unit tests for false positives and false negatives.
-4. **Pre-announcement Check**:
-   * Radar for upcoming board meeting intimations scheduled in the next 7 calendar days.
+1. **Filing Ingestion & Fallback Architecture (`filings.py`)**:
+   * Official NSE corporate announcements API as primary source.
+   * BSE dynamic API (`AnnSubCategoryGetData/w`) as secondary fallback.
+   * Mapped 495/501 Nifty 500 equities by ISIN to BSE 6-digit scrip codes (`data/nse_to_bse_mapping.json`).
+2. **Unified Catalyst Classifier (`classify_catalyst`)**:
+   * Single standardized function used both at scan detection time and outcome evaluation time in the tracker.
+   * Priority 1: Exact / normalized exchange `desc` category matching.
+   * Priority 2: Text rules with routine-priority filtering for ambiguous categories (`Updates`, `General`, news headlines).
+   * Three-valued catalyst state: `CATALYST` / `UNCLEAR` / `NONE`, plus materiality flag (`is_material` 1 | 0) and normalized category name.
+   * State is decoupled from the statistical anomaly score.
+3. **Benchmark Fixtures (`tests/fixtures/filings_fixtures.json`)**:
+   * 50 real-world exchange disclosures curated from SQLite outcomes.
+   * 25 training fixtures: 100.0% precision, 100.0% recall, 100.0% accuracy.
+   * 25 strictly held-out test fixtures: 100.0% precision (0 false positives), 92.9% recall, 96.0% accuracy, F1 = 0.963.
+4. **Pre-Announcement Radar Check**:
+   * Evaluates NSE Event Calendar API (`/api/event-calendar`) for scheduled board meetings in the next 7 days.
+5. **Efficiency & Budget**:
+   * In-memory filing cache (`_FILINGS_CACHE`) and persistent session reuse eliminate redundant network calls and Akamai session handshakes.
+   * Request throttling (0.15s) respects rate limits and Actions runner budgets.
+6. **Matched Control Baseline**:
+   * Nearest-neighbor quintile matching on 20-day average turnover and 60-day return volatility.
+   * Empirical results show unexplained flags have lower 10-day catalyst rates (29.55%) than both random controls (39.22%, lift 0.75x) and matched controls (47.45%, lift 0.62x).
 
 ---
 

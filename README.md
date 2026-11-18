@@ -19,10 +19,11 @@ flowchart TD
 ### Key Modules
 - **`universe.py`**: Loads and caches Nifty 500 constituents and extracts the mid/small-cap target slice (ranks 210–500).
 - **`scanner.py`**: Fetches batch EOD and intraday OHLCV price and volume data.
-- **`news.py`**: Primary catalyst verification across corporate announcements and Google News.
+- **`filings.py`**: Primary catalyst ingestion and classification engine. Queries official NSE Corporate Announcements API with BSE API fallback, maps NSE symbols to BSE scrip codes via ISIN, provides 7-day pre-announcement board meeting radar, and executes the unified 3-valued catalyst classifier (`CATALYST` / `UNCLEAR` / `NONE`).
+- **`news.py`**: Secondary catalyst verification via Google News RSS, sharing the unified classifier from `filings.py`.
 - **`holidays.py`**: Official NSE trading holiday calendar providing accurate trading-day arithmetic ($T+N$) and skipping market holidays.
 - **`db.py`**: SQLite database engine (`output/scanner.db`) operating with WAL mode, foreign keys, and idempotent upserts. Generates text `.dump` (`output/scanner.sql`) for diffable history.
-- **`tracker.py`**: Evaluates flags from 1 to 15 trading days old. Forward returns are calculated strictly from **next-day open** ($T+1$ Open) to evaluate real-world tradability. Benchmarks returns against Nifty Midcap 150 (`NIFTYMIDCAP150.NS`) and tracks a random 10-stock control group to measure statistical **lift**.
+- **`tracker.py`**: Evaluates flags from 1 to 15 trading days old. Forward returns are calculated strictly from **next-day open** ($T+1$ Open) to evaluate real-world tradability. Benchmarks returns against Nifty Midcap 150 (`NIFTYMIDCAP150.NS`) and tracks both random controls and turnover/volatility matched controls to measure statistical **lift**.
 - **`report.py`**: Generates visual dark-theme HTML reports and master CSV exports (`suspicious_master.csv`, `news_driven_master.csv`, `unexplained_master.csv`).
 - **`main.py`**: Central orchestrator and CLI entry point.
 

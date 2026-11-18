@@ -155,6 +155,31 @@ def get_benchmark_history(start_date: date, end_date: date) -> pd.DataFrame:
     return pd.DataFrame()
 
 
+_NSE_SESSION: Optional[requests.Session] = None
+
+
+def get_nse_session() -> requests.Session:
+    """Return a cached requests.Session with active NSE session cookies."""
+    global _NSE_SESSION
+    if _NSE_SESSION is None:
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://www.nseindia.com/",
+        }
+        _NSE_SESSION = requests.Session()
+        _NSE_SESSION.headers.update(headers)
+        try:
+            _NSE_SESSION.get("https://www.nseindia.com", timeout=REQUEST_TIMEOUT)
+        except Exception as exc:
+            logger.debug("Failed initial NSE cookie handshake: %s", exc)
+    return _NSE_SESSION
+
+
 def fetch_corporate_announcements(symbol: str, from_date: date, to_date: date) -> List[Dict[str, Any]]:
     """
     Fetch corporate announcements for a symbol over a date range from NSE,
@@ -170,22 +195,19 @@ def fetch_corporate_announcements(symbol: str, from_date: date, to_date: date) -
         f"https://www.nseindia.com/api/corporate-announcements?"
         f"index=equities&symbol={symbol}&from_date={from_str}&to_date={to_str}"
     )
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        ),
-        "Accept": "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.nseindia.com/",
-    }
-    session = requests.Session()
-    session.headers.update(headers)
+    session = get_nse_session()
 
     for attempt in range(1, REQUEST_MAX_RETRIES + 1):
         try:
-            session.get("https://www.nseindia.com", timeout=REQUEST_TIMEOUT)
             resp = session.get(url, timeout=REQUEST_TIMEOUT)
+            if resp.status_code in (401, 403):
+                # Cookie refresh
+                try:
+                    session.get("https://www.nseindia.com", timeout=REQUEST_TIMEOUT)
+                    resp = session.get(url, timeout=REQUEST_TIMEOUT)
+                except Exception:
+                    pass
+
             if resp.status_code == 200:
                 data = resp.json()
                 items = data if isinstance(data, list) else data.get("data", [])
@@ -201,6 +223,9 @@ def fetch_corporate_announcements(symbol: str, from_date: date, to_date: date) -
                     })
                 _ANNOUNCEMENTS_CACHE[cache_key] = announcements
                 return announcements
+            elif resp.status_code == 404:
+                _ANNOUNCEMENTS_CACHE[cache_key] = []
+                return []
         except Exception as exc:
             logger.debug("Attempt %d fetching announcements for %s failed: %s", attempt, symbol, exc)
             time.sleep(REQUEST_BACKOFF_FACTOR ** attempt)
@@ -209,25 +234,17 @@ def fetch_corporate_announcements(symbol: str, from_date: date, to_date: date) -
     return []
 
 
+from filings import classify_catalyst
+
+
 def classify_announcement(title: str, details: str = "") -> Tuple[int, str]:
     """
-    Classify whether an announcement is material (1) or routine (0).
+    Classify whether an announcement is material (1) or routine (0)
+    using the unified Phase 2 classifier from filings.py.
     Returns (is_material, matched_category).
     """
-    combined = f"{title} {details}".lower()
-
-    # Check routine first
-    is_routine = any(kw in combined for kw in ROUTINE_ANNOUNCEMENT_KEYWORDS)
-
-    # Check material
-    for kw in MATERIAL_ANNOUNCEMENT_KEYWORDS:
-        if kw in combined:
-            return (1, kw.title())
-
-    if is_routine:
-        return (0, "Routine Disclosure")
-
-    return (0, "General Intimation")
+    state, is_mat, cat = classify_catalyst(desc=title, text=details, source="filing")
+    return (is_mat, cat)
 
 
 def evaluate_flag(flag: Dict[str, Any],
