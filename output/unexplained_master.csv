@@ -1,0 +1,157 @@
+scan_timestamp,symbol,company,industry,current_price,prev_close,pct_change,current_volume,avg_volume_20d,volume_ratio,has_catalyst_news,classification,headlines,news_source,score,delivery_pct,run_type,status
+2026-02-22,THERMAX,Thermax Ltd.,Capital Goods,3151.8,3023.5,4.24,318068,135319.0,2.35,0,NONE,,database,3.3,,eod,RESOLVED
+2026-02-23,SIEMENS,Siemens Ltd.,Capital Goods,3301.6,3106.7,6.27,1339800,348903.0,3.84,0,UNCLEAR,,database,21.8,,eod,RESOLVED
+2026-02-24,J&KBANK,Jammu & Kashmir Bank Ltd.,Financial Services,110.1,103.05,6.84,4830563,2111834.0,2.29,0,UNCLEAR,,database,14.7,,eod,RESOLVED
+2026-02-24,JYOTHYLAB,Jyothy Labs Ltd.,Fast Moving Consumer Goods,255.25,239.0,6.8,1171334,518817.0,2.26,0,UNCLEAR,,database,14.4,,eod,RESOLVED
+2026-02-24,JSL,Jindal Stainless Ltd.,Metals & Mining,791.25,744.65,6.26,1952324,610555.0,3.2,1,CATALYST,,database,17.8,,eod,RESOLVED
+2026-02-24,SCHAEFFLER,Schaeffler India Ltd.,Automobile and Auto Components,4110.0,3838.2,7.08,116886,50061.0,2.33,1,CATALYST,,database,16.1,,eod,RESOLVED
+2026-02-24,KPIL,Kalpataru Projects International Ltd.,Construction,1206.7,1106.4,9.07,364726,157564.0,2.31,1,CATALYST,,database,25.0,,eod,RESOLVED
+2026-02-24,INDIANB,Indian Bank,Financial Services,986.0,925.65,6.52,4004600,1820203.0,2.2,1,CATALYST,,database,12.7,,eod,RESOLVED
+2026-02-25,SCHAEFFLER,Schaeffler India Ltd.,Automobile and Auto Components,4285.5,4057.0,5.63,276595,53402.0,5.18,1,CATALYST,,database,27.3,,eod,RESOLVED
+2026-02-26,J&KBANK,Jammu & Kashmir Bank Ltd.,Financial Services,120.7,112.21,7.57,9317903,3542665.0,2.63,0,UNCLEAR,,database,20.2,,eod,RESOLVED
+2026-02-26,KSB,KSB Ltd.,Capital Goods,782.35,717.1,9.1,229177,71885.0,3.19,1,CATALYST,,database,30.6,,eod,RESOLVED
+2026-02-26,MANKIND,Mankind Pharma Ltd.,Healthcare,2280.6,2155.7,5.79,802399,350404.0,2.29,1,CATALYST,,database,9.9,,eod,RESOLVED
+2026-02-27,TEJASNET,Tejas Networks Ltd.,Telecommunication,431.25,381.35,13.09,73892675,1714276.0,43.1,1,CATALYST,,database,91.3,,eod,RESOLVED
+2026-03-02,TEJASNET,Tejas Networks Ltd.,Telecommunication,484.0,435.0,11.26,126512541,4910774.0,25.76,1,CATALYST,,database,83.0,,eod,RESOLVED
+2026-03-03,TEJASNET,Tejas Networks Ltd.,Telecommunication,484.7,435.0,11.43,142992425,10990862.0,13.01,1,CATALYST,,database,83.8,,eod,RESOLVED
+2026-03-04,TEJASNET,Tejas Networks Ltd.,Telecommunication,506.85,471.55,7.49,142992425,10990862.0,13.01,1,CATALYST,,database,65.9,,eod,RESOLVED
+2026-03-05,PETRONET,Petronet LNG Ltd.,Oil Gas & Consumable Fuels,293.1,280.0,4.68,20923538,2879481.0,7.27,1,CATALYST,,database,36.0,,eod,RESOLVED
+2026-03-05,LT,Larsen & Toubro Ltd.,Construction,4062.1,3882.6,4.62,7635350,2330792.0,3.28,1,CATALYST,,database,10.8,,eod,RESOLVED
+2026-03-05,NATIONALUM,National Aluminium Co. Ltd.,Metals & Mining,394.55,372.35,5.96,26380460,9545143.0,2.76,1,CATALYST,,database,13.7,,eod,RESOLVED
+2026-03-06,MRPL,Mangalore Refinery & Petrochemicals Ltd.,Oil Gas & Consumable Fuels,206.79,195.75,5.64,20844935,10016037.0,2.08,0,UNCLEAR,,database,8.0,,eod,RESOLVED
+2026-03-06,MAZDOCK,Mazagoan Dock Shipbuilders Ltd.,Capital Goods,2469.0,2361.0,4.57,9407750,846484.0,11.11,1,CATALYST,,database,52.6,,eod,RESOLVED
+2026-03-10,PETRONET,Petronet LNG Ltd.,Oil Gas & Consumable Fuels,289.75,278.55,4.02,9775021,4891205.0,2.0,0,UNCLEAR,,database,0.1,,eod,RESOLVED
+2026-03-10,PGEL,PG Electroplast Ltd.,Consumer Durables,547.45,519.6,5.36,11304952,1723157.0,6.56,1,CATALYST,,database,34.7,,eod,RESOLVED
+2026-03-10,SHRIRAMFIN,Shriram Finance Ltd.,Financial Services,1060.0,987.2,7.37,11999852,4956549.0,2.42,1,CATALYST,,database,17.9,,eod,RESOLVED
+2026-03-10,PNBHOUSING,PNB Housing Finance Ltd.,Financial Services,789.6,757.0,4.31,1644141,800287.0,2.05,1,CATALYST,,database,1.7,,eod,RESOLVED
+2026-03-12,TATAPOWER,Tata Power Co. Ltd.,Power,403.0,385.0,4.68,9679700,4066088.0,2.38,1,CATALYST,,database,5.5,,eod,RESOLVED
+2026-03-18,IGIL,International Gemmological Institute (India) Ltd.,Services,339.15,318.95,6.33,2646357,616047.0,4.3,0,NONE,,database,25.0,,eod,RESOLVED
+2026-03-18,JPPOWER,Jaiprakash Power Ventures Ltd.,Power,15.1,13.87,8.87,77350661,33296836.0,2.32,1,CATALYST,,database,24.1,,eod,RESOLVED
+2026-03-18,WAAREEENER,Waaree Energies Ltd.,Capital Goods,3190.9,2883.1,10.68,4601103,2145222.0,2.14,1,CATALYST,,database,31.2,,eod,RESOLVED
+2026-03-19,JPPOWER,Jaiprakash Power Ventures Ltd.,Power,17.02,14.99,13.54,260116568,36085209.0,7.21,1,CATALYST,,database,75.9,,eod,RESOLVED
+2026-03-20,JBMA,JBM Auto Ltd.,Automobile and Auto Components,579.85,553.0,4.86,9555262,2451792.0,3.9,0,UNCLEAR,,database,15.8,,eod,RESOLVED
+2026-03-23,METROPOLIS,Metropolis Healthcare Ltd.,Healthcare,466.6,442.0,5.57,486555,190073.0,2.56,1,CATALYST,,database,10.6,,eod,RESOLVED
+2026-03-24,MSUMI,Motherson Sumi Wiring India Ltd.,Automobile and Auto Components,37.5,35.8,4.75,17364254,6448534.0,2.69,0,NONE,,database,7.7,,eod,RESOLVED
+2026-03-24,LLOYDSME,Lloyds Metals And Energy Ltd.,Metals & Mining,1257.0,1207.5,4.1,1480245,676209.0,2.19,1,CATALYST,,database,1.6,,eod,RESOLVED
+2026-03-24,VOLTAS,Voltas Ltd.,Consumer Durables,1301.2,1245.0,4.51,1982017,942322.0,2.1,1,CATALYST,,database,2.9,,eod,RESOLVED
+2026-03-24,MCX,Multi Commodity Exchange of India Ltd.,Financial Services,2420.0,2325.0,4.09,6653727,3287347.0,2.02,1,CATALYST,,database,0.5,,eod,RESOLVED
+2026-03-25,KARURVYSYA,Karur Vysya Bank Ltd.,Financial Services,284.9,272.0,4.74,6110472,2992491.0,2.04,0,UNCLEAR,,database,3.6,,eod,RESOLVED
+2026-03-25,SAMMAANCAP,Sammaan Capital Ltd.,Financial Services,147.71,139.1,6.19,27486426,9652896.0,2.85,1,CATALYST,,database,15.3,,eod,RESOLVED
+2026-03-25,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1197.0,1138.8,5.11,1034234,423676.0,2.44,1,CATALYST,,database,7.8,,eod,RESOLVED
+2026-03-25,SIGNATURE,Signatureglobal (India) Ltd.,Realty,773.8,741.65,4.33,915096,381269.0,2.4,1,CATALYST,,database,4.0,,eod,RESOLVED
+2026-03-26,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1197.2,1138.8,5.13,2213205,462313.0,4.79,0,UNCLEAR,,database,22.6,,eod,RESOLVED
+2026-03-26,ZEEL,Zee Entertainment Enterprises Ltd.,Media Entertainment & Publication,75.96,71.15,6.76,27692927,9192033.0,3.01,0,UNCLEAR,,database,18.9,,eod,RESOLVED
+2026-03-26,RKFORGE,Ramkrishna Forgings Ltd.,Automobile and Auto Components,505.25,480.1,5.24,773355,301251.0,2.57,0,UNCLEAR,,database,9.2,,eod,RESOLVED
+2026-03-26,KALYANKJIL,Kalyan Jewellers India Ltd.,Consumer Durables,391.85,372.15,5.29,7261143,2959914.0,2.45,0,UNCLEAR,,database,8.7,,eod,RESOLVED
+2026-03-26,KAYNES,Kaynes Technology India Ltd.,Capital Goods,3717.9,3520.0,5.62,2874754,1197400.0,2.4,0,UNCLEAR,,database,9.9,,eod,RESOLVED
+2026-03-26,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,177.09,169.49,4.48,7775524,3432244.0,2.27,0,UNCLEAR,,database,3.9,,eod,RESOLVED
+2026-03-26,SYNGENE,Syngene International Ltd.,Healthcare,418.75,398.85,4.99,2746862,1363015.0,2.02,0,UNCLEAR,,database,4.6,,eod,RESOLVED
+2026-03-26,MINDACORP,Minda Corporation Ltd.,Automobile and Auto Components,543.95,521.1,4.38,434036,216331.0,2.01,0,UNCLEAR,,database,1.8,,eod,RESOLVED
+2026-03-26,TRIVENI,Triveni Engineering & Industries Ltd.,Fast Moving Consumer Goods,407.4,370.3,10.02,15847200,474503.0,33.4,1,CATALYST,,database,77.4,,eod,RESOLVED
+2026-03-26,SAMMAANCAP,Sammaan Capital Ltd.,Financial Services,146.88,139.1,5.59,113739337,10634308.0,10.7,1,CATALYST,,database,57.2,,eod,RESOLVED
+2026-03-26,MOTILALOFS,Motilal Oswal Financial Services Ltd.,Financial Services,684.2,650.0,5.26,2004724,806256.0,2.49,1,CATALYST,,database,8.8,,eod,RESOLVED
+2026-03-27,ONESOURCE,Onesource Specialty Pharma Ltd.,Healthcare,1449.3,1334.1,8.64,1325898,307185.0,4.32,1,CATALYST,,database,35.6,,eod,RESOLVED
+2026-03-31,IRB,IRB Infrastructure Developers Ltd.,Construction,22.14,20.4,8.53,104692549,17738340.0,5.9,1,CATALYST,,database,45.0,,eod,RESOLVED
+2026-04-01,TRENT,Trent Ltd.,Consumer Services,3526.0,3298.7,6.89,1835877,873651.0,2.1,0,UNCLEAR,,database,13.8,,eod,RESOLVED
+2026-04-01,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1265.0,1164.0,8.68,1322583,644805.0,2.05,0,UNCLEAR,,database,21.6,,eod,RESOLVED
+2026-04-01,INDGN,Indegene Ltd.,Healthcare,464.35,435.0,6.75,1196127,410747.0,2.91,1,CATALYST,,database,18.2,,eod,RESOLVED
+2026-04-01,SAPPHIRE,Sapphire Foods India Ltd.,Consumer Services,155.03,149.01,4.04,2779815,1003953.0,2.77,1,CATALYST,,database,5.0,,eod,RESOLVED
+2026-04-01,INOXINDIA,INOX India Ltd.,Capital Goods,1245.4,1182.0,5.36,263715,114856.0,2.3,1,CATALYST,,database,8.1,,eod,RESOLVED
+2026-04-01,TITAGARH,Titagarh Rail Systems Ltd.,Capital Goods,612.55,571.9,7.11,1691976,760306.0,2.23,1,CATALYST,,database,15.6,,eod,RESOLVED
+2026-04-01,UPL,UPL Ltd.,Chemicals,593.15,567.95,4.44,5317081,2522138.0,2.11,1,CATALYST,,database,2.7,,eod,RESOLVED
+2026-04-01,SUNDARMFIN,Sundaram Finance Ltd.,Financial Services,4587.2,4375.5,4.84,166789,80559.0,2.07,1,CATALYST,,database,4.3,,eod,RESOLVED
+2026-04-01,PGHH,Procter & Gamble Hygiene & Health Care Ltd.,Fast Moving Consumer Goods,9826.0,9300.0,5.66,47120,23068.0,2.04,1,CATALYST,,database,7.8,,eod,RESOLVED
+2026-04-01,RKFORGE,Ramkrishna Forgings Ltd.,Automobile and Auto Components,503.05,466.6,7.81,747448,370878.0,2.02,1,CATALYST,,database,17.4,,eod,RESOLVED
+2026-04-02,OLAELEC,Ola Electric Mobility Ltd.,Automobile and Auto Components,28.22,25.88,9.04,247154058,59708044.0,4.14,0,UNCLEAR,,database,36.3,,eod,RESOLVED
+2026-04-03,OLAELEC,Ola Electric Mobility Ltd.,Automobile and Auto Components,28.34,25.88,9.51,456246744,69573624.0,6.56,0,UNCLEAR,,database,53.5,,eod,RESOLVED
+2026-04-03,PAGEIND,Page Industries Ltd.,Textiles,33945.0,32620.0,4.06,77315,21831.0,3.54,0,UNCLEAR,,database,9.9,,eod,RESOLVED
+2026-04-03,TATACHEM,Tata Chemicals Ltd.,Chemicals,651.9,606.75,7.44,10671294,522830.0,20.41,1,CATALYST,,database,65.6,,eod,RESOLVED
+2026-04-06,TTML,Tata Teleservices (Maharashtra) Ltd.,Telecommunication,37.67,36.12,4.29,16891242,6038750.0,2.8,0,UNCLEAR,,database,6.3,,eod,RESOLVED
+2026-04-06,SIGNATURE,Signatureglobal (India) Ltd.,Realty,782.0,749.5,4.34,930802,415001.0,2.24,0,UNCLEAR,,database,3.0,,eod,RESOLVED
+2026-04-06,SOBHA,Sobha Ltd.,Realty,1224.1,1155.0,5.98,411454,126484.0,3.25,1,CATALYST,,database,16.8,,eod,RESOLVED
+2026-04-08,ZFCVINDIA,ZF Commercial Vehicle Control Systems India Ltd.,Automobile and Auto Components,14365.0,13649.0,5.25,34179,16419.0,2.08,0,UNCLEAR,,database,6.2,,eod,RESOLVED
+2026-04-08,JUBLFOOD,Jubilant Foodworks Ltd.,Consumer Services,435.0,413.15,5.29,26718173,2455022.0,10.88,1,CATALYST,,database,55.9,,eod,RESOLVED
+2026-04-08,KALYANKJIL,Kalyan Jewellers India Ltd.,Consumer Durables,445.3,414.15,7.52,11433396,3728880.0,3.07,1,CATALYST,,database,22.7,,eod,RESOLVED
+2026-04-08,M&MFIN,Mahindra & Mahindra Financial Services Ltd.,Financial Services,298.05,277.15,7.54,4631997,1878223.0,2.47,1,CATALYST,,database,19.0,,eod,RESOLVED
+2026-04-10,HONASA,Honasa Consumer Ltd.,Fast Moving Consumer Goods,347.8,331.0,5.08,10467745,735266.0,14.24,1,CATALYST,,database,54.9,,eod,RESOLVED
+2026-04-10,OLAELEC,Ola Electric Mobility Ltd.,Automobile and Auto Components,40.4,36.32,11.23,786402928,121061071.0,6.5,1,CATALYST,,database,61.0,,eod,RESOLVED
+2026-04-10,TATAINVEST,Tata Investment Corporation Ltd.,Financial Services,671.1,637.45,5.28,2072516,536739.0,3.86,1,CATALYST,,database,17.4,,eod,RESOLVED
+2026-04-13,NIACL,The New India Assurance Company Ltd.,Financial Services,171.67,155.71,10.25,76076824,673818.0,112.9,0,UNCLEAR,,database,78.4,,eod,RESOLVED
+2026-04-13,INOXINDIA,INOX India Ltd.,Capital Goods,1411.6,1308.0,7.92,780326,156581.0,4.98,1,CATALYST,,database,36.4,,eod,RESOLVED
+2026-04-13,TATAINVEST,Tata Investment Corporation Ltd.,Financial Services,713.2,670.0,6.45,1445388,619679.0,2.33,1,CATALYST,,database,13.2,,eod,RESOLVED
+2026-04-14,SARDAEN,Sarda Energy and Minerals Ltd.,Metals & Mining,579.0,554.6,4.4,4815900,484405.0,9.94,0,UNCLEAR,,database,51.4,,eod,RESOLVED
+2026-04-14,KIRLOSBROS,Kirloskar Brothers Ltd.,Capital Goods,1757.2,1588.3,10.63,457813,82847.0,5.53,0,UNCLEAR,,database,52.2,,eod,RESOLVED
+2026-04-14,TATAINVEST,Tata Investment Corporation Ltd.,Financial Services,713.2,670.0,6.45,13553272,668250.0,20.28,1,CATALYST,,database,61.1,,eod,RESOLVED
+2026-04-14,INOXINDIA,INOX India Ltd.,Capital Goods,1411.6,1308.0,7.92,1379554,193272.0,7.14,1,CATALYST,,database,49.9,,eod,RESOLVED
+2026-04-14,NTPCGREEN,NTPC Green Energy Ltd.,Power,104.23,97.26,7.17,91182889,15014626.0,6.07,1,CATALYST,,database,39.8,,eod,RESOLVED
+2026-04-14,NIACL,The New India Assurance Company Ltd.,Financial Services,171.67,155.71,10.25,29343939,5109289.0,5.74,1,CATALYST,,database,51.8,,eod,RESOLVED
+2026-04-14,ONESOURCE,Onesource Specialty Pharma Ltd.,Healthcare,1545.1,1438.9,7.38,1879985,464302.0,4.05,1,CATALYST,,database,28.2,,eod,RESOLVED
+2026-04-14,WELCORP,Welspun Corp Ltd.,Capital Goods,1005.5,961.8,4.54,1596527,516639.0,3.09,1,CATALYST,,database,9.3,,eod,RESOLVED
+2026-04-14,JSWENERGY,JSW Energy Ltd.,Power,509.6,488.85,4.24,8068921,3672641.0,2.2,1,CATALYST,,database,2.3,,eod,RESOLVED
+2026-04-14,THERMAX,Thermax Ltd.,Capital Goods,3870.8,3658.0,5.82,536932,265453.0,2.02,1,CATALYST,,database,8.4,,eod,RESOLVED
+2026-04-15,INOXINDIA,INOX India Ltd.,Capital Goods,1468.6,1403.0,4.68,1379554,193272.0,7.14,1,CATALYST,,database,35.2,,eod,RESOLVED
+2026-04-15,WELCORP,Welspun Corp Ltd.,Capital Goods,1052.65,1010.0,4.22,1596527,516639.0,3.09,1,CATALYST,,database,7.8,,eod,RESOLVED
+2026-04-15,THERMAX,Thermax Ltd.,Capital Goods,4085.0,3860.0,5.83,536932,265453.0,2.02,1,CATALYST,,database,8.4,,eod,RESOLVED
+2026-04-16,SWANCORP,Swan Corp Ltd.,Chemicals,352.8,332.2,6.2,3564754,1366728.0,2.61,0,UNCLEAR,,database,13.8,,eod,RESOLVED
+2026-04-16,RRKABEL,R R Kabel Ltd.,Capital Goods,1455.0,1392.0,4.53,296075,123809.0,2.39,0,UNCLEAR,,database,4.8,,eod,RESOLVED
+2026-04-17,TRITURBINE,Triveni Turbine Ltd.,Capital Goods,515.45,478.95,7.62,2702532,611071.0,4.42,0,UNCLEAR,,database,31.6,,eod,RESOLVED
+2026-04-17,MINDACORP,Minda Corporation Ltd.,Automobile and Auto Components,532.8,505.6,5.38,841271,357736.0,2.35,0,UNCLEAR,,database,8.5,,eod,RESOLVED
+2026-04-17,RADICO,Radico Khaitan Ltd,Fast Moving Consumer Goods,3186.9,3054.0,4.35,1034273,448140.0,2.31,0,UNCLEAR,,database,3.5,,eod,RESOLVED
+2026-04-17,SCI,Shipping Corporation of India Ltd.,Services,305.87,293.15,4.34,41850036,3360178.0,12.45,1,CATALYST,,database,51.5,,eod,RESOLVED
+2026-04-20,TRITURBINE,Triveni Turbine Ltd.,Capital Goods,576.2,517.8,11.28,6236306,822533.0,7.58,1,CATALYST,,database,68.0,,eod,RESOLVED
+2026-04-20,RADICO,Radico Khaitan Ltd,Fast Moving Consumer Goods,3340.1,3186.9,4.81,1189319,498409.0,2.39,1,CATALYST,,database,6.1,,eod,RESOLVED
+2026-04-21,ZENTEC,Zen Technologies Ltd.,Capital Goods,1742.7,1640.0,6.26,2474125,656689.0,3.77,1,CATALYST,,database,21.3,,eod,RESOLVED
+2026-04-23,PRAJIND,Praj Industries Ltd.,Capital Goods,410.05,383.1,7.03,6935179,2198519.0,3.15,0,UNCLEAR,,database,21.0,,eod,RESOLVED
+2026-04-23,JUBLINGREA,Jubilant Ingrevia Ltd.,Chemicals,735.75,697.5,5.48,3384928,172486.0,19.62,1,CATALYST,,database,56.7,,eod,RESOLVED
+2026-04-23,WELCORP,Welspun Corp Ltd.,Capital Goods,1204.1,1148.0,4.89,3972135,759974.0,5.23,1,CATALYST,,database,24.2,,eod,RESOLVED
+2026-04-27,POLYMED,Poly Medicure Ltd.,Healthcare,1495.6,1413.3,5.82,380843,134368.0,2.83,0,UNCLEAR,,database,13.5,,eod,RESOLVED
+2026-04-27,IKS,Inventurus Knowledge Solutions Ltd.,Information Technology,1504.1,1431.0,5.11,3914727,209674.0,18.67,1,CATALYST,,database,55.0,,eod,RESOLVED
+2026-04-27,UTIAMC,UTI Asset Management Company Ltd.,Financial Services,974.95,925.25,5.37,2105074,268753.0,7.83,1,CATALYST,,database,42.7,,eod,RESOLVED
+2026-04-27,TORNTPOWER,Torrent Power Ltd.,Power,1772.5,1699.6,4.29,2640800,706071.0,3.74,1,CATALYST,,database,12.2,,eod,RESOLVED
+2026-04-27,VIJAYA,Vijaya Diagnostic Centre Ltd.,Healthcare,1112.05,1065.0,4.42,428259,130933.0,3.27,1,CATALYST,,database,9.8,,eod,RESOLVED
+2026-04-27,SUNPHARMA,Sun Pharmaceutical Industries Ltd.,Healthcare,1733.5,1618.5,7.11,9606128,3727993.0,2.58,1,CATALYST,,database,17.8,,eod,RESOLVED
+2026-04-27,HINDZINC,Hindustan Zinc Ltd.,Metals & Mining,628.0,588.5,6.71,13298013,5186166.0,2.56,1,CATALYST,,database,15.8,,eod,RESOLVED
+2026-04-27,WHIRLPOOL,Whirlpool of India Ltd.,Consumer Durables,995.7,952.0,4.59,788059,358823.0,2.2,1,CATALYST,,database,3.9,,eod,RESOLVED
+2026-04-28,RKFORGE,Ramkrishna Forgings Ltd.,Automobile and Auto Components,602.3,568.0,6.04,1757707,530460.0,3.31,1,CATALYST,,database,17.5,,eod,RESOLVED
+2026-04-29,VEDL,Vedanta Ltd.,Metals & Mining,773.6,742.5,4.19,37978285,17414935.0,2.18,1,CATALYST,,database,2.0,,eod,RESOLVED
+2026-04-29,RBLBANK,RBL Bank Ltd.,Financial Services,341.2,321.15,6.24,13444619,6419718.0,2.09,1,CATALYST,,database,10.7,,eod,RESOLVED
+2026-05-01,SYNGENE,Syngene International Ltd.,Healthcare,468.05,431.9,8.37,59274654,991995.0,59.75,1,CATALYST,,database,69.9,,eod,RESOLVED
+2026-05-01,NEWGEN,Newgen Software Technologies Ltd.,Information Technology,508.0,478.1,6.25,12685665,1267877.0,10.01,1,CATALYST,,database,60.2,,eod,RESOLVED
+2026-05-01,IKS,Inventurus Knowledge Solutions Ltd.,Information Technology,1650.0,1560.0,5.77,1329919,421154.0,3.16,1,CATALYST,,database,15.3,,eod,RESOLVED
+2026-05-04,NEULANDLAB,Neuland Laboratories Ltd.,Healthcare,16124.0,15003.0,7.47,208250,43214.0,4.82,0,UNCLEAR,,database,33.4,,eod,RESOLVED
+2026-05-04,PCBL,PCBL Chemical Ltd.,Chemicals,309.5,288.9,7.13,5033511,1576298.0,3.19,0,UNCLEAR,,database,21.7,,eod,RESOLVED
+2026-05-04,SUMICHEM,Sumitomo Chemical India Ltd.,Chemicals,449.0,422.4,6.3,524470,199750.0,2.63,0,UNCLEAR,,database,14.4,,eod,RESOLVED
+2026-05-04,RRKABEL,R R Kabel Ltd.,Capital Goods,1775.2,1571.0,13.0,5777706,454656.0,12.71,1,CATALYST,,database,90.9,,eod,RESOLVED
+2026-05-04,INDGN,Indegene Ltd.,Healthcare,533.35,501.0,6.46,1140181,271745.0,4.2,1,CATALYST,,database,24.9,,eod,RESOLVED
+2026-05-04,VEDL,Vedanta Ltd.,Metals & Mining,294.65,273.1,7.89,86279650,23490348.0,3.67,1,CATALYST,,database,28.1,,eod,RESOLVED
+2026-05-04,LAURUSLABS,Laurus Labs Ltd.,Healthcare,1166.4,1101.2,5.92,4720613,1617830.0,2.92,1,CATALYST,,database,14.5,,eod,RESOLVED
+2026-05-04,HAL,Hindustan Aeronautics Ltd.,Capital Goods,4559.5,4330.0,5.3,2840978,1107983.0,2.56,1,CATALYST,,database,9.4,,eod,RESOLVED
+2026-05-05,SUMICHEM,Sumitomo Chemical India Ltd.,Chemicals,476.95,450.1,5.97,525225,189236.0,2.78,1,CATALYST,,database,13.8,,eod,RESOLVED
+2026-05-06,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1716.9,1537.0,11.7,16498559,568748.0,29.01,1,CATALYST,,database,85.0,,eod,RESOLVED
+2026-05-06,DBREALTY,Valor Estate Ltd.,Consumer Services,138.0,122.82,12.36,10704396,2953164.0,3.62,1,CATALYST,,database,48.1,,eod,RESOLVED
+2026-05-06,NUVAMA,Nuvama Wealth Management Ltd.,Financial Services,1413.6,1351.1,4.63,928587,346426.0,2.68,1,CATALYST,,database,7.1,,eod,RESOLVED
+2026-05-06,NH,Narayana Hrudayalaya Ltd.,Healthcare,1840.4,1765.0,4.27,576577,217946.0,2.65,1,CATALYST,,database,5.3,,eod,RESOLVED
+2026-05-06,NETWEB,Netweb Technologies India Ltd.,Information Technology,4368.4,4178.1,4.55,3065109,1493849.0,2.05,1,CATALYST,,database,2.8,,eod,RESOLVED
+2026-05-07,TEJASNET,Tejas Networks Ltd.,Telecommunication,533.4,465.05,14.7,32264104,2779593.0,11.61,0,UNCLEAR,,database,98.6,,eod,RESOLVED
+2026-05-07,IFCI,IFCI Ltd.,Financial Services,63.88,61.09,4.57,46841098,16578966.0,2.83,1,CATALYST,,database,7.8,,eod,RESOLVED
+2026-05-07,POLYCAB,Polycab India Ltd.,Capital Goods,9003.0,8415.5,6.98,1084637,427858.0,2.54,1,CATALYST,,database,16.9,,eod,RESOLVED
+2026-05-07,KEC,Kec International Ltd.,Construction,612.45,587.3,4.28,3767976,1604168.0,2.35,1,CATALYST,,database,3.5,,eod,RESOLVED
+2026-05-08,NUVAMA,Nuvama Wealth Management Ltd.,Financial Services,1631.5,1476.0,10.54,980887,392808.0,2.5,1,CATALYST,,database,32.9,,eod,RESOLVED
+2026-05-08,VIJAYA,Vijaya Diagnostic Centre Ltd.,Healthcare,1278.9,1206.9,5.97,384458,183597.0,2.09,1,CATALYST,,database,9.5,,eod,RESOLVED
+2026-05-11,VIJAYA,Vijaya Diagnostic Centre Ltd.,Healthcare,1342.6,1275.0,5.3,1257895,202801.0,6.2,1,CATALYST,,database,32.2,,eod,RESOLVED
+2026-05-11,NIVABUPA,Niva Bupa Health Insurance Company Ltd.,Financial Services,84.31,81.05,4.02,3136498,888490.0,3.53,1,CATALYST,,database,9.7,,eod,RESOLVED
+2026-05-11,JBMA,JBM Auto Ltd.,Automobile and Auto Components,681.65,649.0,5.03,3113866,968929.0,3.21,1,CATALYST,,database,12.2,,eod,RESOLVED
+2026-05-11,TATACONSUM,Tata Consumer Products Ltd.,Fast Moving Consumer Goods,1271.0,1176.6,8.02,3672201,1442372.0,2.55,1,CATALYST,,database,21.7,,eod,RESOLVED
+2026-05-13,HINDCOPPER,Hindustan Copper Ltd.,Metals & Mining,595.3,565.25,5.32,13183963,5203504.0,2.53,0,UNCLEAR,,database,9.3,,eod,RESOLVED
+2026-05-15,SAREGAMA,Saregama India Ltd,Media Entertainment & Publication,415.75,385.8,7.76,38733636,330382.0,117.24,1,CATALYST,,database,67.1,,eod,RESOLVED
+2026-05-18,TECHM,Tech Mahindra Ltd.,Information Technology,1430.0,1369.0,4.46,5306932,2394997.0,2.22,0,UNCLEAR,,database,3.5,,eod,RESOLVED
+2026-05-20,IGIL,International Gemmological Institute (India) Ltd.,Services,352.3,332.95,5.81,926798,303697.0,3.05,0,UNCLEAR,,database,14.8,,eod,RESOLVED
+2026-05-21,IRB,IRB Infrastructure Developers Ltd.,Construction,22.84,21.13,8.09,56644534,9746032.0,5.81,1,CATALYST,,database,42.4,,eod,RESOLVED
+2026-05-21,TATACOMM,Tata Communications Ltd.,Telecommunication,1896.3,1775.6,6.8,3191014,573097.0,5.57,1,CATALYST,,database,35.0,,eod,RESOLVED
+2026-05-21,IGIL,International Gemmological Institute (India) Ltd.,Services,375.25,355.15,5.66,1447336,321431.0,4.5,1,CATALYST,,database,23.2,,eod,RESOLVED
+2026-05-21,TRITURBINE,Triveni Turbine Ltd.,Capital Goods,705.6,656.0,7.56,8531572,2174437.0,3.92,1,CATALYST,,database,28.2,,eod,RESOLVED
+2026-05-21,MOTHERSON,Samvardhana Motherson International Ltd.,Automobile and Auto Components,137.0,131.38,4.28,56355040,17780874.0,3.17,1,CATALYST,,database,8.6,,eod,RESOLVED
+2026-05-22,JSWCEMENT,JSW Cement Ltd.,Construction Materials,137.99,127.99,7.81,41116895,861977.0,47.7,1,CATALYST,,database,67.3,,eod,RESOLVED
+2026-05-22,SAMMAANCAP,Sammaan Capital Ltd.,Financial Services,161.46,154.74,4.34,120079677,15411476.0,7.79,1,CATALYST,,database,37.7,,eod,RESOLVED
+2026-05-22,MINDACORP,Minda Corporation Ltd.,Automobile and Auto Components,574.65,533.6,7.69,657876,254445.0,2.59,1,CATALYST,,database,20.5,,eod,RESOLVED
+2026-11-18,INOXINDIA,INOX India Ltd.,Capital Goods,2134.1,1952.5,9.3,1215214,143017.0,8.5,1,CATALYST,,database,64.7,,eod,ACTIVE

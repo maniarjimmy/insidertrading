@@ -1,0 +1,45 @@
+scan_timestamp,symbol,company,industry,current_price,prev_close,pct_change,current_volume,avg_volume_20d,volume_ratio,has_catalyst_news,classification,headlines,news_source
+2026-02-22,THERMAX,Thermax Ltd.,Capital Goods,3151.8,3023.5,4.24,318068,135319.0,2.35,0,NONE,,database
+2026-02-23,SIEMENS,Siemens Ltd.,Capital Goods,3301.6,3106.7,6.27,1339800,348903.0,3.84,0,UNCLEAR,,database
+2026-02-24,J&KBANK,Jammu & Kashmir Bank Ltd.,Financial Services,110.1,103.05,6.84,4830563,2111834.0,2.29,0,UNCLEAR,,database
+2026-02-24,JYOTHYLAB,Jyothy Labs Ltd.,Fast Moving Consumer Goods,255.25,239.0,6.8,1171334,518817.0,2.26,0,UNCLEAR,,database
+2026-02-26,J&KBANK,Jammu & Kashmir Bank Ltd.,Financial Services,120.7,112.21,7.57,9317903,3542665.0,2.63,0,UNCLEAR,,database
+2026-03-06,MRPL,Mangalore Refinery & Petrochemicals Ltd.,Oil Gas & Consumable Fuels,206.79,195.75,5.64,20844935,10016037.0,2.08,0,UNCLEAR,,database
+2026-03-10,PETRONET,Petronet LNG Ltd.,Oil Gas & Consumable Fuels,289.75,278.55,4.02,9775021,4891205.0,2.0,0,UNCLEAR,,database
+2026-03-18,IGIL,International Gemmological Institute (India) Ltd.,Services,339.15,318.95,6.33,2646357,616047.0,4.3,0,NONE,,database
+2026-03-20,JBMA,JBM Auto Ltd.,Automobile and Auto Components,579.85,553.0,4.86,9555262,2451792.0,3.9,0,UNCLEAR,,database
+2026-03-24,MSUMI,Motherson Sumi Wiring India Ltd.,Automobile and Auto Components,37.5,35.8,4.75,17364254,6448534.0,2.69,0,NONE,,database
+2026-03-25,KARURVYSYA,Karur Vysya Bank Ltd.,Financial Services,284.9,272.0,4.74,6110472,2992491.0,2.04,0,UNCLEAR,,database
+2026-03-26,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1197.2,1138.8,5.13,2213205,462313.0,4.79,0,UNCLEAR,,database
+2026-03-26,ZEEL,Zee Entertainment Enterprises Ltd.,Media Entertainment & Publication,75.96,71.15,6.76,27692927,9192033.0,3.01,0,UNCLEAR,,database
+2026-03-26,RKFORGE,Ramkrishna Forgings Ltd.,Automobile and Auto Components,505.25,480.1,5.24,773355,301251.0,2.57,0,UNCLEAR,,database
+2026-03-26,KALYANKJIL,Kalyan Jewellers India Ltd.,Consumer Durables,391.85,372.15,5.29,7261143,2959914.0,2.45,0,UNCLEAR,,database
+2026-03-26,KAYNES,Kaynes Technology India Ltd.,Capital Goods,3717.9,3520.0,5.62,2874754,1197400.0,2.4,0,UNCLEAR,,database
+2026-03-26,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,177.09,169.49,4.48,7775524,3432244.0,2.27,0,UNCLEAR,,database
+2026-03-26,SYNGENE,Syngene International Ltd.,Healthcare,418.75,398.85,4.99,2746862,1363015.0,2.02,0,UNCLEAR,,database
+2026-03-26,MINDACORP,Minda Corporation Ltd.,Automobile and Auto Components,543.95,521.1,4.38,434036,216331.0,2.01,0,UNCLEAR,,database
+2026-04-01,TRENT,Trent Ltd.,Consumer Services,3526.0,3298.7,6.89,1835877,873651.0,2.1,0,UNCLEAR,,database
+2026-04-01,WOCKPHARMA,Wockhardt Ltd.,Healthcare,1265.0,1164.0,8.68,1322583,644805.0,2.05,0,UNCLEAR,,database
+2026-04-02,OLAELEC,Ola Electric Mobility Ltd.,Automobile and Auto Components,28.22,25.88,9.04,247154058,59708044.0,4.14,0,UNCLEAR,,database
+2026-04-03,OLAELEC,Ola Electric Mobility Ltd.,Automobile and Auto Components,28.34,25.88,9.51,456246744,69573624.0,6.56,0,UNCLEAR,,database
+2026-04-03,PAGEIND,Page Industries Ltd.,Textiles,33945.0,32620.0,4.06,77315,21831.0,3.54,0,UNCLEAR,,database
+2026-04-06,TTML,Tata Teleservices (Maharashtra) Ltd.,Telecommunication,37.67,36.12,4.29,16891242,6038750.0,2.8,0,UNCLEAR,,database
+2026-04-06,SIGNATURE,Signatureglobal (India) Ltd.,Realty,782.0,749.5,4.34,930802,415001.0,2.24,0,UNCLEAR,,database
+2026-04-08,ZFCVINDIA,ZF Commercial Vehicle Control Systems India Ltd.,Automobile and Auto Components,14365.0,13649.0,5.25,34179,16419.0,2.08,0,UNCLEAR,,database
+2026-04-13,NIACL,The New India Assurance Company Ltd.,Financial Services,171.67,155.71,10.25,76076824,673818.0,112.9,0,UNCLEAR,,database
+2026-04-14,SARDAEN,Sarda Energy and Minerals Ltd.,Metals & Mining,579.0,554.6,4.4,4815900,484405.0,9.94,0,UNCLEAR,,database
+2026-04-14,KIRLOSBROS,Kirloskar Brothers Ltd.,Capital Goods,1757.2,1588.3,10.63,457813,82847.0,5.53,0,UNCLEAR,,database
+2026-04-16,SWANCORP,Swan Corp Ltd.,Chemicals,352.8,332.2,6.2,3564754,1366728.0,2.61,0,UNCLEAR,,database
+2026-04-16,RRKABEL,R R Kabel Ltd.,Capital Goods,1455.0,1392.0,4.53,296075,123809.0,2.39,0,UNCLEAR,,database
+2026-04-17,TRITURBINE,Triveni Turbine Ltd.,Capital Goods,515.45,478.95,7.62,2702532,611071.0,4.42,0,UNCLEAR,,database
+2026-04-17,MINDACORP,Minda Corporation Ltd.,Automobile and Auto Components,532.8,505.6,5.38,841271,357736.0,2.35,0,UNCLEAR,,database
+2026-04-17,RADICO,Radico Khaitan Ltd,Fast Moving Consumer Goods,3186.9,3054.0,4.35,1034273,448140.0,2.31,0,UNCLEAR,,database
+2026-04-23,PRAJIND,Praj Industries Ltd.,Capital Goods,410.05,383.1,7.03,6935179,2198519.0,3.15,0,UNCLEAR,,database
+2026-04-27,POLYMED,Poly Medicure Ltd.,Healthcare,1495.6,1413.3,5.82,380843,134368.0,2.83,0,UNCLEAR,,database
+2026-05-04,NEULANDLAB,Neuland Laboratories Ltd.,Healthcare,16124.0,15003.0,7.47,208250,43214.0,4.82,0,UNCLEAR,,database
+2026-05-04,PCBL,PCBL Chemical Ltd.,Chemicals,309.5,288.9,7.13,5033511,1576298.0,3.19,0,UNCLEAR,,database
+2026-05-04,SUMICHEM,Sumitomo Chemical India Ltd.,Chemicals,449.0,422.4,6.3,524470,199750.0,2.63,0,UNCLEAR,,database
+2026-05-07,TEJASNET,Tejas Networks Ltd.,Telecommunication,533.4,465.05,14.7,32264104,2779593.0,11.61,0,UNCLEAR,,database
+2026-05-13,HINDCOPPER,Hindustan Copper Ltd.,Metals & Mining,595.3,565.25,5.32,13183963,5203504.0,2.53,0,UNCLEAR,,database
+2026-05-18,TECHM,Tech Mahindra Ltd.,Information Technology,1430.0,1369.0,4.46,5306932,2394997.0,2.22,0,UNCLEAR,,database
+2026-05-20,IGIL,International Gemmological Institute (India) Ltd.,Services,352.3,332.95,5.81,926798,303697.0,3.05,0,UNCLEAR,,database
