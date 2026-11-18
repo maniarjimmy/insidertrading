@@ -33,11 +33,11 @@ flowchart TD
 
 **Verified Results from GitHub Runner Runs #44275991733 and #44277610196 (`ubuntu-latest`)**:
 * **16/17 Endpoints Tested**: 16 Passed with valid JSON/CSV formatting and required fields present (1 expected unready: today's Bhavcopy returning 404 prior to EOD publication; yesterday's Bhavcopy returned HTTP 200 with 3,572 rows).
-* **Bhavcopy Timing Measurements**:
+* **Bhavcopy Timing & Schedule Calibration**:
   - `sec_bhavdata_full_<DDMMYYYY>.csv` has `Last-Modified: 18:25 GMT` (23:55 IST). It returns 404 before midnight on NSE archives.
-  - Official UDDiP Bhavcopy (`BhavCopy_NSE_CM_0_0_0_<YYYYMMDD>_F_0000.csv.zip`) is published at 11:03 GMT (16:33 IST).
-  - Security Delivery Position (`MTO_<DDMMYYYY>.DAT`) is published at 11:25 GMT (16:55 IST).
-  - Bulk (`bulk.csv`) and Block (`block.csv`) are updated around 17:00–17:30 IST.
+  - Official UDDiP Bhavcopy (`BhavCopy_NSE_CM_0_0_0_<YYYYMMDD>_F_0000.csv.zip`) and Delivery Position (`MTO_<DDMMYYYY>.DAT`) are published after market close.
+  - Daily logging of `Last-Modified` headers for UDDiP, MTO, bulk, and block deals is active across 5 consecutive trading days to empirically establish publication timing before locking the EOD schedule (provisional target: 17:30–18:00 IST).
+  - Extended spike on GitHub Actions will run after 17:00 IST on the next trading day for live runner verification of UDDiP, MTO, and multi-symbol date ranges.
 * **Surveillance (ASM / GSM) & Price Bands**:
   - `sec_list.csv` confirmed (3,609 securities; GSM stages 0, 1, 2 for 67 stocks; 329 T2T series `BE`/`BZ`/`ST`; circuit bands: 2%, 5%, 10%, 20%, No Band).
   - ST-ASM/LT-ASM lists are published via circulars API `/api/circulars` (subject strings: "ST-ASM", "ASM").
@@ -108,9 +108,12 @@ flowchart TD
 5. **Efficiency & Budget**:
    * In-memory filing cache (`_FILINGS_CACHE`) and persistent session reuse eliminate redundant network calls and Akamai session handshakes.
    * Request throttling (0.15s) respects rate limits and Actions runner budgets.
-6. **Matched Control Baseline**:
+6. **Matched Control Baseline & Statistical Edge**:
    * Nearest-neighbor quintile matching on 20-day average turnover and 60-day return volatility.
-   * Empirical results show unexplained flags have lower 10-day catalyst rates (29.55%) than both random controls (39.22%, lift 0.75x) and matched controls (47.45%, lift 0.62x).
+   * **Empirical Results & Lift Significance**:
+     - **All Material Catalysts (3-day pre-move window)**: Clean unexplained pairs $N = 118$. Flag precision: 27.12% (32/118), Control precision: 36.44% (43/118). Unpaired lift: 0.74x (95% CI: [0.51, 1.08]). Paired discordance: $n_{10} = 19$ (flag only), $n_{01} = 30$ (control only). Paired odds ratio = 0.63. McNemar stat = 2.04 ($p = 0.153$), exact binomial sign test $p = 0.1524$. Date-clustered bootstrap 95% CI includes 1.0. Conclusion: **No detectable edge over matched controls** (paired $p = 0.152$, CIs include 1.0).
+     - **Unscheduled-Material Catalysts Only (3-day pre-move window)**: Clean unexplained pairs $N = 118$. Flag precision: 13.56% (16/118), Control precision: 24.58% (29/118). Unpaired lift: 0.55x (95% CI: [0.32, 0.95]). Paired discordance: $n_{10} = 12$, $n_{01} = 25$. Paired odds ratio = 0.48. McNemar stat = 3.89 ($p = 0.0485$), exact binomial sign test $p = 0.0470$.
+     - **10-day Pre-Move Sensitivity Check**: Clean unexplained pairs $N = 78$. All material: flag precision 24.36% vs control 34.62% (lift 0.70x, $n_{10}=12, n_{01}=20$, odds=0.60, McNemar $p=0.216$, exact sign $p=0.2153$). Unscheduled: flag 12.82% vs control 25.64% (lift 0.50x, $n_{10}=7, n_{01}=17$, odds=0.41, McNemar $p=0.066$, exact sign $p=0.0639$).
 
 ---
 
@@ -143,8 +146,12 @@ flowchart TD
    * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
    * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
    * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
-3. **Rigorous Signal Evaluation**:
-   * Apply current price/volume scan thresholds across historical trading days.
+3. **Rigorous Signal Evaluation & Design Requirements**:
+   * **Pre-Registered Hypothesis**: Unexplained volume and price anomalies in Indian mid/small-caps systematically precede forward unscheduled material corporate disclosures ($T+1..T+10$) with a statistically significant edge ($\text{Lift} > 1.25\text{x}$) over matched controls. Null hypothesis: $H_0: \text{Odds Ratio} \le 1.0$ (no detectable edge).
+   * **Point-in-Time Universe**: Universe reconstructed using historical semi-annual Nifty 500 reconstitution dates to eliminate survivorship bias.
+   * **Time Split (Train/Test)**: In-sample development on the earlier 12 months (e.g. Nov 2024–Oct 2025) and strictly out-of-sample testing on the subsequent 12 months (Nov 2025–Nov 2026).
+   * **Signal Evaluation (EOD vs 14:30 Intraday)**: Comparative backtest evaluating EOD signals (using final Bhavcopy & delivery) vs 14:30 IST snapshot signals to quantify alpha decay and false-positive rates of intraday alerting.
+   * **Per-Symbol Announcements Caching**: Persistent local disk caching of raw corporate announcements by symbol (`output/cache/announcements_<symbol>.json`) to eliminate redundant HTTP calls across repeated backtest runs.
    * Filter pre-move filings strictly before each flag timestamp.
    * Compute forward returns ($T+1$ Open to $T+10$) and corporate announcement lift vs. liquidity/volatility quintile-matched controls.
    * Report both paired and unpaired lift disaggregated by scheduled vs. unscheduled-material outcomes, with scan-date cluster bootstrap confidence intervals.

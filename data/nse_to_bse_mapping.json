@@ -2473,5 +2473,20 @@
     "bse_scrip": "532927",
     "isin": "INE738I01010",
     "company": "eClerx Services Ltd."
+  },
+  "EMBASSY": {
+    "bse_scrip": "542602",
+    "isin": "INE041025011",
+    "company": "Embassy Office Parks REIT"
+  },
+  "BIRET": {
+    "bse_scrip": "543261",
+    "isin": "INE0FDU25010",
+    "company": "Brookfield India Real Estate Trust REIT"
+  },
+  "BAGMANE": {
+    "bse_scrip": "544758",
+    "isin": "INE2OVN25015",
+    "company": "Bagmane Prime Office REIT"
   }
 }
