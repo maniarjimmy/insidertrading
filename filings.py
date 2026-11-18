@@ -125,6 +125,10 @@ MATERIAL_DESC_CATEGORIES = {
     "Acquisition": "Acquisition",
     "Amalgamation/Merger": "Acquisition",
     "Takeover": "Acquisition",
+    "Diversification/Disinvestment": "Acquisition",
+    "Disinvestment": "Acquisition",
+    "Commencement of commercial production/operations": "Production Commencement",
+    "Commencement of Commercial Production": "Production Commencement",
     "Award of Order / Receipt of Order": "Order Win",
     "Order / Contract": "Order Win",
     "Fund Raising": "Fund Raising",
@@ -164,6 +168,7 @@ ROUTINE_TEXT_PATTERNS = [
     (r"\b(investor\s+presentation|analyst\s+meet|conference\s+call|transcript|concall|earnings\s+call)\b", "Routine Disclosure"),
     (r"\b(esop|employee\s+stock\s+option|allotment\s+of\s+\d+\s+shares)\b", "Routine Disclosure"),
     (r"\b(investor\s+complaints|redressal\s+of\s+investor|score\s+report)\b", "Routine Disclosure"),
+    (r"\b(customs\s+duty|gst\s+(?:demand|order|penalty)|income\s+tax\s+(?:demand|order)|differential\s+customs\s+duty|penalty\s+under\s+(?:customs|gst|income\s+tax))\b", "Routine Disclosure"),
 ]
 
 MATERIAL_TEXT_PATTERNS = [
@@ -171,21 +176,77 @@ MATERIAL_TEXT_PATTERNS = [
     (r"\b(board\s+meeting|outcome\s+of\s+board|dividend|bonus\s+issue|stock\s+split|buyback)\b", "Board Meeting"),
     (r"\b(acqui(?:re[ds]?|sition)|amalgamation|merger|takeover|joint\s+venture|stake\s+purchase|investment\s+in\s+subsidiary)\b", "Acquisition"),
     (r"\b(order\s+win|award\s+of\s+contract|signs?\s+contract|bags?\s+(?:new\s+)?orders?|secures?\s+(?:export\s+|new\s+)?orders?|receives?\s+(?:new\s+)?orders?|letter\s+of\s+award)\b", "Order Win"),
+    (r"\b(contract\s+with|entered\s+into\s+(?:a\s+)?contract|construction\s+and\s+sale\s+of|award\s+of\s+(?:contract|order)|commercial\s+contract)\b", "Order Win"),
+    (r"\b(divest(?:ed|ment|ing)?|disinvest(?:ed|ment|ing)?|slump\s+sale)\b", "Acquisition"),
+    (r"\b(commencement\s+of\s+commercial\s+production|commercial\s+production|operationalization\s+of\s+facility)\b", "Production Commencement"),
     (r"\b(fund\s+rais(?:ing|e)|qip|preferential\s+(?:issue|allotment)|rights\s+issue|commercial\s+paper|ncd\s+issu)\b", "Fund Raising"),
     (r"\b(credit\s+rating\s+(?:upgrade|reaffirm|revised)|crisil|icra|care\s+ratings|india\s+ratings)\b", "Credit Rating"),
     (r"\b(usfda|establishment\s+inspection|eir\s+with\s+vai|regulatory\s+approval|patent\s+grant|product\s+approval)\b", "Regulatory Approval"),
 ]
 
+_PDF_TEXT_CACHE_PATH = os.path.join(os.path.dirname(__file__), "output", "cache", "pdf_text_cache.json")
+_PDF_TEXT_CACHE: Optional[Dict[str, str]] = None
+
+
+def _load_pdf_text_cache() -> Dict[str, str]:
+    global _PDF_TEXT_CACHE
+    if _PDF_TEXT_CACHE is not None:
+        return _PDF_TEXT_CACHE
+    if os.path.exists(_PDF_TEXT_CACHE_PATH):
+        try:
+            with open(_PDF_TEXT_CACHE_PATH, "r", encoding="utf-8") as f:
+                _PDF_TEXT_CACHE = json.load(f)
+                return _PDF_TEXT_CACHE
+        except Exception:
+            pass
+    _PDF_TEXT_CACHE = {}
+    return _PDF_TEXT_CACHE
+
+
+def extract_pdf_first_page_text(url: str) -> str:
+    """Download and extract text from the first page of an exchange attachment PDF with local disk caching."""
+    if not url or not str(url).startswith("http"):
+        return ""
+    cache = _load_pdf_text_cache()
+    if url in cache:
+        return cache[url]
+
+    try:
+        import io
+        import pypdf
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        r = requests.get(url, headers=headers, timeout=6)
+        if r.status_code == 200:
+            reader = pypdf.PdfReader(io.BytesIO(r.content))
+            if len(reader.pages) > 0:
+                p1_text = reader.pages[0].extract_text() or ""
+                cache[url] = p1_text[:2000]
+                try:
+                    os.makedirs(os.path.dirname(_PDF_TEXT_CACHE_PATH), exist_ok=True)
+                    with open(_PDF_TEXT_CACHE_PATH, "w", encoding="utf-8") as f:
+                        json.dump(cache, f)
+                except Exception:
+                    pass
+                return cache[url]
+    except Exception as exc:
+        logger.debug("PDF first-page extraction skipped for %s: %s", url, exc)
+
+    cache[url] = ""
+    return ""
+
 
 def classify_catalyst(desc: Optional[str] = None,
                       text: Optional[str] = None,
-                      source: str = "filing") -> Tuple[str, int, str]:
+                      source: str = "filing",
+                      url: Optional[str] = None) -> Tuple[str, int, str]:
     """
     Unified classifier for corporate filings and news headlines.
     Rule Sequence:
-      1. Inspect exchange 'desc' category first.
-      2. If desc is ambiguous ("Updates", "General", etc.) or missing, parse text rules.
-      3. Output 3-valued catalyst state ("CATALYST" | "UNCLEAR" | "NONE"),
+      1. Priority 0: Explicit statutory routine exemptions (SAST 31/29).
+      2. Priority 1: Exact / normalized exchange 'desc' category matching.
+      3. Priority 2: Text pattern rules on desc + attchmntText.
+      4. Priority 2b: If status is UNCLEAR on a generic category, check first-page PDF text (cached).
+      5. Output 3-valued catalyst state ("CATALYST" | "UNCLEAR" | "NONE"),
          materiality flag (1 | 0), and normalized category name.
     """
     clean_desc = (desc or "").strip()
@@ -198,7 +259,7 @@ def classify_catalyst(desc: Optional[str] = None,
         r"disclosure\s+under\s+regulation\s+31|disclosure\s+under\s+regulation\s+29|"
         r"disclosure\s+under\s+sebi\s+takeover|sebi\s+takeover\s+regulations?|"
         r"sebi\s+sast\s+regulations?|takeover\s+regulations?|"
-        r"reg\.\s*31\s*\(\s*[1-4]\s*\)|reg\.\s*29\s*\(\s*[1-3]\s*\)|declaration\s+under\s+regulation\s+31)\b",
+        r"reg\.\s*31\s*\(\s*[1-4]\s*\)|reg\.\s*29\s*\(\s*[1-3]\s*\)|declaration\s+under\s+regulation\s+31)",
         combined_text,
         re.IGNORECASE,
     ):
@@ -223,8 +284,29 @@ def classify_catalyst(desc: Optional[str] = None,
         if re.search(pattern, combined_text, re.IGNORECASE):
             return ("CATALYST", 1, cat_name)
 
+    # Priority 2b: First-page PDF inspection for generic categories with attached PDF
+    generic_descs = [
+        "disclosure of material issue",
+        "action(s) taken or orders passed",
+        "action(s) initiated or orders passed",
+        "updates",
+        "general updates",
+        "general",
+        "intimation",
+        "announcement",
+    ]
+    if url and any(g in clean_desc.lower() for g in generic_descs):
+        pdf_text = extract_pdf_first_page_text(url)
+        if pdf_text:
+            pdf_combined = f"{clean_desc} {pdf_text}".lower()
+            for pattern, cat_name in ROUTINE_TEXT_PATTERNS:
+                if re.search(pattern, pdf_combined, re.IGNORECASE):
+                    return ("NONE", 0, cat_name)
+            for pattern, cat_name in MATERIAL_TEXT_PATTERNS:
+                if re.search(pattern, pdf_combined, re.IGNORECASE):
+                    return ("CATALYST", 1, cat_name)
+
     # Priority 3: Fallback classification
-    # If text mentions generic operational updates or minor actions
     if any(k in combined_text for k in ["update", "action", "order passed", "launch", "subsidiary", "intimation"]):
         return ("UNCLEAR", 0, "General Update")
 
@@ -292,16 +374,15 @@ def fetch_nse_announcements(symbol: str, from_date: date, to_date: date) -> List
                 announcements = []
                 for item in items:
                     raw_dt = item.get("sort_date") or item.get("an_dt") or item.get("exchdisstime")
-                    desc = item.get("desc", "")
-                    text = item.get("attchmntText", "")
-                    state, is_mat, cat = classify_catalyst(desc=desc, text=text, source="filing")
+                    att_url = item.get("attchmntFile", "")
+                    state, is_mat, cat = classify_catalyst(desc=desc, text=text, source="filing", url=att_url)
                     announcements.append({
                         "symbol": symbol,
                         "date_str": raw_dt,
                         "dt": parse_filing_datetime(raw_dt),
                         "desc": desc,
                         "text": text,
-                        "url": item.get("attchmntFile", ""),
+                        "url": att_url,
                         "catalyst_state": state,
                         "is_material": is_mat,
                         "category": cat,
@@ -346,14 +427,15 @@ def fetch_bse_announcements(symbol: str, from_date: date, to_date: date) -> List
                 raw_dt = item.get("NEWS_DT") or item.get("DT_TM")
                 desc = item.get("CATEGORYNAME", "")
                 text = item.get("HEADLINE", "")
-                state, is_mat, cat = classify_catalyst(desc=desc, text=text, source="filing")
+                bse_att = item.get("ATTACHMENTNAME", "")
+                state, is_mat, cat = classify_catalyst(desc=desc, text=text, source="filing", url=bse_att)
                 announcements.append({
                     "symbol": symbol,
                     "date_str": raw_dt,
                     "dt": parse_filing_datetime(raw_dt),
                     "desc": desc,
                     "text": text,
-                    "url": item.get("ATTACHMENTNAME", ""),
+                    "url": bse_att,
                     "catalyst_state": state,
                     "is_material": is_mat,
                     "category": cat,

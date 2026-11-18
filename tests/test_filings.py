@@ -102,6 +102,54 @@ def test_bse_to_nse_symbol_mapping():
         assert bse_code == expected_bse, f"Symbol {sym} mapped to {bse_code}, expected {expected_bse}"
 
 
+def test_classify_catalyst_edge_cases():
+    """Verify specific edge cases: disinvestment, production commencement, generic contract wins, and tax orders."""
+    # 1. Disinvestment (SHRIRAMFIN)
+    st, mat, cat = classify_catalyst(
+        desc="Diversification/Disinvestment",
+        text="Shriram Overseas Investments has divested its entire stake of 81.63% in Bharath Investments Pte"
+    )
+    assert mat == 1
+    assert st == "CATALYST"
+
+    # 2. Production commencement (WAAREEENER)
+    st, mat, cat = classify_catalyst(
+        desc="Commencement of commercial production/operations",
+        text="Commencement of commercial production by Sangam Solar One"
+    )
+    assert mat == 1
+    assert st == "CATALYST"
+
+    # 3. Generic desc with contract win text (MAZDOCK)
+    st, mat, cat = classify_catalyst(
+        desc="Disclosure of material issue",
+        text="Mazagon Dock Shipbuilders has entered into a contract with Shipping Corporation of India for construction and sale of PSV"
+    )
+    assert mat == 1
+    assert st == "CATALYST"
+    assert cat == "Order Win"
+
+    # 4. Tax demand / penalty order routine (VOLTAS)
+    with mock.patch("filings.extract_pdf_first_page_text", return_value="demanding payment of differential customs duty of 10.76 crores and a penalty"):
+        st, mat, cat = classify_catalyst(
+            desc="Action(s) taken or orders passed",
+            text="intimation under Regulation 30",
+            url="https://nsearchives.nseindia.com/corporate/test.pdf"
+        )
+        assert mat == 0
+        assert st == "NONE"
+        assert cat == "Routine Disclosure"
+
+    # 5. SAST statutory routine exemption
+    st, mat, cat = classify_catalyst(
+        desc="Acquisition",
+        text="Disclosures under Reg. 31(4) of SEBI (SAST) Regulations, 2011"
+    )
+    assert mat == 0
+    assert st == "NONE"
+    assert cat == "Routine Disclosure"
+
+
 def test_event_calendar_radar_lookup():
     """Test upcoming corporate event radar detection (Requirement F)."""
     sample_calendar = [
