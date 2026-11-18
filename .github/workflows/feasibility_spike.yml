@@ -1,7 +1,16 @@
 name: Feasibility Spike — Endpoint & Data Source Validation
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/scanner-upgrade
+    paths:
+      - .github/workflows/feasibility_spike.yml
+      - scripts/test_endpoints.py
 
 jobs:
   test-endpoints:
@@ -11,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SECRET_TOKEN || github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,10 +36,19 @@ jobs:
         run: |
           python scripts/test_endpoints.py
 
-      - name: Upload Feasibility Report
+      - name: Upload Feasibility Report Artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: endpoint-feasibility-report
-          path: output/endpoint_feasibility_report.md
+          name: runner-feasibility-report
+          path: output/runner_feasibility_report.md
           retention-days: 7
+
+      - name: Save runner results to branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/runner_feasibility_report.md
+          git diff --staged --quiet || git commit -m "chore: save runner feasibility report [skip ci]"
+          git pull --rebase origin feature/scanner-upgrade || true
+          git push origin feature/scanner-upgrade || true
