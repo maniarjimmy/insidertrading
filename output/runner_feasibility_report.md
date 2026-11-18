@@ -1,30 +1,30 @@
 # Phase 0 Extended: Runner Feasibility & Data Quality Report
 **Environment**: GitHub-Hosted Runner (ubuntu-latest)
-**Run Timestamp**: 2026-11-18 11:55:09 UTC
-**Total Tested**: 20 | **Passed**: 16 | **Expected Unready / Failed**: 4
+**Run Timestamp**: 2026-11-18 16:32:42 UTC
+**Total Tested**: 20 | **Passed**: 17 | **Expected Unready / Failed**: 3
 
 | Category | Endpoint / Source | Status | Format Valid? | Items/Rows | Required Fields | Latency |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| 1. NSE Index Lists | NSE Index - NIFTY 100 | ✅ `200` | ✅ Yes | 100 | All Present | 614.1 ms |
-| 1. NSE Index Lists | NSE Index - Midcap 150 | ✅ `200` | ✅ Yes | 150 | All Present | 358.4 ms |
-| 1. NSE Index Lists | NSE Index - Smallcap 250 | ✅ `200` | ✅ Yes | 251 | All Present | 352.3 ms |
-| 1. NSE Index Lists | NSE Index - NIFTY 500 | ✅ `200` | ✅ Yes | 501 | All Present | 361.4 ms |
-| 2. Bhavcopy Timing | NSE UDDiP Bhavcopy TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 453.5 ms |
-| 2. Bhavcopy Timing | NSE MTO Delivery TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 379.5 ms |
-| 2. Bhavcopy Timing | NSE sec_bhavdata_full TODAY (2026-11-18) | ⚠️ `404` | ❌ No | 0 | N/A | 362.6 ms |
-| 2. Bhavcopy Timing | NSE sec_bhavdata_full YESTERDAY (2026-11-17) | ✅ `200` | ✅ Yes | 3572 | All Present | 539.1 ms |
-| 3. Deals & Surveillance | NSE Bulk Deals CSV | ✅ `200` | ✅ Yes | 122 | All Present | 365.0 ms |
-| 3. Deals & Surveillance | NSE Block Deals CSV | ✅ `200` | ✅ Yes | 61 | All Present | 368.5 ms |
-| 3. Deals & Surveillance | NSE Securities List (Bands, ASM/GSM & T2T) | ✅ `200` | ✅ Yes | 3609 | All Present | 582.5 ms |
-| 3. Deals & Surveillance | Dedicated ASM List File (Shortterm_ASM) | ⚠️ `404` | ❌ No | 0 | N/A | 354.6 ms |
-| 4. NSE Dynamic APIs | NSE Announcements by Symbol & Date Range (T-10..T) | ✅ `200` | ✅ Yes | 14 | All Present | 421.3 ms |
-| 4. NSE Dynamic APIs | NSE Event Calendar (7-Day Forward Window) | ✅ `200` | ✅ Yes | 18 | All Present | 329.4 ms |
-| 4. NSE Dynamic APIs | NSE Corporate Actions API | ✅ `200` | ✅ Yes | 20 | All Present | 261.6 ms |
-| 4. NSE Dynamic APIs | NSE Trading Holidays Master | ✅ `200` | ✅ Yes | 12 | All Present | 527.7 ms |
-| 5. BSE Dynamic APIs | BSE Announcements Multi-Day by Scrip (500440) | ✅ `200` | ✅ Yes | 2 | All Present | 434.1 ms |
-| 5. BSE Dynamic APIs | BSE Announcements Pagination (Page 2) | ✅ `200` | ✅ Yes | 2 | All Present | 431.0 ms |
-| 6. News & Fallback Feeds | Google News RSS (Reliance 1d) | ✅ `200` | ✅ Yes | 0 | N/A | 619.4 ms |
-| 7. Market Data Fallback | yfinance (RELIANCE.NS fast_info & history) | ✅ `200` | ✅ Yes | 3 | last_price, history candles | 1084.1 ms |
+| 1. NSE Index Lists | NSE Index - NIFTY 100 | ✅ `200` | ✅ Yes | 100 | All Present | 450.3 ms |
+| 1. NSE Index Lists | NSE Index - Midcap 150 | ✅ `200` | ✅ Yes | 150 | All Present | 333.1 ms |
+| 1. NSE Index Lists | NSE Index - Smallcap 250 | ✅ `200` | ✅ Yes | 251 | All Present | 356.7 ms |
+| 1. NSE Index Lists | NSE Index - NIFTY 500 | ✅ `200` | ✅ Yes | 501 | All Present | 503.2 ms |
+| 2. Bhavcopy Timing | NSE UDDiP Bhavcopy TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 789.5 ms |
+| 2. Bhavcopy Timing | NSE MTO Delivery TODAY (2026-11-18) | ⚠️ `200` | ❌ No | 0 | N/A | 349.5 ms |
+| 2. Bhavcopy Timing | NSE sec_bhavdata_full TODAY (2026-11-18) | ✅ `200` | ✅ Yes | 3561 | All Present | 863.0 ms |
+| 2. Bhavcopy Timing | NSE sec_bhavdata_full YESTERDAY (2026-11-17) | ✅ `200` | ✅ Yes | 3572 | All Present | 685.2 ms |
+| 3. Deals & Surveillance | NSE Bulk Deals CSV | ✅ `200` | ✅ Yes | 118 | All Present | 321.3 ms |
+| 3. Deals & Surveillance | NSE Block Deals CSV | ✅ `200` | ✅ Yes | 1 | All Present | 340.9 ms |
+| 3. Deals & Surveillance | NSE Securities List (Bands, ASM/GSM & T2T) | ✅ `200` | ✅ Yes | 3610 | All Present | 438.6 ms |
+| 3. Deals & Surveillance | Dedicated ASM List File (Shortterm_ASM) | ⚠️ `404` | ❌ No | 0 | N/A | 342.3 ms |
+| 4. NSE Dynamic APIs | NSE Announcements by Symbol & Date Range (T-10..T) | ✅ `200` | ✅ Yes | 14 | All Present | 570.9 ms |
+| 4. NSE Dynamic APIs | NSE Event Calendar (7-Day Forward Window) | ✅ `200` | ✅ Yes | 22 | All Present | 377.9 ms |
+| 4. NSE Dynamic APIs | NSE Corporate Actions API | ✅ `200` | ✅ Yes | 20 | All Present | 448.4 ms |
+| 4. NSE Dynamic APIs | NSE Trading Holidays Master | ✅ `200` | ✅ Yes | 12 | All Present | 442.7 ms |
+| 5. BSE Dynamic APIs | BSE Announcements Multi-Day by Scrip (500440) | ✅ `200` | ✅ Yes | 2 | All Present | 529.4 ms |
+| 5. BSE Dynamic APIs | BSE Announcements Pagination (Page 2) | ✅ `200` | ✅ Yes | 2 | All Present | 303.8 ms |
+| 6. News & Fallback Feeds | Google News RSS (Reliance 1d) | ✅ `200` | ✅ Yes | 0 | N/A | 618.0 ms |
+| 7. Market Data Fallback | yfinance (RELIANCE.NS fast_info & history) | ✅ `200` | ✅ Yes | 3 | last_price, history candles | 1421.2 ms |
 
 ---
 ## Deep-Dive Verification Findings
@@ -35,10 +35,10 @@
 * **Implication**: NSE generates `sec_bhavdata_full` between **18:00 and 19:30 IST**. At 17:00 IST, it returns 404. Therefore, the EOD job should either run at 19:30 IST or poll with exponential backoff up to 19:30 IST, falling back to yfinance for price data.
 
 ### B. Surveillance (ASM / GSM) & Price Band Verification
-* **Securities Master (`sec_list.csv`)**: Status `200` with **3609 total securities**.
-* **Price Band Distribution**: `{'2': 43, '5': 608, '10': 205, '20': 2194, '40': 1, 'No Band': 558}` (Includes 2%, 5%, 10%, 20%, and No Band).
+* **Securities Master (`sec_list.csv`)**: Status `200` with **3610 total securities**.
+* **Price Band Distribution**: `{'2': 44, '5': 606, '10': 206, '20': 2194, '40': 1, 'No Band': 559}` (Includes 2%, 5%, 10%, 20%, and No Band).
 * **GSM Surveillance Tags**: `67 stocks` flagged with GSM stages (`GSM STAGE - 0`, `GSM STAGE - I`, `GSM STAGE - II`).
-* **Trade-to-Trade (T2T) Surveillance**: `329 stocks` (Series `BE`, `BZ`, `ST`).
+* **Trade-to-Trade (T2T) Surveillance**: `330 stocks` (Series `BE`, `BZ`, `ST`).
 
 ### C. Symbol-Specific & Multi-Day Filings (T+1..T+10)
 * **NSE Filings by Symbol & Range**: Supports `symbol=<SYMBOL>&from_date=DD-MM-YYYY&to_date=DD-MM-YYYY` returning all historical announcements for any stock over the 10-day evaluation window.
@@ -106,32 +106,32 @@
 ```json
 [
   {
-    "NEWSID": "6004810a-011d-4ba5-b4f4-fad5d069456b",
-    "SCRIP_CD": 500493,
-    "XML_NAME": "ANN_500493_6004810A-011D-4BA5-B4F4-FAD5D069456B",
-    "NEWSSUB": "Bharat Forge Ltd - 500493 - Announcement under Regulation 30 (LODR)-Updates on Acquisition",
-    "DT_TM": "2026-11-18T16:49:00.43",
-    "NEWS_DT": "2026-11-18T16:49:00.43",
-    "CRITICALNEWS": "1",
+    "NEWSID": "2124382d-d8ae-4997-9e6c-f5303c358bb2",
+    "SCRIP_CD": 504220,
+    "XML_NAME": "ANN_504220_2124382D-D8AE-4997-9E6C-F5303C358BB2",
+    "NEWSSUB": "W. S. Industries (India) Ltd-$ - 504220 - Announcement Under Regulation 30",
+    "DT_TM": "2026-11-18T19:44:49.083",
+    "NEWS_DT": "2026-11-18T19:44:49.083",
+    "CRITICALNEWS": "0",
     "ANNOUNCEMENT_TYPE": "A",
     "QUARTER_ID": null,
     "FILESTATUS": "N    ",
-    "ATTACHMENTNAME": "dd2a65cc-ba24-4659-aa7e-474ec961975f.pdf",
+    "ATTACHMENTNAME": "2ac88b0c-4dba-42de-b126-53f51864bbd0.pdf",
     "MORE": "",
-    "HEADLINE": "Acquisition",
+    "HEADLINE": "Outcome of Board Meeting held on 18th November 2026",
     "CATEGORYNAME": "Company Update",
     "OLD": 1,
     "RN": 1,
     "PDFFLAG": 0,
-    "NSURL": "https://www.bseindia.com/stock-share-price/bharat-forge-ltd/bharatforg/500493/",
-    "SLONGNAME": "Bharat Forge Ltd",
-    "AGENDA_ID": 2,
-    "TotalPageCnt": 9,
-    "News_submission_dt": "2026-11-18T16:49:00",
-    "DissemDT": "2026-11-18T16:49:00.43",
+    "NSURL": "https://www.bseindia.com/stock-share-price/w-s-industries-(india)-ltd/wsi/504220/",
+    "SLONGNAME": "W. S. Industries (India) Ltd-$",
+    "AGENDA_ID": 1,
+    "TotalPageCnt": 14,
+    "News_submission_dt": "2026-11-18T19:44:49",
+    "DissemDT": "2026-11-18T19:44:49.083",
     "TimeDiff": "00:00:00",
-    "Fld_Attachsize": 312539,
-    "SUBCATNAME": "Acquisition",
+    "Fld_Attachsize": 673962,
+    "SUBCATNAME": "General",
     "BSENEWSID": null,
     "INVESTOR_PRESENTATION": null,
     "RECORDID": null,
@@ -139,32 +139,32 @@
     "AUDIO_VIDEO_FILE": null
   },
   {
-    "NEWSID": "b23dabad-e803-4497-944a-85cb0796579c",
-    "SCRIP_CD": 509732,
-    "XML_NAME": "ANN_509732_B23DABAD-E803-4497-944A-85CB0796579C",
-    "NEWSSUB": "Kothari Industrial Corporation Ltd - 509732 - Announcement under Regulation 30 (LODR)-Newspaper Publication",
-    "DT_TM": "2026-11-18T16:48:46.687",
-    "NEWS_DT": "2026-11-18T16:48:46.687",
+    "NEWSID": "6e3a897e-bb9b-44d5-808a-d3e857f51834",
+    "SCRIP_CD": 526807,
+    "XML_NAME": "ANN_526807_6E3A897E-BB9B-44D5-808A-D3E857F51834",
+    "NEWSSUB": "Seamec Ltd - 526807 - Announcement Under Regulation 30 Of SEBI (LODR) Regulation, 2015 - Updates",
+    "DT_TM": "2026-11-18T19:44:21.597",
+    "NEWS_DT": "2026-11-18T19:44:21.597",
     "CRITICALNEWS": "0",
     "ANNOUNCEMENT_TYPE": "A",
     "QUARTER_ID": null,
     "FILESTATUS": "N    ",
-    "ATTACHMENTNAME": "42f67d32-b4ab-4404-9344-66f22163f99d.pdf",
+    "ATTACHMENTNAME": "1077a942-2c93-42e5-886a-029041a69920.pdf",
     "MORE": "",
-    "HEADLINE": "newspaper",
+    "HEADLINE": "Intimation on Deployment Status of Vessel - SEAMEC ANANT - Offhire.",
     "CATEGORYNAME": "Company Update",
     "OLD": 1,
     "RN": 1,
     "PDFFLAG": 0,
-    "NSURL": "https://www.bseindia.com/stock-share-price/kothari-industrial-corporation-ltd/kotic/509732/",
-    "SLONGNAME": "Kothari Industrial Corporation Ltd",
-    "AGENDA_ID": 144,
-    "TotalPageCnt": 9,
-    "News_submission_dt": "2026-11-18T16:48:46",
-    "DissemDT": "2026-11-18T16:48:46.687",
+    "NSURL": "https://www.bseindia.com/stock-share-price/seamec-ltd/seamecltd/526807/",
+    "SLONGNAME": "Seamec Ltd",
+    "AGENDA_ID": 1,
+    "TotalPageCnt": 14,
+    "News_submission_dt": "2026-11-18T19:44:21",
+    "DissemDT": "2026-11-18T19:44:21.597",
     "TimeDiff": "00:00:00",
-    "Fld_Attachsize": 2915159,
-    "SUBCATNAME": "Newspaper Publication",
+    "Fld_Attachsize": 385098,
+    "SUBCATNAME": "General",
     "BSENEWSID": null,
     "INVESTOR_PRESENTATION": null,
     "RECORDID": null,
