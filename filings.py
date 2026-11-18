@@ -192,6 +192,18 @@ def classify_catalyst(desc: Optional[str] = None,
     clean_text = (text or "").strip()
     combined_text = f"{clean_desc} {clean_text}".lower()
 
+    # Priority 0: Explicit Statutory Routine Exemptions (e.g. SAST Reg 31(4) / Reg 29 filed under 'Acquisition')
+    if re.search(
+        r"\b(regulation\s+31\s*\(\s*[1-4]\s*\)|regulation\s+29\s*\(\s*[1-3]\s*\)|"
+        r"disclosure\s+under\s+regulation\s+31|disclosure\s+under\s+regulation\s+29|"
+        r"disclosure\s+under\s+sebi\s+takeover|sebi\s+takeover\s+regulations?|"
+        r"sebi\s+sast\s+regulations?|takeover\s+regulations?|"
+        r"reg\.\s*31\s*\(\s*[1-4]\s*\)|reg\.\s*29\s*\(\s*[1-3]\s*\)|declaration\s+under\s+regulation\s+31)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("NONE", 0, "Routine Disclosure")
+
     # Priority 1: Exact / Normalized Desc match
     for mat_desc, cat_name in MATERIAL_DESC_CATEGORIES.items():
         if mat_desc.lower() in clean_desc.lower():

@@ -22,7 +22,8 @@ flowchart TD
     P0[Phase 0:<br/>Endpoint Feasibility Spike<br/>Actions Validation] --> P1[Phase 1:<br/>Outcome Tracking<br/>& SQLite DB on data branch]
     P1 --> P2[Phase 2:<br/>Catalyst Detection<br/>Exchange Filings]
     P2 --> P5[Phase 5:<br/>Data Correctness,<br/>EOD Bhavcopy, Schedule]
-    P5 --> P4[Phase 4:<br/>India Microstructure,<br/>Delivery % & Deals]
+    P5 --> P5b[Phase 5b:<br/>Historical Event Study<br/>12-24 Mo Backtest]
+    P5b --> P4[Phase 4:<br/>India Microstructure,<br/>Delivery % & Deals]
     P4 --> P3[Phase 3:<br/>Signals & Scoring,<br/>Robust Z-Scores]
     P3 --> P6[Phase 6:<br/>Unexplained Movers,<br/>Report UI & CI/CD]
 ```
@@ -127,6 +128,27 @@ flowchart TD
    * Explicit job timeouts (e.g. 15 minutes) and runtime logging to ensure monthly usage stays well within the 1,000-minute free tier budget.
 4. **Dynamic Universe & Microcap Support**:
    * Script to update constituents from NiftyIndices semi-annual revisions with rank slice config and `--microcap` flag.
+
+---
+
+### Phase 5b: Historical Event Study & 12–24 Month Backtest
+**Objective**: Build a historical backtest spanning 12–24 months using verified archived exchange data to measure signal efficacy, baseline announcement rates, and matched control lift across multiple market regimes and earnings seasons.
+
+1. **Archive Feasibility & Availability (Empirically Verified)**:
+   * **UDDiP Bhavcopy Archive**: Official ZIP files (`BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip`) verified HTTP 200 on NSE public archives across 12-month and 24-month lookbacks.
+   * **Security Delivery Position**: `MTO_DDMMYYYY.DAT` verified HTTP 200 across 12-month and 24-month archives.
+   * **Corporate Actions**: Historical ex-dates and adjustment factors available via `/api/corporates-corporateActions`.
+   * **Corporate Announcements**: NSE API `/api/corporate-announcements` by symbol and date range returns up to 2 years of filings without truncation.
+2. **Local Execution & Budget Isolation**:
+   * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
+   * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
+   * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
+3. **Rigorous Signal Evaluation**:
+   * Apply current price/volume scan thresholds across historical trading days.
+   * Filter pre-move filings strictly before each flag timestamp.
+   * Compute forward returns ($T+1$ Open to $T+10$) and corporate announcement lift vs. liquidity/volatility quintile-matched controls.
+   * Report both paired and unpaired lift disaggregated by scheduled vs. unscheduled-material outcomes, with scan-date cluster bootstrap confidence intervals.
+   * Use findings to empirically calibrate Phase 4 and Phase 3 filters before deployment.
 
 ---
 

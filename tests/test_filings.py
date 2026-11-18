@@ -51,16 +51,16 @@ def test_classify_catalyst_training_fixtures(fixtures_data):
         )
 
 
-def test_classify_catalyst_held_out_benchmark(fixtures_data):
+def test_classify_catalyst_validation_benchmark(fixtures_data):
     """
-    Evaluate precision and recall on the 25 held-out benchmark fixtures.
-    Must achieve ≥ 90% precision and ≥ 85% recall on unseen data.
+    Evaluate precision and recall on the 25 validation benchmark fixtures.
+    Must achieve ≥ 90% precision and ≥ 85% recall on validation data.
     """
-    held_out_items = [x for x in fixtures_data if x["split"] == "held_out"]
-    assert len(held_out_items) == 25
+    val_items = [x for x in fixtures_data if x["split"] == "validation"]
+    assert len(val_items) == 25
 
     tp = fp = tn = fn = 0
-    for item in held_out_items:
+    for item in val_items:
         pred_state, pred_mat, pred_cat = classify_catalyst(desc=item["desc"], text=item["text"])
         exp_mat = item["expected_material"]
 
@@ -75,11 +75,11 @@ def test_classify_catalyst_held_out_benchmark(fixtures_data):
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    accuracy = (tp + tn) / len(held_out_items)
+    accuracy = (tp + tn) / len(val_items)
 
-    assert precision >= 0.90, f"Held-out precision {precision:.2f} is below 0.90 threshold"
-    assert recall >= 0.85, f"Held-out recall {recall:.2f} is below 0.85 threshold"
-    assert accuracy >= 0.90, f"Held-out accuracy {accuracy:.2f} is below 0.90 threshold"
+    assert precision >= 0.90, f"Validation precision {precision:.2f} is below 0.90 threshold"
+    assert recall >= 0.85, f"Validation recall {recall:.2f} is below 0.85 threshold"
+    assert accuracy >= 0.90, f"Validation accuracy {accuracy:.2f} is below 0.90 threshold"
 
 
 def test_bse_to_nse_symbol_mapping():

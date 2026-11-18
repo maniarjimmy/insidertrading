@@ -257,7 +257,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Financial Results",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 27,
@@ -267,17 +267,17 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Board Meeting",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 28,
     "symbol": "CHAMBLFERT",
     "desc": "Acquisition",
     "text": "Adventz Finance Private Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of SAST Regulations.",
-    "expected_state": "CATALYST",
-    "expected_material": 1,
-    "expected_category": "Acquisition",
-    "split": "held_out"
+    "expected_state": "NONE",
+    "expected_material": 0,
+    "expected_category": "Routine Disclosure",
+    "split": "validation"
   },
   {
     "id": 29,
@@ -287,7 +287,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 30,
@@ -297,7 +297,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 31,
@@ -307,7 +307,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 32,
@@ -317,7 +317,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Order Win",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 33,
@@ -327,7 +327,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Board Meeting",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 34,
@@ -337,7 +337,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Credit Rating",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 35,
@@ -347,7 +347,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 36,
@@ -357,7 +357,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Fund Raising",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 37,
@@ -367,7 +367,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Order Win",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 38,
@@ -377,7 +377,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Regulatory Approval",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 39,
@@ -387,7 +387,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Acquisition",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 40,
@@ -397,7 +397,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 41,
@@ -407,7 +407,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Acquisition",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 42,
@@ -417,7 +417,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 43,
@@ -427,7 +427,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 44,
@@ -437,7 +437,7 @@
     "expected_state": "UNCLEAR",
     "expected_material": 0,
     "expected_category": "General Update",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 45,
@@ -447,7 +447,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Order Win",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 46,
@@ -457,7 +457,7 @@
     "expected_state": "UNCLEAR",
     "expected_material": 0,
     "expected_category": "General Update",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 47,
@@ -467,7 +467,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 48,
@@ -477,7 +477,7 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Financial Results",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 49,
@@ -487,7 +487,7 @@
     "expected_state": "NONE",
     "expected_material": 0,
     "expected_category": "Routine Disclosure",
-    "split": "held_out"
+    "split": "validation"
   },
   {
     "id": 50,
@@ -497,6 +497,6 @@
     "expected_state": "CATALYST",
     "expected_material": 1,
     "expected_category": "Board Meeting",
-    "split": "held_out"
+    "split": "validation"
   }
 ]

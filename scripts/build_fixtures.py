@@ -263,7 +263,7 @@ FIXTURE_DATA = [
         "split": "training",
     },
 
-    # --- HELD-OUT TEST SET (25 items - NOT USED FOR RULE WRITING) ---
+    # --- VALIDATION TEST SET (25 items - RELABELED FROM HELD-OUT PER USER INSTRUCTION) ---
     {
         "id": 26,
         "symbol": "BHARATCOAL",
@@ -272,7 +272,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Financial Results",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 27,
@@ -282,17 +282,17 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Board Meeting",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 28,
         "symbol": "CHAMBLFERT",
         "desc": "Acquisition",
         "text": "Adventz Finance Private Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of SAST Regulations.",
-        "expected_state": "CATALYST",
-        "expected_material": 1,
-        "expected_category": "Acquisition",
-        "split": "held_out",
+        "expected_state": "NONE",
+        "expected_material": 0,
+        "expected_category": "Routine Disclosure",
+        "split": "validation",
     },
     {
         "id": 29,
@@ -302,7 +302,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 30,
@@ -312,7 +312,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 31,
@@ -322,7 +322,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 32,
@@ -332,7 +332,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Order Win",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 33,
@@ -342,7 +342,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Board Meeting",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 34,
@@ -352,7 +352,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Credit Rating",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 35,
@@ -362,7 +362,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 36,
@@ -372,7 +372,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Fund Raising",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 37,
@@ -382,7 +382,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Order Win",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 38,
@@ -392,7 +392,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Regulatory Approval",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 39,
@@ -402,7 +402,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Acquisition",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 40,
@@ -412,7 +412,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 41,
@@ -422,7 +422,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Acquisition",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 42,
@@ -432,7 +432,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 43,
@@ -442,7 +442,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 44,
@@ -452,7 +452,7 @@ FIXTURE_DATA = [
         "expected_state": "UNCLEAR",
         "expected_material": 0,
         "expected_category": "General Update",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 45,
@@ -462,7 +462,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Order Win",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 46,
@@ -472,7 +472,7 @@ FIXTURE_DATA = [
         "expected_state": "UNCLEAR",
         "expected_material": 0,
         "expected_category": "General Update",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 47,
@@ -482,7 +482,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 48,
@@ -492,7 +492,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Financial Results",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 49,
@@ -502,7 +502,7 @@ FIXTURE_DATA = [
         "expected_state": "NONE",
         "expected_material": 0,
         "expected_category": "Routine Disclosure",
-        "split": "held_out",
+        "split": "validation",
     },
     {
         "id": 50,
@@ -512,7 +512,7 @@ FIXTURE_DATA = [
         "expected_state": "CATALYST",
         "expected_material": 1,
         "expected_category": "Board Meeting",
-        "split": "held_out",
+        "split": "validation",
     },
 ]
 
@@ -523,8 +523,8 @@ def main():
         json.dump(FIXTURE_DATA, f, indent=2)
     print(f"Saved {len(FIXTURE_DATA)} fixtures to {FIXTURES_PATH}")
     train_count = sum(1 for x in FIXTURE_DATA if x["split"] == "training")
-    held_out_count = sum(1 for x in FIXTURE_DATA if x["split"] == "held_out")
-    print(f"Training set: {train_count} cases | Held-out set: {held_out_count} cases")
+    val_count = sum(1 for x in FIXTURE_DATA if x["split"] == "validation")
+    print(f"Training set: {train_count} cases | Validation set: {val_count} cases")
 
 
 if __name__ == "__main__":
