@@ -45,6 +45,8 @@ def load_universe() -> pd.DataFrame:
             col_map[col] = "company"
         elif "industry" in cl or "sector" in cl:
             col_map[col] = "industry"
+        elif "rank" in cl:
+            col_map[col] = "rank"
 
     df = df.rename(columns=col_map)
 
@@ -56,8 +58,12 @@ def load_universe() -> pd.DataFrame:
             print(f"        Available columns: {list(df.columns)}")
             sys.exit(1)
 
-    # Add rank (1-indexed, based on row order — assumes sorted by market cap)
-    df["rank"] = range(1, len(df) + 1)
+    # Add or preserve rank (1-indexed, based on market-cap order)
+    if "rank" not in df.columns:
+        df["rank"] = range(1, len(df) + 1)
+    else:
+        fallback_ranks = pd.Series(range(1, len(df) + 1), index=df.index)
+        df["rank"] = pd.to_numeric(df["rank"], errors="coerce").fillna(fallback_ranks).astype(int)
 
     # Filter by rank
     df = df[(df["rank"] >= RANK_START) & (df["rank"] <= RANK_END)].copy()
@@ -81,43 +87,62 @@ def load_universe() -> pd.DataFrame:
 
 def download_nifty500_list():
     """
-    Attempt to download the NIFTY 500 list from NSE India.
-    Falls back to creating a starter CSV if download fails.
+    Attempt to download NIFTY 100, Midcap 150, and Smallcap 250 lists from NSE India
+    and combine them in market-cap order (Large -> Mid -> Small).
+    Falls back to single NIFTY 500 download or starter CSV if downloads fail.
     """
+    import io
+    import urllib.request
     data_dir = os.path.dirname(UNIVERSE_FILE)
     os.makedirs(data_dir, exist_ok=True)
 
-    print("[Universe] Attempting to download NIFTY 500 list...")
-    print("[Universe] Note: NSE India may block automated downloads.")
-    print("[Universe] If this fails, please manually download from:")
-    print("           https://www.niftyindices.com/indices/equity/broad-based-indices/NIFTY-500")
-    print(f"           and save as: {UNIVERSE_FILE}")
-    print()
+    print("[Universe] Downloading market-cap segmented lists from NSE India...")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Accept": "text/csv,text/html,application/xhtml+xml",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.nseindia.com/"
+    }
 
-    try:
-        import urllib.request
-        url = "https://archives.nseindia.com/content/indices/ind_nifty500list.csv"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "text/csv,text/html,application/xhtml+xml",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Referer": "https://www.nseindia.com/"
-        }
+    def fetch_index_csv(filename, segment_name):
+        url = f"https://archives.nseindia.com/content/indices/{filename}"
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as response:
-            content = response.read().decode("utf-8")
+            df = pd.read_csv(io.BytesIO(response.read()))
+            df["Segment"] = segment_name
+            return df
 
-        with open(UNIVERSE_FILE, "w", newline="", encoding="utf-8") as f:
-            f.write(content)
+    try:
+        # Download 3 tiers: Large-cap (1-100), Mid-cap (101-250), Small-cap (251-500)
+        n100 = fetch_index_csv("ind_nifty100list.csv", "Large Cap")
+        mid150 = fetch_index_csv("ind_niftymidcap150list.csv", "Mid Cap")
+        small250 = fetch_index_csv("ind_niftysmallcap250list.csv", "Small Cap")
 
-        print(f"[Universe] ✅ Downloaded NIFTY 500 list to {UNIVERSE_FILE}")
+        combined = pd.concat([n100, mid150, small250], ignore_index=True)
+        # Add market-cap order rank
+        combined.insert(0, "Rank", range(1, len(combined) + 1))
+        combined.to_csv(UNIVERSE_FILE, index=False, encoding="utf-8")
+        print(f"[Universe] ✅ Downloaded and structured {len(combined)} stocks (ranks 1–{len(combined)}) to {UNIVERSE_FILE}")
         return True
 
     except Exception as e:
-        print(f"[Universe] ⚠️  Download failed: {e}")
-        print("[Universe] Creating a starter CSV with sample stocks...")
-        _create_starter_csv()
-        return False
+        print(f"[Universe] ⚠️  Segmented download failed: {e}. Trying full NIFTY 500 list...")
+        try:
+            url = "https://archives.nseindia.com/content/indices/ind_nifty500list.csv"
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=15) as response:
+                content = response.read().decode("utf-8")
+
+            with open(UNIVERSE_FILE, "w", newline="", encoding="utf-8") as f:
+                f.write(content)
+
+            print(f"[Universe] ✅ Downloaded NIFTY 500 list to {UNIVERSE_FILE}")
+            return True
+        except Exception as e2:
+            print(f"[Universe] ⚠️  Download failed: {e2}")
+            print("[Universe] Creating starter CSV with sample stocks...")
+            _create_starter_csv()
+            return False
 
 
 def _create_starter_csv():

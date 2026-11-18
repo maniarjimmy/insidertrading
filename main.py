@@ -14,6 +14,14 @@ import argparse
 import sys
 from datetime import datetime
 
+# Ensure utf-8 encoding on Windows consoles
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except AttributeError:
+        pass
+
 from config import MIN_PCT_CHANGE, MIN_VOLUME_RATIO, MAX_PCT_CHANGE, SCAN_TIME
 
 
