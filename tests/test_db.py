@@ -243,3 +243,50 @@ def test_export_db_to_sql_and_csv(temp_db):
         assert os.path.isfile(csv_files["suspicious_master"])
         assert os.path.isfile(csv_files["news_driven_master"])
         assert os.path.isfile(csv_files["unexplained_master"])
+
+
+def test_export_preserves_history_when_db_has_fewer_records():
+    """Verify that export_db_to_csv never destroys existing CSV history when DB is fresh/partial."""
+    import pandas as pd
+    with tempfile.TemporaryDirectory() as td:
+        susp_file = os.path.join(td, "suspicious_master.csv")
+        # Pre-seed existing master CSV with 5 historical rows
+        historical_df = pd.DataFrame([
+            {"scan_timestamp": f"2026-02-1{i} 14:30:00", "symbol": f"HIST{i}", "company": f"Hist Co {i}",
+             "industry": "IT", "current_price": 100.0, "prev_close": 95.0, "pct_change": 5.26,
+             "current_volume": 10000, "avg_volume_20d": 2000, "volume_ratio": 5.0,
+             "has_catalyst_news": 0, "classification": "NONE", "headlines": "", "news_source": "test"}
+            for i in range(5)
+        ])
+        historical_df.to_csv(susp_file, index=False)
+        assert len(pd.read_csv(susp_file)) == 5
+
+        # Create a new empty DB with only 1 new flag
+        empty_db = os.path.join(td, "fresh.db")
+        init_db(empty_db)
+        upsert_flag({
+            "scan_date": "2026-11-18",
+            "symbol": "NEWSTOCK",
+            "company": "New Stock Ltd",
+            "industry": "IT",
+            "current_price": 500.0,
+            "prev_close": 480.0,
+            "price_change": 4.17,
+            "current_volume": 100000,
+            "avg_volume_20d": 25000,
+            "volume_ratio": 4.0,
+            "score": 75.0,
+            "status": "ACTIVE",
+            "catalyst_state": "NONE",
+            "run_type": "eod",
+            "is_control": 0
+        }, db_path=empty_db)
+
+        # Run export to the same directory
+        export_db_to_csv(db_path=empty_db, output_dir=td)
+
+        # Verify that all 5 historical rows + 1 new row = 6 rows exist, no history was lost!
+        result_df = pd.read_csv(susp_file)
+        assert len(result_df) == 6
+        assert "NEWSTOCK" in result_df["symbol"].values
+        assert "HIST0" in result_df["symbol"].values

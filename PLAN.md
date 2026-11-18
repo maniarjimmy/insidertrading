@@ -150,13 +150,26 @@ flowchart TD
    * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
    * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
    * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
-3. **Rigorous Signal Evaluation & Power Analysis**:
-   * **Pre-Registered Hypothesis**: Unexplained volume and price anomalies in Indian mid/small-caps systematically precede forward unscheduled material corporate disclosures ($T+1..T+10$) with a statistically significant edge ($\text{Lift} \ge 1.25\text{x}$) over matched controls. Null hypothesis: $H_0: \text{Lift} \le 1.0$.
-   * **Power Calculation (One-Sided Paired Test, $\alpha=0.05$, Power $=80\%$)**:
-     - Baseline control precision $P_0 = 36.4\%$, Target flag precision $P_1 = 45.5\%$ (effect size $\delta = 9.1\%$).
-     - Observed discordance rate $p_{\text{disc}} \approx 0.415$.
-     - Sample size required: $N_{\text{pairs}} \approx 308$ clean matched pairs.
-     - **Reachability Assessment**: Each 12-month period yields ~350–450 raw flags, resulting in ~280–340 clean unexplained pairs (borderline power ~75%–85% for a single 12-month split). The full 24-month backtest (~600 clean pairs) achieves $>96\%$ statistical power.
+3. **Rigorous Signal Evaluation & Pre-Registration (prereg-v1)**:
+   * **Primary Pre-Registered Hypothesis**:
+     - **Primary Outcome**: Occurrence of an **unscheduled-material corporate filing** (orders, M&A, capital restructuring, commercial production, credit rating, regulatory actions; excluding scheduled financial results and board meetings) within **10 trading days ($T+1..T+10$)**.
+     - **Statistical Test**: One-sided paired test (paired McNemar test / exact binomial sign test on discordant pairs $n_{10} > n_{01}$) at pre-registered significance level $\alpha = 0.05$.
+     - **Pre-Registered Success Criterion**: $\text{Lift} \ge 1.25\text{x}$ with one-sided $p < 0.05$ against matched controls. Null hypothesis: $H_0: \text{Lift} \le 1.0$ (no evidence of a positive edge).
+   * **Secondary Outcomes (Exploratory / Sensitivity)**:
+     - Short-horizon forward window: $T+1..T+3$ unscheduled-material filings.
+     - Comprehensive filings window: All-material filings (scheduled financial results, board meetings + unscheduled catalysts) at $T+1..T+10$ and $T+1..T+3$.
+     - Return tracking: Forward excess returns ($R_i - R_m$) over $T+1..T+10$.
+   * **Standardized Table Window Labels**: Every contingency and lift table must explicitly state both:
+     - **Pre-Move Window**: $[T-3, T]$ (baseline 3 calendar days prior to scan) or $[T-10, T]$ (10 calendar days sensitivity).
+     - **Forward Horizon Window**: $[T+1, T+10]$ (primary 10 trading days) or $[T+1, T+3]$ (secondary 3 trading days).
+   * **Power Calculation & Empirical Pilot Yield (Updated)**:
+     - **Empirical Pilot Retention**: Tested on 1-month pilot periods (March & April 2026 historical scans) with unique matched controls and frozen classifier rules:
+       * March 2026: 40 raw flags $\to$ 34 clean flags (85.0%) $\to$ 27 unique clean pairs (Retention: **67.5%**).
+       * April 2026: 63 raw flags $\to$ 56 clean flags (88.9%) $\to$ 44 unique clean pairs (Retention: **69.8%**).
+       * Weighted average clean pair retention rate: **$68.7\%$**.
+     - **Required Sample Size**: For one-sided paired test ($\alpha = 0.05, 1-\beta = 0.80$, base rate $P_0 = 36.4\%$, target $P_1 = 45.5\%$ for $1.25\text{x}$ lift, discordant rate $p_{\text{disc}} \approx 0.415$): $N_{\text{pairs}} \approx 308$ clean matched pairs.
+     - **12-Month Reachability**: ~375–450 raw flags $\times 68.7\% \approx 258\text{--}310$ clean pairs (yields **~72%–80% statistical power**, borderline for an individual 12-month split).
+     - **Full 24-Month Backtest**: ~750–900 raw flags $\times 68.7\% \approx 515\text{--}618$ clean pairs (reaches **$>96\%$ statistical power**).
    * **Point-in-Time Universe & Turnover-Rank Proxy**:
      - Official semi-annual index reconstitution circulars are used where archived constituent files exist.
      - Where continuous daily constituent archives are unavailable, the **Turnover-Rank Proxy** is used: on any historical scan date $T$, rank all active EQ/BE equities by 6-month rolling ADTV (Average Daily Turnover in INR) from UDDiP Bhavcopy; select stocks ranked 101–500. This provides a survivorship-bias-free, point-in-time universe.

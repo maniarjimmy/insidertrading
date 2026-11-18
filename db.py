@@ -53,16 +53,35 @@ def get_connection(db_path: Optional[str] = None) -> Generator[sqlite3.Connectio
         conn.close()
 
 
-def init_db(db_path: Optional[str] = None) -> None:
+def init_db(db_path: Optional[str] = None, auto_hydrate: bool = False) -> None:
     """
     Initialize SQLite schema for flags, outcomes, deals, holidays, and run_log.
     Creates unique indexes for idempotent upserts.
+    If initializing the production database and a SQL dump exists, auto-hydrates from the dump.
     """
     path = get_db_path(db_path)
     logger.info("Initializing scanner database at %s", path)
 
     with get_connection(path) as conn:
         cursor = conn.cursor()
+
+        # Check if database is brand new (0 tables)
+        cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table'")
+        table_count = cursor.fetchone()[0]
+
+        if table_count == 0 and (auto_hydrate or db_path is None):
+            sql_dump_candidate = os.path.join(os.path.dirname(path), "scanner.sql")
+            if not os.path.isfile(sql_dump_candidate):
+                sql_dump_candidate = DB_SQL_DUMP_PATH
+            if os.path.isfile(sql_dump_candidate):
+                try:
+                    logger.info("Empty database detected. Restoring from SQL dump: %s", sql_dump_candidate)
+                    with open(sql_dump_candidate, "r", encoding="utf-8") as f:
+                        cursor.executescript(f.read())
+                    logger.info("Successfully restored database from SQL dump.")
+                    return
+                except Exception as exc:
+                    logger.warning("Could not restore database from SQL dump: %s", exc)
 
         # 1. Flags table
         cursor.execute("""
@@ -614,38 +633,51 @@ def export_db_to_csv(db_path: Optional[str] = None, output_dir: Optional[str] = 
     news_driven_file = os.path.join(out_dir, "news_driven_master.csv")
     unexplained_file = os.path.join(out_dir, "unexplained_master.csv")
 
-    if not df.empty:
-        # Backward-compatible column list
-        legacy_cols = [
-            "scan_timestamp", "symbol", "company", "industry",
-            "current_price", "prev_close", "pct_change", "current_volume",
-            "avg_volume_20d", "volume_ratio", "has_catalyst_news",
-            "classification", "headlines", "news_source"
-        ]
+    legacy_cols = [
+        "scan_timestamp", "symbol", "company", "industry",
+        "current_price", "prev_close", "pct_change", "current_volume",
+        "avg_volume_20d", "volume_ratio", "has_catalyst_news",
+        "classification", "headlines", "news_source"
+    ]
 
-        suspicious_df = df[df["has_catalyst_news"] == 0]
-        news_driven_df = df[df["has_catalyst_news"] == 1]
+    def _merge_and_save(filepath: str, new_df: pd.DataFrame, is_legacy: bool = True):
+        cols = legacy_cols if is_legacy else list(new_df.columns if not new_df.empty else legacy_cols)
+        existing_df = pd.DataFrame()
+        if os.path.isfile(filepath):
+            try:
+                existing_df = pd.read_csv(filepath)
+            except Exception as exc:
+                logger.warning("Could not read existing CSV %s: %s", filepath, exc)
 
-        suspicious_df[legacy_cols].to_csv(suspicious_file, index=False, encoding="utf-8")
-        news_driven_df[legacy_cols].to_csv(news_driven_file, index=False, encoding="utf-8")
-        df.to_csv(unexplained_file, index=False, encoding="utf-8")
-    else:
-        # Write headers if empty
-        pd.DataFrame(columns=[
-            "scan_timestamp", "symbol", "company", "industry",
-            "current_price", "prev_close", "pct_change", "current_volume",
-            "avg_volume_20d", "volume_ratio", "has_catalyst_news",
-            "classification", "headlines", "news_source"
-        ]).to_csv(suspicious_file, index=False, encoding="utf-8")
+        if not existing_df.empty and not new_df.empty:
+            # Union existing and new, deduplicating by (symbol, scan_timestamp date prefix)
+            for c in cols:
+                if c not in existing_df.columns:
+                    existing_df[c] = None
+                if c not in new_df.columns:
+                    new_df[c] = None
+            
+            combined = pd.concat([existing_df[cols], new_df[cols]], ignore_index=True)
+            combined["_dedup_ts"] = combined["scan_timestamp"].astype(str).str.split().str[0]
+            combined = combined.drop_duplicates(subset=["symbol", "_dedup_ts"], keep="last")
+            combined = combined.drop(columns=["_dedup_ts"])
+            combined = combined.sort_values(by=["scan_timestamp", "symbol"])
+            combined.to_csv(filepath, index=False, encoding="utf-8")
+        elif not new_df.empty:
+            new_df[cols].to_csv(filepath, index=False, encoding="utf-8")
+        elif not existing_df.empty:
+            # Preserve existing file completely when new_df is empty
+            pass
+        else:
+            # File does not exist and new_df is empty
+            pd.DataFrame(columns=cols).to_csv(filepath, index=False, encoding="utf-8")
 
-        pd.DataFrame(columns=[
-            "scan_timestamp", "symbol", "company", "industry",
-            "current_price", "prev_close", "pct_change", "current_volume",
-            "avg_volume_20d", "volume_ratio", "has_catalyst_news",
-            "classification", "headlines", "news_source"
-        ]).to_csv(news_driven_file, index=False, encoding="utf-8")
+    suspicious_df = df[df["has_catalyst_news"] == 0] if not df.empty else pd.DataFrame()
+    news_driven_df = df[df["has_catalyst_news"] == 1] if not df.empty else pd.DataFrame()
 
-        df.to_csv(unexplained_file, index=False, encoding="utf-8")
+    _merge_and_save(suspicious_file, suspicious_df, is_legacy=True)
+    _merge_and_save(news_driven_file, news_driven_df, is_legacy=True)
+    _merge_and_save(unexplained_file, df, is_legacy=False)
 
     logger.info("Updated CSV exports: %s, %s, %s", suspicious_file, news_driven_file, unexplained_file)
     return {
