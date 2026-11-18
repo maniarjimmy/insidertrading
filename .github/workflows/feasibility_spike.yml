@@ -1,0 +1,34 @@
+name: Feasibility Spike — Endpoint & Data Source Validation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-endpoints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt requests
+
+      - name: Run Endpoint Feasibility Spike
+        run: |
+          python scripts/test_endpoints.py
+
+      - name: Upload Feasibility Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: endpoint-feasibility-report
+          path: output/endpoint_feasibility_report.md
+          retention-days: 7
