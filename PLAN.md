@@ -30,46 +30,58 @@ flowchart TD
 ### Phase 0: Endpoint Feasibility Spike (Actions Runner Verified)
 **Objective**: Empirically verify every prospective NSE/BSE public endpoint, Bhavcopy URL, and RSS feed from a GitHub Actions `ubuntu-latest` runner to detect geo-blocking, Akamai challenges, or IP bans before writing application logic.
 
-**Verified Results from GitHub Runner Run #44275991733 (`ubuntu-latest`)**:
-* **14/14 Endpoints Tested**: 100% Passed with valid JSON/CSV formatting and required fields present.
-* **Full Bhavcopy & Delivery**: `https://archives.nseindia.com/products/content/sec_bhavdata_full_<DDMMYYYY>.csv` verified functional (HTTP 200, 3,572 valid rows with `DELIV_QTY`, `DELIV_PER`).
-* **NSE Dynamic APIs**: Both `/api/corporate-announcements` and `/api/event-calendar` verified functional with session cookie bootstrapping.
-* **BSE Dynamic APIs**: `/BseIndiaAPI/api/AnnSubCategoryGetData/w` verified functional as primary fallback.
+**Verified Results from GitHub Runner Runs #44275991733 and #44277610196 (`ubuntu-latest`)**:
+* **16/17 Endpoints Tested**: 16 Passed with valid JSON/CSV formatting and required fields present (1 expected unready: today's Bhavcopy returning 404 prior to EOD publication; yesterday's Bhavcopy returned HTTP 200 with 3,572 rows).
+* **Bhavcopy Timing Measurements**:
+  - `sec_bhavdata_full_<DDMMYYYY>.csv` has `Last-Modified: 18:25 GMT` (23:55 IST). It returns 404 before midnight on NSE archives.
+  - Official UDDiP Bhavcopy (`BhavCopy_NSE_CM_0_0_0_<YYYYMMDD>_F_0000.csv.zip`) is published at 11:03 GMT (16:33 IST).
+  - Security Delivery Position (`MTO_<DDMMYYYY>.DAT`) is published at 11:25 GMT (16:55 IST).
+  - Bulk (`bulk.csv`) and Block (`block.csv`) are updated around 17:00–17:30 IST.
+* **Surveillance (ASM / GSM) & Price Bands**:
+  - `sec_list.csv` confirmed (3,609 securities; GSM stages 0, 1, 2 for 67 stocks; 329 T2T series `BE`/`BZ`/`ST`; circuit bands: 2%, 5%, 10%, 20%, No Band).
+  - ST-ASM/LT-ASM lists are published via circulars API `/api/circulars` (subject strings: "ST-ASM", "ASM").
+* **BSE Dynamic APIs**: `/BseIndiaAPI/api/AnnSubCategoryGetData/w` verified functional as primary fallback, supports multi-day `strPrevDate/strToDate` spans and pagination (`pageno=1,2,3...` with 50+ records/page).
+* **Completeness**:
+  - NSE announcements by symbol/date range returns up to 1,779 historical items without truncation when symbol is supplied.
+  - Event calendar returns all forward items in the specified 7-day window.
 
 **Data Source & Fallback Architecture Matrix**:
 | Data Requirement | Primary Source (Actions Verified) | Secondary Fallback | Failure Graceful Mode |
 | :--- | :--- | :--- | :--- |
 | **Market-Cap Universe** | `archives.nseindia.com` Index CSVs | Local cached `data/nifty500.csv` | Slices available local universe |
-| **EOD Price & Delivery** | NSE `sec_bhavdata_full_<DDMMYYYY>.csv` | `yfinance` history (`period="1d"`) | Delivery % marked `None`, log warning |
+| **EOD Price & Delivery** | NSE UDDiP / Bhavcopy | `yfinance` history (`period="1d"`) | Delivery % marked `None`, log warning |
 | **Corporate Filings** | NSE API `/api/corporate-announcements` | BSE API `AnnSubCategoryGetData/w` | Google News RSS / Catalyst `UNCLEAR` |
 | **Upcoming Board Mtgs** | NSE API `/api/event-calendar` | BSE API `BoardMeeting/w` | Pre-announcement radar skipped |
 | **Trading Holidays** | NSE API `/api/holiday-master` | Static `data/nse_holidays_2026.json` | Fallback to hardcoded Mon-Fri rules |
 | **Bulk & Block Deals** | NSE `bulk.csv` & `block.csv` | Direct scrape if available | Tag skipped, composite score ignores deals |
-| **Market Data Fallback** | `yfinance` (`RELIANCE.NS`) | NSE Bhavcopy EOD | Log skipped symbol |
+| **Market Data Fallback** | `yfinance` (`NIFTYMIDCAP150.NS`) | NSE Bhavcopy EOD | Log skipped symbol |
 
 ---
 
-### Phase 1: Outcome Tracking & Persistent Storage
+### Phase 1: Outcome Tracking & Persistent Storage (COMPLETED)
 **Objective**: Build a persistent evaluation loop measuring forward returns and hit rates against a benchmark and a random control sample.
 
 1. **Storage Architecture (`output/scanner.db` on `data` branch)**:
-   * Orphan `data` branch established as primary storage for `scanner.db` and exports.
-   * Tables:
-     * `flags`: `id`, `scan_date`, `symbol`, `company`, `industry`, `current_price`, `prev_close`, `price_change`, `current_volume`, `avg_volume_20d`, `volume_ratio`, `score`, `status`, `catalyst_state`, `delivery_pct`, `run_type` (`intraday`, `eod`), `is_control` (0 for flagged, 1 for control group), `created_at`.
-     * Upsert constraint: `UNIQUE(symbol, scan_date, run_type)`.
-     * `outcomes`: `id`, `flag_id`, `horizon_days` ($T+1, T+2, T+3, T+5, T+10$), `entry_price` (measured from **next-day open**), `forward_return`, `benchmark_return`, `excess_return`, `announcement_found`, `announcement_type`, `is_material`, `announcement_date`, `updated_at`.
-2. **NSE Trading Holiday Calendar (`holidays.py`)**:
-   * Hardcoded + API-refreshed calendar of NSE trading holidays to accurately compute trading-day steps ($T+N$) and skip pipeline runs on market holidays.
+   - Orphan `data` branch established as primary storage for `scanner.db` and exports.
+   - Core tables implemented: `flags`, `outcomes`, `deals`, `holidays`, and `run_log`.
+   - Idempotent upsert constraints: `UNIQUE(symbol, scan_date, run_type)` on flags, `UNIQUE(flag_id, horizon_days)` on outcomes, `UNIQUE(date, symbol, client_name, side)` on deals.
+   - Diffable SQLite `.dump` generation (`output/scanner.sql`) for auditability.
+2. **NSE Trading Holiday Calendar (`holidays.py` & `data/nse_holidays_2026.json`)**:
+   - Official 2026 NSE Equities trading holidays incorporated.
+   - Trading day arithmetic functions (`is_trading_day`, `get_next_trading_day`, `get_previous_trading_day`, `count_trading_days`).
 3. **Outcome Evaluator & Control Sample (`tracker.py`)**:
-   * Evaluates flags $T+1$ to $T+10$ trading days old.
-   * Forward return calculated from **next-day open** ($T+1$ Open) to evaluate tradability.
-   * Samples a random 10-stock control group of unflagged universe constituents on each run to measure baseline lift (flagged precision vs. control group precision).
-   * Distinguishes material filings (earnings, M&A, major orders) from routine/administrative filings.
-4. **Report Integration**:
-   * Hit-rate section in HTML report: precision of flags followed by material catalyst within 10 days, lift vs control group, forward excess return by score bucket.
+   - Forward returns measured strictly from **next-day open** ($T+1$ Open) to evaluate realistic execution feasibility.
+   - Evaluates horizons $T+1, T+2, T+3, T+5, T+10$ trading days against Nifty Midcap 150 benchmark (`NIFTYMIDCAP150.NS`).
+   - Categorizes corporate filings into material vs routine disclosures.
+   - Evaluates random 10-stock control group per scan to compute baseline precision and statistical **lift**.
+4. **Report Integration (`report.py`)**:
+   - Added visual "Outcome Tracking & Catalyst Hit Rate" dashboard section.
+   - Metrics: 10-day precision, control precision, lift factor, average forward return, average excess return.
+   - Score bucket breakdown table and recent resolved flags table with links to verified exchange disclosures.
 5. **CLI & Migration**:
-   * Add `python main.py --track`.
-   * One-time migration script `scripts/migrate_csv_to_db.py` to ingest historical CSVs. Keep existing CSV filenames/columns for backward compatibility alongside renamed exports.
+   - CLI command `python main.py --track`.
+   - Migration script `scripts/migrate_csv_to_db.py` migrated 156 historical records and 775 outcome records into `output/scanner.db`.
+   - Full test coverage with 18 pytest unit tests.
 
 ---
 

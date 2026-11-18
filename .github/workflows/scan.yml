@@ -1,36 +1,74 @@
-name: Insider Scanner — Daily Scan
+name: Insider Scanner — Scan & Outcome Tracking
 
 permissions:
   contents: write
 
+concurrency:
+  group: scanner-data-sync
+  cancel-in-progress: false
+
 on:
   schedule:
-    # Mon-Fri at 09:00 UTC = 2:30 PM IST
+    # Mon-Fri at 09:00 UTC = 2:30 PM IST (EOD scanner & tracker)
     - cron: '0 9 * * 1-5'
-  workflow_dispatch:  # Allow manual trigger from GitHub UI
+    # Monthly squash on 1st day of month at 00:00 UTC
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Workflow task to run'
+        required: true
+        default: 'scan_and_track'
+        type: choice
+        options:
+          - scan_and_track
+          - track_only
+          - squash_data_branch
 
 jobs:
-  scan:
+  scan_and_track:
+    if: github.event.inputs.action != 'squash_data_branch' && github.event.schedule != '0 0 1 * *'
     runs-on: ubuntu-latest
+    timeout-minutes: 25
 
     steps:
-      - name: Checkout code
+      - name: Record Job Start Time
+        id: timing
+        run: echo "start_epoch=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.SECRET_TOKEN || github.token }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: 'pip'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run insider scan
+      - name: Restore Database & Exports from data Branch
+        run: |
+          mkdir -p output
+          if git fetch origin data:data 2>/dev/null; then
+            echo "Restoring scanner.db and exports from data branch..."
+            git checkout data -- output/scanner.db output/scanner.sql output/suspicious_master.csv output/news_driven_master.csv output/unexplained_master.csv 2>/dev/null || true
+          else
+            echo "No existing data branch found. Initializing fresh DB."
+          fi
+
+      - name: Run Insider Scan
+        if: github.event.inputs.action != 'track_only'
         run: python main.py
 
-      - name: Find latest HTML report
+      - name: Run Outcome Tracker
+        run: python main.py --track
+
+      - name: Find Latest HTML Report
         id: find_report
         run: |
           REPORT=$(ls -t output/scan_*.html 2>/dev/null | head -1)
@@ -38,7 +76,7 @@ jobs:
           echo "report_name=$(basename $REPORT)" >> $GITHUB_OUTPUT
           echo "Found report: $REPORT"
 
-      - name: Email scan report
+      - name: Email Scan Report
         if: steps.find_report.outputs.report_path != ''
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
@@ -48,22 +86,23 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_ADDRESS }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "📊 Insider Scan Report — ${{ github.event.repository.name }} — $(date -u +%Y-%m-%d)"
+          subject: "📊 Insider Scan & Hit-Rate Report — ${{ github.event.repository.name }} — $(date -u +%Y-%m-%d)"
           body: |
             Hi,
 
-            Today's insider activity scan has completed.
+            Today's insider activity scan & outcome tracking job has completed.
             Please find attached:
-            - HTML scan report
-            - Suspicious stocks master CSV (cumulative)
-            - News-driven movers master CSV (cumulative)
+            - HTML scan & hit-rate report
+            - Suspicious stocks master CSV
+            - News-driven movers master CSV
+            - Unexplained movers master CSV
 
             — Insider Scanner Bot 🤖
           to: ${{ secrets.EMAIL_TO }}
           from: ${{ secrets.GMAIL_ADDRESS }}
-          attachments: ${{ steps.find_report.outputs.report_path }},output/suspicious_master.csv,output/news_driven_master.csv
+          attachments: ${{ steps.find_report.outputs.report_path }},output/suspicious_master.csv,output/news_driven_master.csv,output/unexplained_master.csv
 
-      - name: Upload reports as artifact
+      - name: Upload Reports as Artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -71,15 +110,83 @@ jobs:
           path: output/
           retention-days: 30
 
-      - name: Commit reports to repo
+      - name: Sync & Commit State to data Branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/
-          git diff --staged --quiet || git commit -m "📊 Scan report $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main || true
-          git push
 
-      - name: Keep workflow active (prevent 60-day auto-disable)
-        uses: gautamkrishnar/keepalive-workflow@v2
+          # Stage output files
+          mkdir -p /tmp/scanner_data
+          cp output/scanner.db /tmp/scanner_data/ 2>/dev/null || true
+          cp output/scanner.sql /tmp/scanner_data/ 2>/dev/null || true
+          cp output/suspicious_master.csv /tmp/scanner_data/ 2>/dev/null || true
+          cp output/news_driven_master.csv /tmp/scanner_data/ 2>/dev/null || true
+          cp output/unexplained_master.csv /tmp/scanner_data/ 2>/dev/null || true
+
+          # Checkout data branch
+          git fetch origin data:data 2>/dev/null || git branch data
+          git checkout data
+
+          mkdir -p output
+          cp /tmp/scanner_data/* output/ 2>/dev/null || true
+
+          git add output/scanner.db output/scanner.sql output/suspicious_master.csv output/news_driven_master.csv output/unexplained_master.csv
+          if git diff --staged --quiet; then
+            echo "No changes to data branch to commit."
+          else
+            git commit -m "📊 Update scanner.db, SQL dump, and exports [skip ci]"
+            # Retry loop for push conflicts
+            SUCCESS=0
+            for attempt in 1 2 3; do
+              echo "Push attempt $attempt to data branch..."
+              if git pull --rebase origin data 2>/dev/null && git push origin data; then
+                SUCCESS=1
+                break
+              fi
+              sleep 5
+            done
+            if [ $SUCCESS -eq 0 ]; then
+              echo "Failed to push to data branch after 3 attempts."
+              exit 1
+            fi
+          fi
+
+      - name: Log Execution Runtime
         if: always()
+        run: |
+          END_EPOCH=$(date +%s)
+          START_EPOCH=${{ steps.timing.outputs.start_epoch }}
+          RUNTIME=$((END_EPOCH - START_EPOCH))
+          echo "=============================================="
+          echo "Job Execution Runtime: ${RUNTIME} seconds"
+          echo "=============================================="
+
+  squash_data_branch:
+    if: github.event.inputs.action == 'squash_data_branch' || github.event.schedule == '0 0 1 * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SECRET_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - name: Monthly Squash of data Branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          echo "Squashing data branch history to reset commit log and save storage..."
+          git fetch origin data:data || true
+          git checkout data
+          
+          # Create orphan squash commit
+          git checkout --orphan temp-squash
+          git add output/
+          git commit -m "📦 Monthly squash of scanner data history $(date -u +%Y-%m)"
+          
+          # Force push to data branch ONLY (allowed per architectural constraint)
+          git push origin temp-squash:data --force
+          echo "✅ data branch successfully squashed."
