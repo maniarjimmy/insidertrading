@@ -4,19 +4,29 @@ permissions:
   contents: write
 
 concurrency:
-  group: scanner-data-sync
+  group: scanner-data-sync-${{ github.ref }}
   cancel-in-progress: false
 
 on:
   schedule:
-    # Mon-Fri at 09:00 UTC = 2:30 PM IST (EOD scanner & tracker)
+    # 14:30 IST (09:00 UTC) — Optional Early Alert (Intraday scan)
     - cron: '0 9 * * 1-5'
-    # Monthly squash on 1st day of month at 00:00 UTC
-    - cron: '0 0 1 * *'
+    # 17:30 IST (12:00 UTC) — Main EOD Scan & Outcome Tracking (with UDDiP + MTO)
+    - cron: '0 12 * * 1-5'
+  push:
+    branches:
+      - feature/scanner-upgrade
+    paths:
+      - '.github/workflows/scan.yml'
+      - 'scripts/**'
+      - 'tracker.py'
+      - 'holidays.py'
+      - 'db.py'
+      - 'main.py'
   workflow_dispatch:
     inputs:
       action:
-        description: 'Workflow task to run'
+        description: 'Workflow task to execute'
         required: true
         default: 'scan_and_track'
         type: choice
@@ -24,10 +34,20 @@ on:
           - scan_and_track
           - track_only
           - squash_data_branch
+      dry_run:
+        description: 'Dry run mode (writes to throwaway data-test branch instead of data)'
+        required: false
+        type: boolean
+        default: false
+      enable_squash:
+        description: 'Guard flag required to enable squash job (disabled by default)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   scan_and_track:
-    if: github.event.inputs.action != 'squash_data_branch' && github.event.schedule != '0 0 1 * *'
+    if: github.event.inputs.action != 'squash_data_branch'
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -51,15 +71,55 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Restore Database & Exports from data Branch
+      - name: Determine Target Data Branch (Guard for Production Data)
+        id: branch_target
         run: |
+          # If triggered from feature branch, push, or dry_run=true, use throwaway data-test branch
+          if [ "${{ github.ref }}" = "refs/heads/main" ] && [ "${{ github.event.inputs.dry_run }}" != "true" ]; then
+            TARGET_BRANCH="data"
+          else
+            TARGET_BRANCH="data-test"
+          fi
+          echo "target_branch=$TARGET_BRANCH" >> $GITHUB_OUTPUT
+          echo "=========================================================="
+          echo "Target Storage Branch: $TARGET_BRANCH"
+          echo "=========================================================="
+
+      - name: Restore Database from Target Storage Branch
+        run: |
+          TARGET="${{ steps.branch_target.outputs.target_branch }}"
           mkdir -p output
-          if git fetch origin data:data 2>/dev/null; then
-            echo "Restoring scanner.db and exports from data branch..."
-            git checkout data -- output/scanner.db output/scanner.sql output/suspicious_master.csv output/news_driven_master.csv output/unexplained_master.csv 2>/dev/null || true
+          if git fetch origin ${TARGET}:${TARGET} 2>/dev/null; then
+            echo "Restoring scanner.db and exports from ${TARGET} branch..."
+            git checkout ${TARGET} -- output/scanner.db output/scanner.sql output/unexplained_master.csv 2>/dev/null || true
+          elif git fetch origin data:data 2>/dev/null; then
+            echo "Seeding fresh ${TARGET} branch from production data branch..."
+            git checkout data -- output/scanner.db output/scanner.sql output/unexplained_master.csv 2>/dev/null || true
           else
             echo "No existing data branch found. Initializing fresh DB."
           fi
+
+      - name: Poll & Retry for EOD Bhavcopy Availability (17:30 IST Loop)
+        run: |
+          python -c "
+          import time, requests, sys
+          from datetime import datetime, timedelta
+          headers = {'User-Agent': 'Mozilla/5.0'}
+          today_str = datetime.now().strftime('%Y%m%d')
+          url = f'https://archives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_{today_str}_F_0000.csv.zip'
+          print(f'[Poll] Checking UDDiP Bhavcopy availability at {url}...')
+          for attempt in range(1, 4):
+              try:
+                  r = requests.get(url, headers=headers, stream=True, timeout=5)
+                  if r.status_code == 200:
+                      print(f'[Poll] UDDiP Bhavcopy is AVAILABLE (HTTP 200, Last-Modified: {r.headers.get(\"Last-Modified\")})')
+                      sys.exit(0)
+                  print(f'[Poll] Attempt {attempt}: Received status {r.status_code}. Waiting 15s...')
+              except Exception as e:
+                  print(f'[Poll] Attempt {attempt} error: {e}')
+              time.sleep(15)
+          print('[Poll] Max retries reached. Pipeline will proceed with yfinance fallback gracefully.')
+          "
 
       - name: Run Insider Scan
         if: github.event.inputs.action != 'track_only'
@@ -77,8 +137,10 @@ jobs:
           echo "Found report: $REPORT"
 
       - name: Email Scan Report
-        if: steps.find_report.outputs.report_path != ''
+        if: steps.find_report.outputs.report_path != '' && env.GMAIL_ADDRESS != ''
         continue-on-error: true
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -93,14 +155,12 @@ jobs:
             Today's insider activity scan & outcome tracking job has completed.
             Please find attached:
             - HTML scan & hit-rate report
-            - Suspicious stocks master CSV
-            - News-driven movers master CSV
             - Unexplained movers master CSV
 
             — Insider Scanner Bot 🤖
           to: ${{ secrets.EMAIL_TO }}
           from: ${{ secrets.GMAIL_ADDRESS }}
-          attachments: ${{ steps.find_report.outputs.report_path }},output/suspicious_master.csv,output/news_driven_master.csv,output/unexplained_master.csv
+          attachments: ${{ steps.find_report.outputs.report_path }},output/unexplained_master.csv
 
       - name: Upload Reports as Artifact
         uses: actions/upload-artifact@v4
@@ -110,43 +170,50 @@ jobs:
           path: output/
           retention-days: 30
 
-      - name: Sync & Commit State to data Branch
+      - name: Sync & Commit State to Target Branch
         run: |
+          TARGET="${{ steps.branch_target.outputs.target_branch }}"
+          echo "Syncing state to branch: ${TARGET}"
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage output files
           mkdir -p /tmp/scanner_data
           cp output/scanner.db /tmp/scanner_data/ 2>/dev/null || true
           cp output/scanner.sql /tmp/scanner_data/ 2>/dev/null || true
-          cp output/suspicious_master.csv /tmp/scanner_data/ 2>/dev/null || true
-          cp output/news_driven_master.csv /tmp/scanner_data/ 2>/dev/null || true
           cp output/unexplained_master.csv /tmp/scanner_data/ 2>/dev/null || true
 
-          # Checkout data branch
-          git fetch origin data:data 2>/dev/null || git branch data
-          git checkout data
+          # Checkout target data branch (creating orphan branch if it does not exist)
+          if git fetch origin ${TARGET}:${TARGET} 2>/dev/null; then
+            git checkout ${TARGET}
+          else
+            echo "Creating orphan branch ${TARGET}..."
+            git checkout --orphan ${TARGET}
+            git rm -rf . 2>/dev/null || true
+          fi
 
           mkdir -p output
           cp /tmp/scanner_data/* output/ 2>/dev/null || true
 
-          git add output/scanner.db output/scanner.sql output/suspicious_master.csv output/news_driven_master.csv output/unexplained_master.csv
+          git add output/scanner.db output/scanner.sql output/unexplained_master.csv
           if git diff --staged --quiet; then
-            echo "No changes to data branch to commit."
+            echo "No changes to ${TARGET} branch to commit."
           else
-            git commit -m "📊 Update scanner.db, SQL dump, and exports [skip ci]"
-            # Retry loop for push conflicts
+            git commit -m "📊 Update scanner database, SQL dump, and exports [skip ci]"
             SUCCESS=0
             for attempt in 1 2 3; do
-              echo "Push attempt $attempt to data branch..."
-              if git pull --rebase origin data 2>/dev/null && git push origin data; then
+              echo "Push attempt $attempt to ${TARGET} branch..."
+              if git pull --rebase origin ${TARGET} 2>/dev/null && git push origin ${TARGET}; then
+                SUCCESS=1
+                break
+              elif git push origin ${TARGET}; then
                 SUCCESS=1
                 break
               fi
               sleep 5
             done
             if [ $SUCCESS -eq 0 ]; then
-              echo "Failed to push to data branch after 3 attempts."
+              echo "Failed to push to ${TARGET} branch after 3 attempts."
               exit 1
             fi
           fi
@@ -162,7 +229,8 @@ jobs:
           echo "=============================================="
 
   squash_data_branch:
-    if: github.event.inputs.action == 'squash_data_branch' || github.event.schedule == '0 0 1 * *'
+    # Guards: Only runs on manual trigger, only if enable_squash=true, only against main ref
+    if: github.event.inputs.action == 'squash_data_branch' && github.event.inputs.enable_squash == 'true' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -173,20 +241,27 @@ jobs:
           token: ${{ secrets.SECRET_TOKEN || github.token }}
           fetch-depth: 0
 
-      - name: Monthly Squash of data Branch
+      - name: Monthly Squash of data Branch (With Safety Backup Tag)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          echo "Squashing data branch history to reset commit log and save storage..."
-          git fetch origin data:data || true
+          echo "Guard check passed. Preparing squash for production 'data' branch..."
+          git fetch origin data:data
           git checkout data
-          
-          # Create orphan squash commit
+
+          # Step 1: Create safety backup tag before squashing
+          BACKUP_TAG="backup-data-$(date -u +%Y%m%d%H%M%S)"
+          echo "Creating safety backup tag: ${BACKUP_TAG}"
+          git tag "${BACKUP_TAG}"
+          git push origin "${BACKUP_TAG}"
+          echo "✅ Backup tag ${BACKUP_TAG} pushed successfully."
+
+          # Step 2: Create orphan squash commit
           git checkout --orphan temp-squash
           git add output/
-          git commit -m "📦 Monthly squash of scanner data history $(date -u +%Y-%m)"
-          
-          # Force push to data branch ONLY (allowed per architectural constraint)
+          git commit -m "📦 Squash of scanner database history $(date -u +%Y-%m-%d) [skip ci]"
+
+          # Step 3: Force push to data branch ONLY (allowed per architectural constraint)
           git push origin temp-squash:data --force
-          echo "✅ data branch successfully squashed."
+          echo "✅ Production data branch successfully squashed and force-pushed."

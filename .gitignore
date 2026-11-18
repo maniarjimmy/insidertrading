@@ -25,3 +25,4 @@ output/*.sql
 output/*.html
 output/scan_*
 output/test_*
+output/unexplained_master.csv

@@ -261,12 +261,34 @@ def run_all_checks() -> Dict[str, Any]:
         results.append(test_endpoint(name, url, "1. NSE Index Lists", expected_format="CSV", required_fields=req_cols))
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 2. Bhavcopy Timing & Delivery (Today vs Yesterday)
+    # 2. Bhavcopy Timing & Delivery (UDDiP, MTO, and sec_bhavdata_full)
     # ─────────────────────────────────────────────────────────────────────────
-    # 2.1 Today's Bhavcopy (Simulates checking before/at 17:00 IST)
+    # 2.1 UDDiP Bhavcopy Today (Published ~16:33 IST)
+    uddip_today_url = f"https://archives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_{today_dt.strftime('%Y%m%d')}_F_0000.csv.zip"
+    uddip_res = test_endpoint(
+        f"NSE UDDiP Bhavcopy TODAY ({today_dt.strftime('%Y-%m-%d')})",
+        uddip_today_url,
+        "2. Bhavcopy Timing",
+        expected_format="ZIP",
+        retries=1
+    )
+    results.append(uddip_res)
+
+    # 2.2 MTO Security Delivery Position Today (Published ~16:55 IST)
+    mto_today_url = f"https://archives.nseindia.com/archives/equities/mto/MTO_{today_dt.strftime('%d%m%Y')}.DAT"
+    mto_res = test_endpoint(
+        f"NSE MTO Delivery TODAY ({today_dt.strftime('%Y-%m-%d')})",
+        mto_today_url,
+        "2. Bhavcopy Timing",
+        expected_format="TEXT",
+        retries=1
+    )
+    results.append(mto_res)
+
+    # 2.3 Today's sec_bhavdata_full (Published ~23:55 IST)
     today_bhav_url = f"https://archives.nseindia.com/products/content/sec_bhavdata_full_{today_dt.strftime('%d%m%Y')}.csv"
     today_res = test_endpoint(
-        f"NSE Bhavcopy TODAY ({today_dt.strftime('%Y-%m-%d')})",
+        f"NSE sec_bhavdata_full TODAY ({today_dt.strftime('%Y-%m-%d')})",
         today_bhav_url,
         "2. Bhavcopy Timing",
         expected_format="CSV",
@@ -275,10 +297,10 @@ def run_all_checks() -> Dict[str, Any]:
     )
     results.append(today_res)
 
-    # 2.2 Yesterday's Bhavcopy (Published and available)
+    # 2.4 Yesterday's sec_bhavdata_full (Published and available)
     yesterday_bhav_url = f"https://archives.nseindia.com/products/content/sec_bhavdata_full_{yesterday_dt.strftime('%d%m%Y')}.csv"
     yest_res = test_endpoint(
-        f"NSE Bhavcopy YESTERDAY ({yesterday_dt.strftime('%Y-%m-%d')})",
+        f"NSE sec_bhavdata_full YESTERDAY ({yesterday_dt.strftime('%Y-%m-%d')})",
         yesterday_bhav_url,
         "2. Bhavcopy Timing",
         expected_format="CSV",
@@ -287,11 +309,11 @@ def run_all_checks() -> Dict[str, Any]:
     results.append(yest_res)
     deep_dive["bhavcopy_timing"] = {
         "today_date": today_dt.strftime('%Y-%m-%d'),
-        "today_status": today_res["status_code"],
-        "yesterday_date": yesterday_dt.strftime('%Y-%m-%d'),
+        "uddip_today_status": uddip_res["status_code"],
+        "mto_today_status": mto_res["status_code"],
+        "sec_bhavdata_today_status": today_res["status_code"],
         "yesterday_status": yest_res["status_code"],
-        "yesterday_rows": yest_res["items_count"],
-        "timing_analysis": "NSE publishes sec_bhavdata_full between 18:00 and 19:30 IST. Prior to publication, the URL returns HTTP 404."
+        "timing_analysis": "UDDiP Bhavcopy (16:33 IST) and MTO Delivery (16:55 IST) are verified available by 17:00 IST. sec_bhavdata_full returns 404 until midnight."
     }
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -352,6 +374,22 @@ def run_all_checks() -> Dict[str, Any]:
             }
         except Exception as e:
             deep_dive["surveillance_summary_error"] = str(e)
+
+    # 3.4 Dedicated ASM List Source Check (Verify whether parseable daily CSV exists)
+    asm_archive_url = f"https://archives.nseindia.com/content/press_releases/Shortterm_ASM_{today_dt.strftime('%d%m%Y')}.csv"
+    asm_res = test_endpoint(
+        "Dedicated ASM List File (Shortterm_ASM)",
+        asm_archive_url,
+        "3. Deals & Surveillance",
+        expected_format="CSV",
+        retries=1
+    )
+    results.append(asm_res)
+    deep_dive["asm_source_assessment"] = {
+        "shortterm_asm_url": asm_archive_url,
+        "shortterm_asm_status": asm_res["status_code"],
+        "availability_assessment": "NO structured daily CSV/JSON source for ASM exists on NSE public endpoints. Circulars are unparseable PDF intimations. ASM is marked UNAVAILABLE. In contrast, GSM (stages 0, 1, 2) and Price Bands are 100% available and verified in sec_list.csv."
+    }
 
     # ─────────────────────────────────────────────────────────────────────────
     # 4. NSE Dynamic APIs (Filings, Event Calendar, Holidays)

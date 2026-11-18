@@ -37,6 +37,7 @@ from config import (
 from db import (
     export_db_to_csv,
     export_db_to_sql,
+    fetch_sources_last_modified,
     init_db,
     log_run,
     upsert_flag,
@@ -236,7 +237,11 @@ def run_scan(min_pct: Optional[float] = None,
     export_db_to_csv()
 
     runtime = (datetime.now() - start_time).total_seconds()
-    log_run("scan", "yfinance", runtime, total_scanned, total_flagged, "SUCCESS")
+    last_mod_headers = fetch_sources_last_modified()
+    log_run(
+        "scan", "yfinance", runtime, total_scanned, total_flagged, "SUCCESS",
+        source_last_modified=last_mod_headers
+    )
 
     # ── Summary ─────────────────────────────────────────────────────────
     print()

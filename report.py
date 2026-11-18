@@ -314,7 +314,8 @@ HTML_TEMPLATE = Template("""<!DOCTYPE html>
                     <thead>
                         <tr>
                             <th>Score Bucket</th>
-                            <th>Resolved Count</th>
+                            <th>Sample Size (n)</th>
+                            <th>Statistical Reliability</th>
                             <th>Average T+10 Return</th>
                         </tr>
                     </thead>
@@ -323,6 +324,13 @@ HTML_TEMPLATE = Template("""<!DOCTYPE html>
                         <tr>
                             <td><strong>{{ bucket }}</strong></td>
                             <td>{{ bdata.count }}</td>
+                            <td>
+                                {% if bdata.is_low_sample %}
+                                <span class="badge" style="background: rgba(243, 156, 18, 0.2); color: var(--accent-amber);">⚠️ Low Sample (n &lt; 30)</span>
+                                {% else %}
+                                <span class="badge badge-green">✓ Valid Sample (n ≥ 30)</span>
+                                {% endif %}
+                            </td>
                             <td class="{% if bdata.avg_return >= 0 %}positive{% else %}negative{% endif %}">
                                 {% if bdata.avg_return >= 0 %}+{% endif %}{{ bdata.avg_return }}%
                             </td>
@@ -330,6 +338,9 @@ HTML_TEMPLATE = Template("""<!DOCTYPE html>
                         {% endfor %}
                     </tbody>
                 </table>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: -8px;">
+                    * Ground rule: Returns and hit rates with n &lt; 30 are exploratory indicators only, not statistically significant findings.
+                </p>
             </div>
             {% endif %}
 

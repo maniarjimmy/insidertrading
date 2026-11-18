@@ -1,6 +1,7 @@
 """
 NSE Trading Holiday Calendar Module
-Provides accurate trading-day arithmetic (T+N) and holiday checks.
+Provides year-agnostic trading-day arithmetic (T+N), auto-refresh from NSE API,
+and out-of-range calendar warnings.
 """
 
 from datetime import date, datetime, timedelta
@@ -9,7 +10,7 @@ import logging
 import os
 import sqlite3
 import time
-from typing import Dict, List, Optional, Set, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
 import requests
 
@@ -26,6 +27,7 @@ logger = setup_logging("holidays")
 
 # In-memory cache of loaded trading holidays (ISO string: "YYYY-MM-DD")
 _HOLIDAY_CACHE: Optional[Set[str]] = None
+_LAST_SYNC_TIMESTAMP: Optional[float] = None
 
 
 def parse_date(d: Union[date, datetime, str]) -> date:
@@ -35,7 +37,6 @@ def parse_date(d: Union[date, datetime, str]) -> date:
     if isinstance(d, date):
         return d
     if isinstance(d, str):
-        # Support "YYYY-MM-DD", "YYYY-MM-DD HH:MM", "DD-MM-YYYY", etc.
         d = d.strip()
         if " " in d:
             d = d.split(" ")[0]
@@ -48,9 +49,9 @@ def parse_date(d: Union[date, datetime, str]) -> date:
 
 
 def load_holidays_from_file(filepath: str = HOLIDAYS_FILE) -> Set[str]:
-    """Load holiday dates from the static JSON file."""
+    """Load holiday dates from static JSON file."""
     if not os.path.isfile(filepath):
-        logger.warning("Holidays file not found at %s", filepath)
+        logger.debug("Holidays file not found at %s", filepath)
         return set()
     try:
         with open(filepath, "r", encoding="utf-8") as f:
@@ -72,28 +73,30 @@ def load_holidays_from_file(filepath: str = HOLIDAYS_FILE) -> Set[str]:
 
 
 def load_holidays_from_db(db_path: str = DB_PATH) -> Set[str]:
-    """Load holiday dates from the SQLite database."""
+    """Load holiday dates from the SQLite database (all years)."""
     if not os.path.isfile(db_path):
         return set()
     try:
-        with sqlite3.connect(db_path) as conn:
+        conn = sqlite3.connect(db_path, timeout=10.0)
+        try:
             cursor = conn.cursor()
-            # Check if table exists
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='holidays'")
             if not cursor.fetchone():
                 return set()
             cursor.execute("SELECT date FROM holidays WHERE trading_holiday = 1")
             rows = cursor.fetchall()
             return {r[0] for r in rows if r[0]}
+        finally:
+            conn.close()
     except Exception as exc:
         logger.debug("Could not read holidays from DB: %s", exc)
         return set()
 
 
-def fetch_nse_holidays() -> List[Dict[str, str]]:
+def fetch_nse_holidays() -> List[Dict[str, Any]]:
     """
     Fetch the official trading holiday master from NSE with retry and backoff.
-    Returns a list of dicts: [{'date': 'YYYY-MM-DD', 'description': '...'}]
+    Returns list of dicts: [{'date': 'YYYY-MM-DD', 'description': '...', 'trading_holiday': 1}]
     """
     url = "https://www.nseindia.com/api/holiday-master?type=trading"
     headers = {
@@ -110,12 +113,10 @@ def fetch_nse_holidays() -> List[Dict[str, str]]:
 
     for attempt in range(1, REQUEST_MAX_RETRIES + 1):
         try:
-            # Bootstrap session cookie
             session.get("https://www.nseindia.com", timeout=REQUEST_TIMEOUT)
             resp = session.get(url, timeout=REQUEST_TIMEOUT)
             if resp.status_code == 200:
                 data = resp.json()
-                # 'CM' indicates Capital Market (Equities)
                 cm_holidays = data.get("CM", data.get("equities", []))
                 result = []
                 for item in cm_holidays:
@@ -130,15 +131,53 @@ def fetch_nse_holidays() -> List[Dict[str, str]]:
                 logger.info("Successfully fetched %d trading holidays from NSE API", len(result))
                 return result
         except Exception as exc:
-            logger.warning("Attempt %d to fetch NSE holidays failed: %s", attempt, exc)
+            logger.debug("Attempt %d to fetch NSE holidays failed: %s", attempt, exc)
             time.sleep(REQUEST_BACKOFF_FACTOR ** attempt)
 
     logger.warning("All attempts to fetch online NSE holidays failed. Falling back to local cache.")
     return []
 
 
+def sync_holidays_from_api(db_path: str = DB_PATH) -> int:
+    """
+    Auto-refresh holidays from the NSE API and persist them to SQLite.
+    Safe to call on every run (cached to avoid repeat calls within 1 hour).
+    """
+    global _LAST_SYNC_TIMESTAMP, _HOLIDAY_CACHE
+    now = time.time()
+    if _LAST_SYNC_TIMESTAMP is not None and (now - _LAST_SYNC_TIMESTAMP) < 3600:
+        return 0  # synced recently
+
+    holidays = fetch_nse_holidays()
+    if not holidays:
+        return 0
+
+    from db import upsert_holidays
+    count = upsert_holidays(holidays, db_path=db_path)
+    _LAST_SYNC_TIMESTAMP = now
+    # Refresh in-memory cache
+    _HOLIDAY_CACHE = load_holidays_from_db(db_path)
+    logger.info("Auto-refreshed and synced %d holidays to database", count)
+    return count
+
+
+def check_holiday_coverage(target_date: date, holidays: Set[str]) -> None:
+    """
+    Check if the holiday calendar covers the year of target_date.
+    Logs a warning if future years are missing.
+    """
+    target_year = target_date.year
+    known_years = {int(d.split("-")[0]) for d in holidays if "-" in d}
+    if known_years and target_year > max(known_years):
+        logger.warning(
+            "⚠️ Holiday calendar coverage gap: target date %s (year %d) exceeds max known holiday year %d! "
+            "Please ensure upcoming year holidays are synced. Falling back to Mon-Fri trading calendar.",
+            target_date.isoformat(), target_year, max(known_years)
+        )
+
+
 def get_holiday_set(db_path: str = DB_PATH, refresh: bool = False) -> Set[str]:
-    """Retrieve the set of holiday ISO date strings (cached in memory)."""
+    """Retrieve the set of holiday ISO date strings (year-agnostic, cached in memory)."""
     global _HOLIDAY_CACHE
     if _HOLIDAY_CACHE is not None and not refresh:
         return _HOLIDAY_CACHE
@@ -160,15 +199,15 @@ def is_trading_day(d: Union[date, datetime, str], db_path: str = DB_PATH) -> boo
     # 5 = Saturday, 6 = Sunday
     if parsed.weekday() >= 5:
         return False
-    iso = parsed.strftime("%Y-%m-%d")
+
     holidays = get_holiday_set(db_path)
+    check_holiday_coverage(parsed, holidays)
+    iso = parsed.strftime("%Y-%m-%d")
     return iso not in holidays
 
 
 def get_next_trading_day(d: Union[date, datetime, str], n: int = 1, db_path: str = DB_PATH) -> date:
-    """
-    Advance n trading days from date d, skipping weekends and NSE holidays.
-    """
+    """Advance n trading days from date d, skipping weekends and NSE holidays."""
     cur = parse_date(d)
     count = 0
     while count < n:
@@ -179,9 +218,7 @@ def get_next_trading_day(d: Union[date, datetime, str], n: int = 1, db_path: str
 
 
 def get_previous_trading_day(d: Union[date, datetime, str], n: int = 1, db_path: str = DB_PATH) -> date:
-    """
-    Step backward n trading days from date d, skipping weekends and NSE holidays.
-    """
+    """Step backward n trading days from date d, skipping weekends and NSE holidays."""
     cur = parse_date(d)
     count = 0
     while count < n:
@@ -194,9 +231,7 @@ def get_previous_trading_day(d: Union[date, datetime, str], n: int = 1, db_path:
 def get_trading_days_between(start_d: Union[date, datetime, str],
                              end_d: Union[date, datetime, str],
                              db_path: str = DB_PATH) -> List[date]:
-    """
-    Return all trading days in the range [start_d, end_d] inclusive.
-    """
+    """Return all trading days in the range [start_d, end_d] inclusive."""
     start = parse_date(start_d)
     end = parse_date(end_d)
     if start > end:

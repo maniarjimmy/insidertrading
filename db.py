@@ -146,9 +146,15 @@ def init_db(db_path: Optional[str] = None) -> None:
                 rows_scanned INTEGER DEFAULT 0,
                 flags_generated INTEGER DEFAULT 0,
                 status TEXT NOT NULL,
-                error_message TEXT
+                error_message TEXT,
+                source_last_modified TEXT
             )
         """)
+        # Safe migration if table exists without column
+        try:
+            cursor.execute("ALTER TABLE run_log ADD COLUMN source_last_modified TEXT")
+        except sqlite3.OperationalError:
+            pass
 
         # Performance Indexes
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_flags_date ON flags(scan_date)")
@@ -324,20 +330,23 @@ def log_run(run_type: str,
             flags_generated: int = 0,
             status: str = "SUCCESS",
             error_message: Optional[str] = None,
+            source_last_modified: Optional[Dict[str, Any]] = None,
             db_path: Optional[str] = None) -> int:
     """
-    Record pipeline execution metadata to `run_log`.
+    Record pipeline execution metadata and sources Last-Modified headers to `run_log`.
     """
+    import json
     path = get_db_path(db_path)
     sql = """
         INSERT INTO run_log (
             run_type, source_used, runtime_seconds, rows_scanned,
-            flags_generated, status, error_message
+            flags_generated, status, error_message, source_last_modified
         ) VALUES (
             :run_type, :source_used, :runtime_seconds, :rows_scanned,
-            :flags_generated, :status, :error_message
+            :flags_generated, :status, :error_message, :source_last_modified
         ) RETURNING id
     """
+    lm_str = json.dumps(source_last_modified) if source_last_modified else None
     with get_connection(path) as conn:
         cursor = conn.cursor()
         cursor.execute(sql, {
@@ -348,6 +357,7 @@ def log_run(run_type: str,
             "flags_generated": flags_generated,
             "status": status,
             "error_message": error_message,
+            "source_last_modified": lm_str,
         })
         row = cursor.fetchone()
         return row[0] if row else -1
@@ -377,6 +387,35 @@ def mark_flag_status(flag_id: int, status: str, db_path: Optional[str] = None) -
     path = get_db_path(db_path)
     with get_connection(path) as conn:
         conn.execute("UPDATE flags SET status = ? WHERE id = ?", (status, flag_id))
+
+
+def fetch_sources_last_modified() -> Dict[str, Optional[str]]:
+    """
+    Check and record Last-Modified headers for primary exchange data sources
+    to maintain a daily audit trail of file publication timing.
+    """
+    import requests
+    from datetime import timedelta
+    today_d = datetime.now()
+    prev_d = today_d - timedelta(days=1)
+    urls = {
+        "bhavcopy_today": f"https://archives.nseindia.com/products/content/sec_bhavdata_full_{today_d.strftime('%d%m%Y')}.csv",
+        "bhavcopy_prev": f"https://archives.nseindia.com/products/content/sec_bhavdata_full_{prev_d.strftime('%d%m%Y')}.csv",
+        "uddip_bhavcopy_prev": f"https://archives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_{prev_d.strftime('%Y%m%d')}_F_0000.csv.zip",
+        "mto_delivery_prev": f"https://archives.nseindia.com/archives/equities/mto/MTO_{prev_d.strftime('%d%m%Y')}.DAT",
+        "bulk_deals": "https://archives.nseindia.com/content/equities/bulk.csv",
+        "block_deals": "https://archives.nseindia.com/content/equities/block.csv",
+        "sec_list": "https://archives.nseindia.com/content/equities/sec_list.csv",
+    }
+    headers = {"User-Agent": "Mozilla/5.0"}
+    result: Dict[str, Optional[str]] = {}
+    for name, url in urls.items():
+        try:
+            resp = requests.get(url, headers=headers, stream=True, timeout=6)
+            result[name] = resp.headers.get("Last-Modified")
+        except Exception:
+            result[name] = None
+    return result
 
 
 def get_hit_rate_stats(db_path: Optional[str] = None) -> Dict[str, Any]:
@@ -467,10 +506,12 @@ def get_hit_rate_stats(db_path: Optional[str] = None) -> Dict[str, Any]:
             stats["avg_excess_ret_10d"] = round(sum(flagged_excess) / len(flagged_excess), 2)
 
         for bucket, rets in score_bucket_data.items():
-            if rets:
+            cnt = len(rets)
+            if cnt > 0:
                 stats["score_buckets"][bucket] = {
-                    "count": len(rets),
-                    "avg_return": round(sum(rets) / len(rets), 2)
+                    "count": cnt,
+                    "avg_return": round(sum(rets) / cnt, 2),
+                    "is_low_sample": cnt < 30,
                 }
 
     return stats
