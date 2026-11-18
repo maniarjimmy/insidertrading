@@ -18,6 +18,8 @@ import logging
 import sys
 from typing import Optional
 
+import pandas as pd
+
 # Ensure utf-8 encoding on Windows consoles
 if sys.platform == "win32":
     try:
