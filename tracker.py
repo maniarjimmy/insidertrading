@@ -392,6 +392,7 @@ def evaluate_flag(flag: Dict[str, Any],
             "announcement_date": ann_date_str,
             "announcement_title": ann_title,
             "announcement_url": ann_url,
+            "classifier_version": "classifier-v1",
         }
         upsert_outcome(outcome_record, db_path=db_path)
         evaluated_horizons += 1

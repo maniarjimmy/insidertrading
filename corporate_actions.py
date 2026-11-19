@@ -203,16 +203,59 @@ def adjust_price_for_corporate_actions(prices: List[Dict[str, Any]],
     """
     Adjust historical daily price candles backwards for stock splits and bonus issues.
     Each candle should have {'date': 'YYYY-MM-DD', 'open': ..., 'high': ..., 'low': ..., 'close': ..., 'volume': ...}
+    Includes guard against double-adjusting already-adjusted price series (no-ops if already adjusted).
     """
     if not prices or not actions:
         return prices
 
     # Filter actions to splits and bonuses
-    split_bonuses = [
+    candidate_actions = [
         a for a in actions
         if a.get("action_type") in ("SPLIT", "BONUS") and a.get("ratio", 1.0) > 1.0
     ]
-    if not split_bonuses:
+    if not candidate_actions:
+        return prices
+
+    # Build chronological map for ex-date discontinuity detection
+    chronological = sorted(prices, key=lambda x: parse_date(x["date"]))
+    date_to_idx = {c["date"]: i for i, c in enumerate(chronological)}
+
+    # Determine which actions are genuinely unadjusted in the input data
+    applicable_actions = []
+    for act in candidate_actions:
+        ex_dt_str = act.get("ex_date", "")
+        ratio = float(act.get("ratio", 1.0))
+        sym = act.get("symbol", "")
+
+        # Find ex-date candle index (or first candle on/after ex-date)
+        ex_idx = None
+        for i, c in enumerate(chronological):
+            if parse_date(c["date"]) >= parse_date(ex_dt_str):
+                ex_idx = i
+                break
+
+        if ex_idx is not None and ex_idx > 0:
+            c_ex = chronological[ex_idx]
+            c_pre = chronological[ex_idx - 1]
+            close_ex = c_ex.get("close")
+            close_pre = c_pre.get("close")
+
+            if close_ex and close_pre and close_ex > 0 and close_pre > 0:
+                raw_ratio = close_pre / close_ex
+                # If raw_ratio is already close to 1.0 and far from ratio, series is already adjusted
+                dist_from_1 = abs(raw_ratio - 1.0)
+                dist_from_ratio = abs(raw_ratio - ratio)
+
+                if dist_from_1 < dist_from_ratio and ratio >= 1.3:
+                    logger.warning(
+                        "Data already adjusted for %s at ex-date %s (pre=%.2f, ex=%.2f, raw_ratio=%.2f, action_ratio=%.2f). Skipping adjustment.",
+                        sym, ex_dt_str, close_pre, close_ex, raw_ratio, ratio
+                    )
+                    continue
+
+        applicable_actions.append(act)
+
+    if not applicable_actions:
         return prices
 
     # Sort candles descending by date
@@ -235,7 +278,7 @@ def adjust_price_for_corporate_actions(prices: List[Dict[str, Any]],
             adj_candle["adj_factor"] = 1.0
 
         # When stepping past an ex-date into the past, accumulate factor for earlier candles
-        for act in split_bonuses:
+        for act in applicable_actions:
             ex_dt = parse_date(act["ex_date"])
             if ex_dt == c_date:
                 cumulative_factor *= act["ratio"]

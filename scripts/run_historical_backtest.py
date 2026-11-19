@@ -90,10 +90,10 @@ class BacktestHarness:
         self._announcements_cache[symbol] = ann
         return ann
 
-    def run_simulation(self, dry_run: bool = False) -> Dict[str, Any]:
+    def run_simulation(self, dry_run: bool = True) -> Dict[str, Any]:
         """
         Execute backtest across all trading days in the date range.
-        Gated by approval: will not execute unless explicitly triggered.
+        Gated by lock file and explicit approval: will not execute unless explicitly triggered with logged override.
         """
         logger.info(
             "Initializing Historical Backtest | Range: %s to %s | Type: %s | DryRun: %s",
@@ -103,8 +103,17 @@ class BacktestHarness:
             dry_run,
         )
 
+        lock_file = os.path.join(BASE_DIR, "output", "backtest", "lock.json")
+        lock_info = {}
+        if os.path.exists(lock_file):
+            try:
+                with open(lock_file, "r", encoding="utf-8") as f:
+                    lock_info = json.load(f)
+            except Exception:
+                pass
+
         if dry_run:
-            logger.info("Dry-run mode enabled. Validating configuration and endpoints without executing simulation loop.")
+            logger.info("Dry-run mode enabled. Validating configuration and lock gate without executing simulation loop.")
             return {
                 "status": "DRY_RUN_SUCCESS",
                 "start_date": self.start_date.isoformat(),
@@ -112,7 +121,18 @@ class BacktestHarness:
                 "in_sample": self.is_in_sample,
                 "pre_move_window": f"[T-{self.pre_move_window_days}, T]",
                 "forward_window": f"[T+1, T+{self.forward_window_days}]",
+                "locked": lock_info.get("locked", True),
+                "classifier_hash": lock_info.get("classifier_hash", "classifier-v1"),
+                "prereg_tag_sha": lock_info.get("prereg_tag_sha", "prereg-v2"),
             }
+
+        # Gate out-of-sample and full backtest behind lock file
+        if lock_info.get("locked", True) and not lock_info.get("override_logged", False):
+            raise PermissionError(
+                f"Backtest execution is locked behind {lock_info.get('classifier_tag', 'classifier-v1')} "
+                f"and {lock_info.get('prereg_tag', 'prereg-v2')} lock file ({lock_file}). "
+                "No execution permitted without explicit user authorization and a logged override."
+            )
 
         raise NotImplementedError(
             "Backtest simulation execution is built but locked. "

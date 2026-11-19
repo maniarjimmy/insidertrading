@@ -96,3 +96,32 @@ def test_trading_days_between_and_count():
     # count_trading_days excludes start date (elapsed days): 04-06 and 04-07 = 2
     count = count_trading_days(date(2026, 4, 2), date(2026, 4, 7))
     assert count == 2
+
+
+def test_partial_sessions_excluded_from_tn():
+    """
+    Verify that partial/special sessions (Muhurat, Saturday DR sessions) are:
+    1. Identified by is_partial_session.
+    2. Excluded from is_trading_day by default (exclude_partial=True).
+    3. Excluded from T+N forward calculation (get_next_trading_day).
+    """
+    from holidays import is_partial_session
+
+    # 2024-11-01 is Muhurat Trading (Diwali Laxmi Pujan)
+    assert is_partial_session("2024-11-01") is True
+    assert is_trading_day("2024-11-01") is False
+
+    # Special Saturday disaster recovery sessions in 2024
+    for sat in ("2024-01-20", "2024-03-02", "2024-05-18"):
+        assert is_partial_session(sat) is True
+        assert is_trading_day(sat) is False
+
+    # Regular session is not a partial session
+    assert is_partial_session("2024-11-04") is False
+
+    # Advancing from Thursday 2024-10-31 by 1 trading day:
+    # 2024-11-01 (Muhurat partial session) and weekend (11-02, 11-03) are skipped,
+    # landing on Monday 2024-11-04!
+    next_day = get_next_trading_day(date(2024, 10, 31), n=1)
+    assert next_day == date(2024, 11, 4)
+

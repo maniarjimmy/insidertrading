@@ -150,31 +150,61 @@ flowchart TD
    * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
    * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
    * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
-3. **Rigorous Signal Evaluation & Pre-Registration (prereg-v1)**:
+3. **Rigorous Signal Evaluation & Pre-Registration (prereg-v2)**:
    * **Primary Pre-Registered Hypothesis**:
-     - **Primary Outcome**: Occurrence of an **unscheduled-material corporate filing** (orders, M&A, capital restructuring, commercial production, credit rating, regulatory actions; excluding scheduled financial results and board meetings) within **10 trading days ($T+1..T+10$)**.
+     - **Primary Outcome**: Occurrence of an **unscheduled-material corporate filing** (orders, M&A, capital restructuring, commercial production, credit rating, regulatory actions; excluding scheduled financial results and board meeting outcomes) within **10 trading days ($T+1..T+10$)**.
      - **Statistical Test**: One-sided paired test (paired McNemar test / exact binomial sign test on discordant pairs $n_{10} > n_{01}$) at pre-registered significance level $\alpha = 0.05$.
      - **Pre-Registered Success Criterion**: $\text{Lift} \ge 1.25\text{x}$ with one-sided $p < 0.05$ against matched controls. Null hypothesis: $H_0: \text{Lift} \le 1.0$ (no evidence of a positive edge).
-   * **Secondary Outcomes (Exploratory / Sensitivity)**:
-     - Short-horizon forward window: $T+1..T+3$ unscheduled-material filings.
-     - Comprehensive filings window: All-material filings (scheduled financial results, board meetings + unscheduled catalysts) at $T+1..T+10$ and $T+1..T+3$.
-     - Return tracking: Forward excess returns ($R_i - R_m$) over $T+1..T+10$.
+   * **Primary Test Architecture**:
+     - **One Pooled 24-Month Primary Test**: The primary hypothesis test is evaluated as a single pooled 24-month backtest across historical exchange data using the fixed current rules (no mid-stream rule adjustments). A train/test or in-sample/holdout split is reserved exclusively for subsequent tuned versions or parameter optimization.
+     - **Exclusion of Development Period**: The development period (February–May 2026 and November 2026) is strictly labeled as **non-independent / development sample** and is excluded from the primary test dataset.
+   * **Power Calculation & Reconciled Flag Rate (Empirically Recomputed)**:
+     - **Base Rate for Primary Outcome**: In the empirical pilot with unique matched controls, the observed base rate of forward unscheduled-material filings for matched controls is $P_0 = 18.2\%$ ($P_1 = 1.25 \times 18.2\% = 22.75\%$, effect size $\Delta = +4.55\%$, discordant rate $p_{\text{disc}} \approx 30.0\%$).
+     - **Sample Size Required**: To detect a $1.25\text{x}$ lift with $80\%$ statistical power ($\beta = 0.20$) at one-sided $\alpha = 0.05$, the paired McNemar test requires **$N = 898$ clean matched pairs**.
+     - **Empirical Pilot Pair-Yield**: Pilot measurements (March & April 2026) confirm clean paired yield is **$68.7\%$** of raw flags after filtering pre-move filings ($[T-3, T]$) and corporate actions.
+     - **Reconciled Raw Flag Rate**:
+       * Pilot Observation: During the high-volatility / earnings season pilot, the raw flag rate was ~2.2 to 2.5 flags/day.
+       * Annualized Steady-State Rate: Across a full trading year including quiet periods and applying the 5-day repeat-flag cooldown, the expected rate is **~375–450 raw flags/year** (~1.5–1.8 flags/day).
+       * Pair Yield Projection:
+         - Individual 12-Month Period: 375–450 raw flags $\times 68.7\% \approx 258\text{--}310$ clean pairs (reaches only **$\sim 35\%\text{--}42\%$ power** for $1.25\text{x}$ lift). Neither 12-month half alone can achieve 80% power.
+         - Pooled 24-Month Period: 750–900 raw flags $\times 68.7\% \approx 515\text{--}618$ clean pairs (reaches **$\sim 65\%\text{--}75\%$ power** for $1.25\text{x}$ lift, and $>80\%$ power if the true lift is $\ge 1.30\text{x}$).
+       * Conclusion: A pooled 24-month sample is statistically mandatory to approach adequate power.
+   * **Universe Proxy Specification & Justification**:
+     - **Turnover Rank 101–500 Chosen**: We select daily turnover rank 101–500 (point-in-time from official NSE UDDiP Bhavcopy) as the primary universe proxy for the historical backtest over the static live band (Nifty 500 market-cap ranks 210–500).
+     - **Justification**:
+       1. *Eliminates Survivorship Bias*: Historical daily turnover ranks are computed purely from point-in-time daily bhavcopy without survivorship or lookahead bias inherent in static retrospective index membership lists.
+       2. *Institutional Exclusion*: Ranks 1–100 (mega/large caps) are heavily covered by institutional analysts and driven by algorithmic flows where retail insider leakage is negligible.
+       3. *Liquidity Assurance*: Ranks 101–500 ensure liquid, tradable mid/small-cap equities while filtering out illiquid micro-caps below rank 500 that suffer from chronic market-maker spreads.
+   * **Standardized Operational Backtest Rules**:
+     1. **EOD Flag Thresholds**:
+        - Daily price return: $|r_{\text{day}}| \ge 3.0\%$
+        - Volume ratio: $V / \text{SMA}_{20}(V) \ge 2.5\text{x}$
+        - Anomaly Score: $\ge 60.0$
+        - Delivery percentage: $\ge 35.0\%$ (when MTO delivery data is available)
+     2. **Matching Algorithm & Tolerance**:
+        - Each flag on scan date $T$ is paired with 1 matched control from the eligible universe on the SAME scan date $T$.
+        - Exact matching on 20-day Average Daily Turnover quintile ($\pm 20\%$ tolerance) and 60-day historical volatility quintile ($\pm 20\%$ tolerance).
+        - Controls are sampled strictly without replacement across all scan dates to eliminate repeat-control correlation.
+     3. **Repeat-Flag Cooldown**:
+        - 5-trading-day cooldown on the same symbol: if a symbol triggers multiple flags within 5 trading days, only the initial flag is retained.
+     4. **Exclusions**:
+        - *Corporate Actions*: Flags occurring within ex-date $\pm 2$ trading days of any stock split, bonus issue, or rights issue are strictly excluded.
+        - *Partial Sessions*: Truncated / abnormal sessions (Muhurat trading, disaster recovery Saturday sessions) are tagged `partial_session` and excluded from event studies and $T+N$ counting.
+        - *Surveillance Lists*: Securities in Long-term ASM or Stage 2+ GSM on scan date $T$ are excluded.
+        - *Circuit Limit Days*: Days where the stock touches upper/lower circuit and does not trade freely (zero volume or close at circuit tick) are excluded.
+     5. **Clean-Pair Definition**:
+        - Both flag stock and matched control stock must have NO material filing in the pre-move window $[T-3, T]$.
+        - Both must have verified $T+1$ Open entry price and full $T+1..T+10$ historical candle history.
+     6. **Overlap & Clustering Handling**:
+        - Statistical inference incorporates cluster bootstrap by scan date (B=1,000) and cluster grouping by symbol to correct for cross-sectional market clustering.
+     7. **Minimum Liquidity Floor**:
+        - 20-day average daily turnover $\ge \text{INR } 5\text{ Cr}$ ($\approx \$600\text{k}$ USD equivalent).
+     8. **Classifier Hash & Settings**:
+        - Classifier version locked at Git tag `classifier-v1`.
+        - Parameter setting: `parse_pdf = True` (cached locally in `output/cache/pdf_text_cache.json`, throttled).
    * **Standardized Table Window Labels**: Every contingency and lift table must explicitly state both:
      - **Pre-Move Window**: $[T-3, T]$ (baseline 3 calendar days prior to scan) or $[T-10, T]$ (10 calendar days sensitivity).
      - **Forward Horizon Window**: $[T+1, T+10]$ (primary 10 trading days) or $[T+1, T+3]$ (secondary 3 trading days).
-   * **Power Calculation & Empirical Pilot Yield (Updated)**:
-     - **Empirical Pilot Retention**: Tested on 1-month pilot periods (March & April 2026 historical scans) with unique matched controls and frozen classifier rules:
-       * March 2026: 40 raw flags $\to$ 34 clean flags (85.0%) $\to$ 27 unique clean pairs (Retention: **67.5%**).
-       * April 2026: 63 raw flags $\to$ 56 clean flags (88.9%) $\to$ 44 unique clean pairs (Retention: **69.8%**).
-       * Weighted average clean pair retention rate: **$68.7\%$**.
-     - **Required Sample Size**: For one-sided paired test ($\alpha = 0.05, 1-\beta = 0.80$, base rate $P_0 = 36.4\%$, target $P_1 = 45.5\%$ for $1.25\text{x}$ lift, discordant rate $p_{\text{disc}} \approx 0.415$): $N_{\text{pairs}} \approx 308$ clean matched pairs.
-     - **12-Month Reachability**: ~375–450 raw flags $\times 68.7\% \approx 258\text{--}310$ clean pairs (yields **~72%–80% statistical power**, borderline for an individual 12-month split).
-     - **Full 24-Month Backtest**: ~750–900 raw flags $\times 68.7\% \approx 515\text{--}618$ clean pairs (reaches **$>96\%$ statistical power**).
-   * **Point-in-Time Universe & Turnover-Rank Proxy**:
-     - Official semi-annual index reconstitution circulars are used where archived constituent files exist.
-     - Where continuous daily constituent archives are unavailable, the **Turnover-Rank Proxy** is used: on any historical scan date $T$, rank all active EQ/BE equities by 6-month rolling ADTV (Average Daily Turnover in INR) from UDDiP Bhavcopy; select stocks ranked 101–500. This provides a survivorship-bias-free, point-in-time universe.
-   * **Time Split (Train/Test)**: In-sample development on the earlier 12 months (e.g. Nov 2024–Oct 2025) and strictly out-of-sample testing on the subsequent 12 months (Nov 2025–Nov 2026).
-   * **Signal Evaluation (EOD vs 14:30 Intraday)**: Comparative backtest evaluating EOD signals (using final Bhavcopy & delivery) vs 14:30 IST snapshot signals to quantify alpha decay and false-positive rates of intraday alerting.
    * **Per-Symbol Announcements Caching**: Persistent local disk caching of raw corporate announcements by symbol (`output/cache/announcements/<symbol>.json`) to eliminate redundant HTTP calls across repeated backtest runs.
    * Filter pre-move filings strictly before each flag timestamp.
    * Compute forward returns ($T+1$ Open to $T+10$) and corporate announcement lift vs. liquidity/volatility quintile-matched controls.

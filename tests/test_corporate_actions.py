@@ -120,3 +120,97 @@ def test_adjust_price_for_corporate_actions():
     assert c2["date"] == "2026-03-25"
     assert c2["close"] == 108.0  # Already at ex-bonus price
     assert c2["volume"] == 2500
+
+
+def test_real_corporate_actions_uddip():
+    """
+    Test corporate action adjustment on real historical data from official NSE UDDiP Bhavcopy.
+    Asserts:
+    1. Adjusted economic returns across ex-date are plausible (|r| < 25%).
+    2. Adjuster refuses / no-ops on already-adjusted data (preventing double-adjustment).
+    """
+    real_cases = [
+        {
+            "symbol": "COCHINSHIP",
+            "action": {"symbol": "COCHINSHIP", "action_type": "SPLIT", "ratio": 2.0, "ex_date": "2024-01-10"},
+            "raw_candles": [
+                {"date": "2024-01-08", "close": 1293.65, "volume": 2299797},
+                {"date": "2024-01-09", "close": 1338.00, "volume": 3355705},
+                {"date": "2024-01-10", "close": 802.80, "volume": 22442717},
+                {"date": "2024-01-11", "close": 772.80, "volume": 11469695},
+            ]
+        },
+        {
+            "symbol": "CANBK",
+            "action": {"symbol": "CANBK", "action_type": "SPLIT", "ratio": 5.0, "ex_date": "2024-05-15"},
+            "raw_candles": [
+                {"date": "2024-05-13", "close": 549.35, "volume": 10498821},
+                {"date": "2024-05-14", "close": 566.55, "volume": 9219466},
+                {"date": "2024-05-15", "close": 119.00, "volume": 58148316},
+                {"date": "2024-05-16", "close": 113.70, "volume": 83518740},
+            ]
+        },
+        {
+            "symbol": "BPCL",
+            "action": {"symbol": "BPCL", "action_type": "BONUS", "ratio": 2.0, "ex_date": "2024-06-21"},
+            "raw_candles": [
+                {"date": "2024-06-19", "close": 615.80, "volume": 9824003},
+                {"date": "2024-06-20", "close": 626.25, "volume": 9038323},
+                {"date": "2024-06-21", "close": 307.60, "volume": 30004484},
+                {"date": "2024-06-24", "close": 305.25, "volume": 7557297},
+            ]
+        },
+        {
+            "symbol": "HINDPETRO",
+            "action": {"symbol": "HINDPETRO", "action_type": "BONUS", "ratio": 1.5, "ex_date": "2024-06-21"},
+            "raw_candles": [
+                {"date": "2024-06-19", "close": 515.50, "volume": 6529379},
+                {"date": "2024-06-20", "close": 523.80, "volume": 4582098},
+                {"date": "2024-06-21", "close": 340.85, "volume": 13108523},
+                {"date": "2024-06-24", "close": 337.95, "volume": 8084076},
+            ]
+        },
+        {
+            "symbol": "OIL",
+            "action": {"symbol": "OIL", "action_type": "BONUS", "ratio": 1.5, "ex_date": "2024-07-02"},
+            "raw_candles": [
+                {"date": "2024-06-28", "close": 723.05, "volume": 6366365},
+                {"date": "2024-07-01", "close": 713.85, "volume": 3516710},
+                {"date": "2024-07-02", "close": 485.35, "volume": 12658263},
+                {"date": "2024-07-03", "close": 495.30, "volume": 3237838},
+            ]
+        },
+        {
+            "symbol": "NESTLEIND",
+            "action": {"symbol": "NESTLEIND", "action_type": "SPLIT", "ratio": 10.0, "ex_date": "2024-01-05"},
+            "raw_candles": [
+                {"date": "2024-01-03", "close": 26635.20, "volume": 101346},
+                {"date": "2024-01-04", "close": 27116.40, "volume": 132390},
+                {"date": "2024-01-05", "close": 2666.40, "volume": 2577064},
+                {"date": "2024-01-08", "close": 2619.30, "volume": 1032378},
+            ]
+        },
+    ]
+
+    for case in real_cases:
+        sym = case["symbol"]
+        act = case["action"]
+        raw = [dict(c) for c in case["raw_candles"]]
+        adj = adjust_price_for_corporate_actions(raw, [act])
+
+        # Find ex-date candle and pre-ex candle
+        ex_idx = [i for i, c in enumerate(adj) if c["date"] == act["ex_date"]][0]
+        c_pre = adj[ex_idx - 1]
+        c_ex = adj[ex_idx]
+
+        # Calculate ex-date adjusted economic return
+        adj_return = ((c_ex["close"] - c_pre["close"]) / c_pre["close"]) * 100.0
+        assert abs(adj_return) < 25.0, (
+            f"Ex-date adjusted return for {sym} ({adj_return:.2f}%) exceeds plausible 25% threshold"
+        )
+
+        # Test double-adjustment prevention guard:
+        # Re-running adjustment on already-adjusted data must NO-OP
+        re_adj = adjust_price_for_corporate_actions(adj, [act])
+        assert re_adj[0]["close"] == adj[0]["close"], f"Double adjustment guard failed to no-op for {sym}"
+

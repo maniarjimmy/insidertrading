@@ -124,10 +124,17 @@ def init_db(db_path: Optional[str] = None, auto_hydrate: bool = False) -> None:
                 announcement_date TEXT,
                 announcement_title TEXT,
                 announcement_url TEXT,
+                classifier_version VARCHAR(32) DEFAULT 'classifier-v1',
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 UNIQUE(flag_id, horizon_days)
             )
         """)
+
+        # Migration: Ensure classifier_version exists on outcomes
+        cursor.execute("PRAGMA table_info(outcomes)")
+        outcome_cols = {row[1] for row in cursor.fetchall()}
+        if "classifier_version" not in outcome_cols:
+            cursor.execute("ALTER TABLE outcomes ADD COLUMN classifier_version VARCHAR(32) DEFAULT 'classifier-v1'")
 
         # 3. Deals table (Bulk & Block deals daily snapshot)
         cursor.execute("""
@@ -253,12 +260,12 @@ def upsert_outcome(outcome_data: Dict[str, Any], db_path: Optional[str] = None) 
             flag_id, horizon_days, entry_price, forward_return,
             benchmark_return, excess_return, announcement_found,
             announcement_type, is_material, announcement_date,
-            announcement_title, announcement_url, updated_at
+            announcement_title, announcement_url, classifier_version, updated_at
         ) VALUES (
             :flag_id, :horizon_days, :entry_price, :forward_return,
             :benchmark_return, :excess_return, :announcement_found,
             :announcement_type, :is_material, :announcement_date,
-            :announcement_title, :announcement_url, CURRENT_TIMESTAMP
+            :announcement_title, :announcement_url, :classifier_version, CURRENT_TIMESTAMP
         )
         ON CONFLICT(flag_id, horizon_days) DO UPDATE SET
             entry_price = excluded.entry_price,
@@ -271,6 +278,7 @@ def upsert_outcome(outcome_data: Dict[str, Any], db_path: Optional[str] = None) 
             announcement_date = excluded.announcement_date,
             announcement_title = excluded.announcement_title,
             announcement_url = excluded.announcement_url,
+            classifier_version = excluded.classifier_version,
             updated_at = CURRENT_TIMESTAMP
         RETURNING id
     """
@@ -287,6 +295,7 @@ def upsert_outcome(outcome_data: Dict[str, Any], db_path: Optional[str] = None) 
         "announcement_date": outcome_data.get("announcement_date"),
         "announcement_title": outcome_data.get("announcement_title"),
         "announcement_url": outcome_data.get("announcement_url"),
+        "classifier_version": outcome_data.get("classifier_version", "classifier-v1"),
     }
 
     with get_connection(path) as conn:
@@ -650,19 +659,33 @@ def export_db_to_csv(db_path: Optional[str] = None, output_dir: Optional[str] = 
                 logger.warning("Could not read existing CSV %s: %s", filepath, exc)
 
         if not existing_df.empty and not new_df.empty:
-            # Union existing and new, deduplicating by (symbol, scan_timestamp date prefix)
             for c in cols:
                 if c not in existing_df.columns:
                     existing_df[c] = None
                 if c not in new_df.columns:
                     new_df[c] = None
             
-            combined = pd.concat([existing_df[cols], new_df[cols]], ignore_index=True)
+            # Ensure run_type column exists for deduplication
+            if "run_type" not in existing_df.columns:
+                existing_df["run_type"] = "eod"
+            if "run_type" not in new_df.columns:
+                new_df["run_type"] = "eod"
+
+            existing_df["run_type"] = existing_df["run_type"].fillna("eod")
+            new_df["run_type"] = new_df["run_type"].fillna("eod")
+
+            # Union existing (from disk) and new (from DB), ensuring DB rows take precedence (keep='last')
+            combined = pd.concat([existing_df, new_df], ignore_index=True)
             combined["_dedup_ts"] = combined["scan_timestamp"].astype(str).str.split().str[0]
-            combined = combined.drop_duplicates(subset=["symbol", "_dedup_ts"], keep="last")
+            # Deduplicate by (symbol, scan_date, run_type)
+            combined = combined.drop_duplicates(subset=["symbol", "_dedup_ts", "run_type"], keep="last")
             combined = combined.drop(columns=["_dedup_ts"])
             combined = combined.sort_values(by=["scan_timestamp", "symbol"])
-            combined.to_csv(filepath, index=False, encoding="utf-8")
+
+            save_cols = [c for c in cols if c in combined.columns]
+            if "run_type" in combined.columns and "run_type" not in save_cols:
+                save_cols.append("run_type")
+            combined[save_cols].to_csv(filepath, index=False, encoding="utf-8")
         elif not new_df.empty:
             new_df[cols].to_csv(filepath, index=False, encoding="utf-8")
         elif not existing_df.empty:

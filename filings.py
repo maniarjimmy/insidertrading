@@ -203,13 +203,15 @@ def _load_pdf_text_cache() -> Dict[str, str]:
     return _PDF_TEXT_CACHE
 
 
-def extract_pdf_first_page_text(url: str) -> str:
+def extract_pdf_first_page_text(url: str, fetch_remote: bool = True) -> str:
     """Download and extract text from the first page of an exchange attachment PDF with local disk caching."""
     if not url or not str(url).startswith("http"):
         return ""
     cache = _load_pdf_text_cache()
     if url in cache:
         return cache[url]
+    if not fetch_remote:
+        return ""
 
     try:
         import io
@@ -239,7 +241,8 @@ def classify_catalyst(desc: Optional[str] = None,
                       text: Optional[str] = None,
                       source: str = "filing",
                       url: Optional[str] = None,
-                      parse_pdf: bool = False) -> Tuple[str, int, str]:
+                      parse_pdf: bool = True,
+                      fetch_remote_pdf: bool = True) -> Tuple[str, int, str]:
     """
     Unified classifier for corporate filings and news headlines.
     Rule Sequence:
@@ -297,7 +300,7 @@ def classify_catalyst(desc: Optional[str] = None,
         "announcement",
     ]
     if parse_pdf and url and any(g in clean_desc.lower() for g in generic_descs):
-        pdf_text = extract_pdf_first_page_text(url)
+        pdf_text = extract_pdf_first_page_text(url, fetch_remote=fetch_remote_pdf)
         if pdf_text:
             pdf_combined = f"{clean_desc} {pdf_text}".lower()
             for pattern, cat_name in ROUTINE_TEXT_PATTERNS:

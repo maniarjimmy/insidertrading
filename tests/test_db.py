@@ -290,3 +290,116 @@ def test_export_preserves_history_when_db_has_fewer_records():
         assert len(result_df) == 6
         assert "NEWSTOCK" in result_df["symbol"].values
         assert "HIST0" in result_df["symbol"].values
+
+
+def test_export_db_to_csv_dedupe_run_type_and_db_precedence():
+    """
+    Test PR1 CSV merge safety:
+    1. Dedupe key includes run_type: keeps both intraday and eod for same symbol/date.
+    2. DB rows win for updated fields when symbol/date/run_type matches.
+    """
+    import pandas as pd
+    with tempfile.TemporaryDirectory() as td:
+        susp_file = os.path.join(td, "suspicious_master.csv")
+        # Existing CSV contains:
+        # - INFY intraday scan on 2026-11-18 with price 1500
+        # - INFY eod scan on 2026-11-18 with outdated price 1505
+        existing_df = pd.DataFrame([
+            {
+                "scan_timestamp": "2026-11-18 11:30:00",
+                "symbol": "INFY",
+                "company": "Infosys Ltd",
+                "industry": "IT",
+                "current_price": 1500.0,
+                "prev_close": 1490.0,
+                "pct_change": 0.67,
+                "current_volume": 50000,
+                "avg_volume_20d": 30000,
+                "volume_ratio": 1.67,
+                "has_catalyst_news": 0,
+                "classification": "NONE",
+                "headlines": "",
+                "news_source": "test",
+                "run_type": "intraday",
+            },
+            {
+                "scan_timestamp": "2026-11-18 16:00:00",
+                "symbol": "INFY",
+                "company": "Infosys Ltd",
+                "industry": "IT",
+                "current_price": 1505.0,  # Old price
+                "prev_close": 1490.0,
+                "pct_change": 1.01,
+                "current_volume": 120000,
+                "avg_volume_20d": 30000,
+                "volume_ratio": 4.0,
+                "has_catalyst_news": 0,
+                "classification": "NONE",
+                "headlines": "",
+                "news_source": "test",
+                "run_type": "eod",
+            }
+        ])
+        existing_df.to_csv(susp_file, index=False)
+
+        # Fresh DB with updated EOD scan for INFY (e.g. final verified price 1520.0)
+        test_db = os.path.join(td, "merge_test.db")
+        init_db(test_db)
+        upsert_flag({
+            "scan_date": "2026-11-18 16:30:00",
+            "symbol": "INFY",
+            "company": "Infosys Ltd",
+            "industry": "IT",
+            "current_price": 1520.0,  # Updated price from DB
+            "prev_close": 1490.0,
+            "price_change": 2.01,
+            "current_volume": 130000,
+            "avg_volume_20d": 30000,
+            "volume_ratio": 4.33,
+            "score": 82.0,
+            "status": "ACTIVE",
+            "catalyst_state": "NONE",
+            "run_type": "eod",
+            "is_control": 0
+        }, db_path=test_db)
+
+        # Export DB to CSV in same folder
+        export_db_to_csv(db_path=test_db, output_dir=td)
+
+        res_df = pd.read_csv(susp_file)
+        # Should have exactly 2 rows: 1 intraday + 1 eod (no duplicate eod)
+        assert len(res_df) == 2
+
+        # Check intraday row is preserved
+        intraday_row = res_df[res_df["run_type"] == "intraday"].iloc[0]
+        assert intraday_row["current_price"] == 1500.0
+
+        # Check EOD row has DB updated price (1520.0 wins over 1505.0)
+        eod_row = res_df[res_df["run_type"] == "eod"].iloc[0]
+        assert eod_row["current_price"] == 1520.0
+
+
+def test_outcomes_classifier_version_column(temp_db):
+    """Test that classifier_version column exists on outcomes table and defaults to classifier-v1."""
+    flag_id = upsert_flag({
+        "scan_date": "2026-03-10",
+        "symbol": "TESTSYM",
+        "company": "Test Co",
+        "current_price": 100.0,
+        "is_control": 0
+    }, db_path=temp_db)
+
+    out_id = upsert_outcome({
+        "flag_id": flag_id,
+        "horizon_days": 10,
+        "entry_price": 100.0,
+        "is_material": 1,
+        "classifier_version": "classifier-v1"
+    }, db_path=temp_db)
+
+    with get_connection(temp_db) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT classifier_version FROM outcomes WHERE id=?", (out_id,))
+        row = cursor.fetchone()
+        assert row["classifier_version"] == "classifier-v1"
+

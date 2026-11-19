@@ -1,0 +1,11 @@
+{
+  "locked": true,
+  "classifier_tag": "classifier-v1",
+  "classifier_hash": "classifier-v1",
+  "prereg_tag": "prereg-v2",
+  "prereg_tag_sha": "prereg-v2",
+  "override_logged": false,
+  "authorized_by": null,
+  "override_timestamp": null,
+  "notes": "Backtest execution and out-of-sample partition are strictly locked pending explicit user authorization after review."
+}

@@ -25,6 +25,16 @@ from config import (
 
 logger = setup_logging("holidays")
 
+# Partial or special sessions (Muhurat trading, disaster recovery / Saturday live trading)
+# Excluded from event study windows and standard T+N counting due to truncated hours / abnormal liquidity.
+PARTIAL_SESSIONS: Set[str] = {
+    "2024-01-20",  # Saturday Special Live Trading (Ram Mandir rescheduled session)
+    "2024-03-02",  # Saturday Disaster Recovery site failover live trading
+    "2024-05-18",  # Saturday Disaster Recovery site failover live trading
+    "2024-11-01",  # Muhurat Trading 2024 (1-hour evening session: 18:00 - 19:15 IST)
+    "2025-10-21",  # Muhurat Trading 2025 (Diwali Laxmi Pujan 1-hour session)
+}
+
 # In-memory cache of loaded trading holidays (ISO string: "YYYY-MM-DD")
 _HOLIDAY_CACHE: Optional[Set[str]] = None
 _LAST_SYNC_TIMESTAMP: Optional[float] = None
@@ -199,19 +209,34 @@ def get_holiday_set(db_path: str = DB_PATH, refresh: bool = False) -> Set[str]:
     return _HOLIDAY_CACHE
 
 
-def is_trading_day(d: Union[date, datetime, str], db_path: str = DB_PATH) -> bool:
+def is_partial_session(d: Union[date, datetime, str]) -> bool:
     """
-    Check if a given date is an active NSE trading day.
-    Returns False for Saturdays, Sundays, and official trading holidays.
+    Check if a given date is a partial/special trading session
+    (e.g., 1-hour Muhurat trading or special Saturday disaster recovery session).
     """
     parsed = parse_date(d)
+    return parsed.strftime("%Y-%m-%d") in PARTIAL_SESSIONS
+
+
+def is_trading_day(d: Union[date, datetime, str], db_path: str = DB_PATH, exclude_partial: bool = True) -> bool:
+    """
+    Check if a given date is an active full NSE trading day.
+    Returns False for Saturdays, Sundays, official trading holidays,
+    and partial sessions (Muhurat, Saturday DR sessions) when exclude_partial is True.
+    """
+    parsed = parse_date(d)
+    iso = parsed.strftime("%Y-%m-%d")
+
+    # Exclude partial/special sessions from standard trading day calculations
+    if exclude_partial and iso in PARTIAL_SESSIONS:
+        return False
+
     # 5 = Saturday, 6 = Sunday
     if parsed.weekday() >= 5:
         return False
 
     holidays = get_holiday_set(db_path)
     check_holiday_coverage(parsed, holidays)
-    iso = parsed.strftime("%Y-%m-%d")
     return iso not in holidays
 
 
