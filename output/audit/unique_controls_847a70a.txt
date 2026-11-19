@@ -1,0 +1,14 @@
+==========================================================================================
+STRICTLY UNIQUE CONTROLS (WITHOUT REPLACEMENT) PAIRED ANALYSIS | COMMIT: 847a70a
+==========================================================================================
+Sampling Policy: Controls sampled strictly without replacement across ALL scan dates.
+Eliminates potential correlation from control stock re-use.
+
+Clean Matched Pairs: N = 66
+All Material Filings:     Flag 31.82% vs Ctrl 31.82% | Lift 1.0x | Odds 1.0 | n10=14, n01=14 | p = 1.0
+Unscheduled-Material:     Flag 16.67% vs Ctrl 18.18% | Lift 0.92x | Odds 0.91 | n10=10, n01=11 | p = 1.0
+Contingency Table Breakdown:
+  All Material:       n11=7, n10=14, n01=14, n00=31
+  Unscheduled Only:   n11=1, n10=10, n01=11, n00=44
+Verdict: Lift is exactly 1.00x (All Material) and 0.92x (Unscheduled), p = 1.000. Zero positive edge.
+==========================================================================================

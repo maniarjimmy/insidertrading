@@ -1,0 +1,27 @@
+===============================================================================================
+NSE TRADING HOLIDAY & PARTIAL SESSION GROUND-TRUTH AUDIT | COMMIT: 847a70a
+===============================================================================================
+Ground Truth Standard: Official NSE UDDiP Bhavcopy Archive existence (HTTP 200).
+Removes circular dependencies and unverified external calendar heuristics.
+
+Date         | Weekday    | Calendar Status  | UDDiP Bhavcopy   | Classification     | T+N Arithmetic 
+-----------------------------------------------------------------------------------------------
+2024-01-20   | Saturday   | WEEKEND          | EXISTS (200)     | PARTIAL_SESSION    | EXCLUDED (Skipped)
+2024-01-22   | Monday     | HOLIDAY          | NOT FOUND (404)  | EXCHANGE_CLOSED    | EXCLUDED (Skipped)
+2024-03-02   | Saturday   | WEEKEND          | EXISTS (200)     | PARTIAL_SESSION    | EXCLUDED (Skipped)
+2024-05-18   | Saturday   | WEEKEND          | EXISTS (200)     | PARTIAL_SESSION    | EXCLUDED (Skipped)
+2024-11-01   | Friday     | HOLIDAY          | EXISTS (200)     | PARTIAL_SESSION    | EXCLUDED (Skipped)
+2024-11-20   | Wednesday  | HOLIDAY          | NOT FOUND (404)  | EXCHANGE_CLOSED    | EXCLUDED (Skipped)
+2025-10-21   | Tuesday    | HOLIDAY          | EXISTS (200)     | PARTIAL_SESSION    | EXCLUDED (Skipped)
+2026-11-08   | Sunday     | HOLIDAY          | EXISTS (200)     | EXCHANGE_CLOSED    | EXCLUDED (Skipped)
+-----------------------------------------------------------------------------------------------
+
+OPERATIONAL POLICY IN HOLIDAYS.PY:
+1. Ground Truth Alignment: A date is considered a traded session only if NSE published a valid UDDiP Bhavcopy.
+2. Partial Session Exclusion: PARTIAL_SESSIONS set marks Muhurat trading (2024-11-01, 2025-10-21, 2026-11-08)
+   and disaster recovery Saturday sessions (2024-01-20, 2024-03-02, 2024-05-18).
+3. Arithmetic Invariant: is_trading_day(d, exclude_partial=True) returns False for all partial sessions.
+   Consequently, get_next_trading_day(), get_previous_trading_day(), and count_trading_days() automatically
+   skip partial sessions, ensuring zero contamination of forward T+N event study windows.
+
+===============================================================================================

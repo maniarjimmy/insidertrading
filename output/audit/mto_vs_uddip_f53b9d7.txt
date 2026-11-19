@@ -1,0 +1,27 @@
+===============================================================================================
+MTO TRADED QTY VS UDDIP BHAVCOPY VOLUME CROSS-CHECK | COMMIT: f53b9d7
+===============================================================================================
+Session Date: 2026-11-18
+Primary Source: Official NSE UDDiP Bhavcopy (BhavCopy_NSE_CM_0_0_0_20261118_F_0000.csv.zip)
+Delivery Source: Official NSE Security-wise Delivery Position (MTO_18112026.DAT)
+Acceptance Criteria: Zero discrepancy (Traded Qty in MTO == Total Traded Volume in UDDiP EQ series).
+
+#   | Symbol       | UDDiP Volume   | MTO Traded Qty   | Discrepancy  | Delivery Qty   | Deliv %  | Status
+-----------------------------------------------------------------------------------------------
+1   | RELIANCE     | 18,228,940     | 18,228,940       | 0            | 10,476,168     | 57.47   % | EXACT MATCH
+2   | TCS          | 1,374,716      | 1,374,716        | 0            | 612,272        | 44.54   % | EXACT MATCH
+3   | INFY         | 5,932,375      | 5,932,375        | 0            | 3,215,429      | 54.20   % | EXACT MATCH
+4   | HDFCBANK     | 21,579,720     | 21,579,720       | 0            | 12,566,939     | 58.23   % | EXACT MATCH
+5   | ICICIBANK    | 10,778,116     | 10,778,116       | 0            | 7,129,479      | 66.15   % | EXACT MATCH
+6   | SBIN         | 35,420,675     | 35,420,675       | 0            | 22,606,059     | 63.82   % | EXACT MATCH
+7   | BHARTIARTL   | 3,984,758      | 3,984,758        | 0            | 2,660,810      | 66.77   % | EXACT MATCH
+8   | ITC          | 17,029,644     | 17,029,644       | 0            | 7,883,640      | 46.29   % | EXACT MATCH
+9   | LT           | 1,148,593      | 1,148,593        | 0            | 648,217        | 56.44   % | EXACT MATCH
+10  | TATASTEEL    | 17,340,892     | 17,340,892       | 0            | 7,932,563      | 45.74   % | EXACT MATCH
+-----------------------------------------------------------------------------------------------
+Summary Verification:
+  Total Symbols Tested: 10
+  Exact Matches (Diff = 0): 10 / 10 (100.0%)
+  Discrepancies: 0
+  Conclusion: Verified 100% precision alignment between MTO Traded Quantity and UDDiP Bhavcopy Volume.
+===============================================================================================
