@@ -257,6 +257,176 @@ def classify_catalyst_v2(desc: Optional[str] = None,
     )
 
 
+def classify_catalyst_v3(desc: Optional[str] = None,
+                         text: Optional[str] = None,
+                         source: str = "filing") -> Tuple[str, int, str]:
+    """
+    classifier-v3: Signed positive unscheduled-material classifier for primary outcome.
+    Deterministic TEXT-ONLY (desc + attchmntText). Zero PDF extraction, zero network requests.
+    
+    Constituent Positive Unscheduled-Material Categories (is_material = 1):
+      - "Order Win": Commercial contracts, LOA, supply/construction agreements, PPA.
+      - "Acquisition (Third-Party)": Genuine third-party acquisitions, mergers, open offers.
+      - "Production Commencement": Plant commissioning, commercial operations launch.
+      - "Credit Rating (Upgrade)": Rating upgrades or new rating assignments.
+      - "Regulatory Approval": USFDA approvals/EIR VAI, product approvals, patent grants.
+
+    Separate Secondary / Routine Categories (is_material = 0 for primary positive):
+      - "Credit Rating (Downgrade)" / "Credit Rating (Reaffirmation)" / "Credit Rating (Other)"
+      - "Acquisition (Intra-Group/JV)" / "Disinvestment"
+      - "Fund Raising": Preferential issue, QIP, rights issue, warrants
+      - "Board Meeting" / "Financial Results": Scheduled disclosures
+      - "Routine Disclosure": Statutorily routine (SAST Reg 29/31, Dividend TDS, share certs, newspaper)
+    """
+    clean_desc = (desc or "").strip()
+    clean_text = (text or "").strip()
+    combined_text = f"{clean_desc} {clean_text}".lower()
+
+    # Priority 0a: Genuine Open Offer / Acquirer Disclosure Exemption check
+    is_open_offer = bool(re.search(
+        r"\b(open\s+offer|public\s+announcement|detailed\s+public\s+statement|"
+        r"draft\s+letter\s+of\s+offer|letter\s+of\s+offer|"
+        r"regulation\s+[345]\s*\(\s*[1-4]?\s*\)|regulation\s+18\s*\(\s*[1-4]?\s*\))\b",
+        combined_text,
+        re.IGNORECASE,
+    ))
+
+    # Priority 0b: Routine SAST Reg 29/31 exclusion (when NOT a genuine open offer)
+    if not is_open_offer and re.search(
+        r"\b(regulation\s+31\s*\(\s*[1-4]\s*\)|regulation\s+29\s*\(\s*[1-3]\s*\)|"
+        r"disclosure\s+under\s+regulation\s+31|disclosure\s+under\s+regulation\s+29|"
+        r"reg\.\s*31\s*\(\s*[1-4]\s*\)|reg\.\s*29\s*\(\s*[1-3]\s*\)|"
+        r"declaration\s+under\s+regulation\s+31|promoter\s+encumbrance|pledge\s+of\s+shares)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("NONE", 0, "Routine Disclosure")
+
+    # Priority 0c: Dividend TDS / Tax Deduction Routine Circular Exemption (TRITURBINE fix)
+    if re.search(
+        r"\b(tax\s+deduction\s+on\s+dividend|tds\s+on\s+dividend|"
+        r"deduction\s+of\s+tax\s+at\s+source\s+on\s+dividend|"
+        r"intimation\s+on\s+tax\s+deduction|tax\s+deducted\s+at\s+source\s+on\s+dividend|"
+        r"communication\s+to\s+shareholders\s*-\s*intimation\s+on\s+tax)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("NONE", 0, "Routine Disclosure")
+
+    # Priority 1: Exact / Normalized Routine Desc match
+    for rtn_desc, cat_name in ROUTINE_DESC_CATEGORIES.items():
+        if rtn_desc.lower() in clean_desc.lower():
+            return ("NONE", 0, cat_name)
+
+    # Priority 2a: Routine text patterns
+    for pattern, cat_name in ROUTINE_TEXT_PATTERNS:
+        if re.search(pattern, combined_text, re.IGNORECASE):
+            return ("NONE", 0, cat_name)
+
+    if re.search(r"\b(submission\s+of\s+newspaper|newspaper\s+publication|notice\s+published)\b", combined_text, re.IGNORECASE):
+        return ("NONE", 0, "Routine Disclosure")
+    if re.search(r"\b(transcript\s+of\s+(?:conference|concall|analyst)|audio\s+recording|video\s+recording)\b", combined_text, re.IGNORECASE):
+        return ("NONE", 0, "Routine Disclosure")
+
+    # Priority 2b: Credit Rating Sub-categorization
+    if "credit rating" in clean_desc.lower() or re.search(r"\b(crisil|icra|care\s+ratings?|india\s+ratings?|infomerics|acuite)\b", combined_text, re.IGNORECASE):
+        if re.search(r"\b(upgrade|upgraded|up-grade|revision\s+upwards?|revised\s+upwards?|assigned\s+(?:a\s+)?(?:new\s+)?rating|assignment\s+of\s+rating)\b", combined_text, re.IGNORECASE):
+            return ("CATALYST", 1, "Credit Rating (Upgrade)")
+        elif re.search(r"\b(downgrade|downgraded|down-grade|revision\s+downwards?|revised\s+downwards?)\b", combined_text, re.IGNORECASE):
+            return ("CATALYST", 0, "Credit Rating (Downgrade)")
+        elif re.search(r"\b(reaffirm|re-affirm|reaffirmed|re-affirmed|revalidated|withdrawal|withdrawn|stable\s+outlook)\b", combined_text, re.IGNORECASE):
+            return ("NONE", 0, "Credit Rating (Reaffirmation)")
+        else:
+            return ("NONE", 0, "Credit Rating (Other)")
+
+    # Priority 2c: Order Win (Positive Unscheduled-Material)
+    if any(k in clean_desc.lower() for k in ["award of order", "order / contract"]) or re.search(
+        r"\b(order\s+win|award\s+of\s+contract|signs?\s+contract|bags?\s+(?:new\s+)?orders?|"
+        r"secures?\s+(?:export\s+|new\s+)?orders?|receives?\s+(?:new\s+)?orders?|letter\s+of\s+award|"
+        r"contract\s+with|entered\s+into\s+(?:a\s+)?contract|construction\s+and\s+sale\s+of|"
+        r"award\s+of\s+(?:contract|order)|commercial\s+contract|signs?\s+ppa)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 1, "Order Win")
+
+    # Priority 2d: Production Commencement (Positive Unscheduled-Material)
+    if any(k in clean_desc.lower() for k in ["commercial production", "commencement of commercial"]) or re.search(
+        r"\b(commencement\s+of\s+commercial\s+production|commercial\s+production|"
+        r"operationalization\s+of\s+facility|plant\s+commissioning|capacity\s+commissioning)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 1, "Production Commencement")
+
+    # Priority 2e: Acquisition / M&A Sub-categorization
+    if is_open_offer or any(k in clean_desc.lower() for k in ["acquisition", "amalgamation", "merger", "takeover", "disinvestment", "diversification/disinvestment"]) or re.search(
+        r"\b(acqui(?:re[ds]?|sition)|amalgamation|merger|takeover|open\s+offer)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        # Disinvestment / Sale check (check clean_text for disinvestment even if filed under Acquisition desc)
+        if re.search(
+            r"\b(divest(?:ed|ment|ing)?|disinvest(?:ed|ment|ing)?|slump\s+sale|sale\s+of\s+(?:a\s+)?(?:subsidiary|division|business|manufacturing|shares?|stake)|stake\s+sale|share\s+sale)\b",
+            clean_text if clean_text else combined_text,
+            re.IGNORECASE,
+        ) and not re.search(r"\b(agreement\s+to\s+acquire|acquires?\b|completed\s+acquisition)\b", clean_text, re.IGNORECASE):
+            return ("CATALYST", 0, "Disinvestment")
+
+        # Intra-group / Subsidiary investment / JV check
+        if re.search(
+            r"\b(wholly\s+owned\s+subsidiary|intra-group|step-down\s+subsidiary|incorporation\s+of\s+(?:a\s+)?subsidiary|investment\s+in\s+subsidiary|joint\s+venture|formation\s+of\s+(?:a\s+)?jv)\b",
+            combined_text,
+            re.IGNORECASE,
+        ) and not re.search(r"\b(third[- ]party|independent\s+entity|agreement\s+to\s+acquire)\b", clean_text, re.IGNORECASE):
+            return ("CATALYST", 0, "Acquisition (Intra-Group/JV)")
+
+        return ("CATALYST", 1, "Acquisition (Third-Party)")
+
+    # Priority 2f: Regulatory Approval (Positive Unscheduled-Material)
+    if re.search(
+        r"\b(usfda|establishment\s+inspection|eir\s+with\s+vai|regulatory\s+approval|patent\s+grant|product\s+approval)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 1, "Regulatory Approval")
+
+    # Priority 2g: Fund Raising (Separate Bucket: is_material = 0 for primary positive)
+    if any(k in clean_desc.lower() for k in ["fund raising", "preferential issue", "rights issue", "qualified institutions placement"]) or re.search(
+        r"\b(fund\s+rais(?:ing|e)|qip|preferential\s+(?:issue|allotment)|rights\s+issue|commercial\s+paper|ncd\s+issu|warrants?\s+allotment)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 0, "Fund Raising")
+
+    # Priority 2h: Scheduled Outcomes (Board Meeting / Financial Results: is_material = 0 for primary)
+    if any(k in clean_desc.lower() for k in ["financial results", "financial result", "board meeting", "outcome of board meeting"]) or re.search(
+        r"\b(financial\s+results?|quarterly\s+results?|q[1-4]\s+results?|limited\s+review|annual\s+results?|"
+        r"board\s+meeting|outcome\s+of\s+board|dividend|bonus\s+issue|stock\s+split|buyback)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 0, "Board Meeting" if "board" in combined_text or "dividend" in combined_text else "Financial Results")
+
+    # Priority 2i: Regulatory Action / Demand (Negative: is_material = 0 for primary positive)
+    if any(k in clean_desc.lower() for k in ["action(s) initiated or orders passed", "regulatory action"]) or re.search(
+        r"\b(penalty\s+imposed|show\s+cause\s+notice|customs\s+demand|gst\s+demand|income\s+tax\s+demand|search\s+and\s+seizure)\b",
+        combined_text,
+        re.IGNORECASE,
+    ):
+        return ("CATALYST", 0, "Regulatory Action")
+
+    # Priority 3: Fallback classification
+    if any(k in combined_text for k in ["update", "action", "order passed", "launch", "subsidiary", "intimation"]):
+        return ("UNCLEAR", 0, "General Update")
+
+    if not clean_desc and not clean_text:
+        return ("NONE", 0, "No Disclosure")
+
+    return ("UNCLEAR", 0, "Unclassified")
+
+
+
 def classify_catalyst(desc: Optional[str] = None,
                       text: Optional[str] = None,
                       source: str = "filing",

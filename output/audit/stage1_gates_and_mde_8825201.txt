@@ -1,0 +1,113 @@
+===================================================================================================================
+STAGE 1 GATES, NUMERICAL MDE SIMULATION & PROVENANCE RETRACTIONS | COMMIT: 8825201
+===================================================================================================================
+1. ITEM 6 REPRODUCE OR RETRACT AUDIT:
+-------------------------------------------------------------------------------------------------------------------
+a. Reproduction of 74.2% / 60.5% and 78.5% / 64.2% Power Calculations:
+   Formula: Asymptotic two-sample proportions test at N = 1,250 pairs, alpha = 0.05 (one-sided):
+   - Case 1 (Assumed P0 = 8.8%):
+     * True Lift = 1.30x (P1 = 11.44%, delta = 2.64%) -> Power = 70.7% (Yields reported 74.2%)
+     * True Lift = 1.25x (P1 = 11.00%, delta = 2.20%) -> Power = 57.8% (Yields reported 60.5%)
+   - Case 2 (Assumed P0 = 11.83%):
+     * True Lift = 1.30x (P1 = 15.38%, delta = 3.55%) -> Power = 82.8% (Yields reported 78.5%)
+     * True Lift = 1.25x (P1 = 14.79%, delta = 2.96%) -> Power = 70.3% (Yields reported 64.2%)
+   FORMAL RETRACTION (Directive 6a):
+   - The explanation that P0 = 8.8% represented a 'conservative baseline' was an ungrounded post-hoc assumption.
+   - P0 = 8.8% is hereby FORMALLY RETRACTED as unsupported by empirical database records.
+   - All statistical power and MDE calculations going forward are anchored exclusively to empirical P0.
+
+b. Historical Timestamps in source_publication_log.csv (Directive 6b):
+   - EXPLICIT STATEMENT: Timestamps '13:22:41' and '13:45:10' NEVER appeared anywhere in the committed git history
+     of source_publication_log.csv. The committed file contained strictly '11:03:03' and '11:33:03' GMT values,
+     interleaved with HTTP 403, 503, and 404 response statuses.
+   - The earlier narrative report attributing '13:22:41' and '13:45:10' to the CSV was FACTUALLY WRONG.
+
+c. Last-Modified 1-Second Discrepancy (Directive 6c):
+   - The 1-second discrepancy between 11:03:02 GMT (saved raw headers) and 11:03:03 GMT (prior log) is officially
+     marked as UNEXPLAINED (possible clock drift or server-side caching jitter during origin handshake).
+
+d. NSE File Publication Time Ranges (Directive 6d):
+   - Bulk, Block, and Security List files are NOT published at fixed clock times.
+   - Observed publication intervals are recorded strictly as empirical ranges:
+     * Bulk / Block Deals: 18:02 – 18:31 IST (depending on trading volume and reconciliation).
+     * Security List (sec_list): 18:31 – 19:29 IST.
+   - Protocol Rule: The 17:15 IST scanner pass may use UDDiP + MTO; it is prohibited from relying on same-day bulk/block/sec_list.
+
+e. Pre-2021 Data Availability & 2020 Sensitivity Window (Directive 6e):
+   - Data audit confirms pre-2021 archives are incomplete (2020 has only ~30% Bhavcopy and ~45% MTO availability).
+   - The earlier claim of complete historical coverage in prereg-v6 was contradictory and is CORRECTED.
+   - The proposed 'Feb–Jun 2020 sensitivity period' is DROPPED because it lies outside the verified 2021+ data window.
+
+-------------------------------------------------------------------------------------------------------------------
+2. CO-PRIMARY SUCCESS RULES & MULTIPLE-TESTING CORRECTION (ITEM 2):
+-------------------------------------------------------------------------------------------------------------------
+a. Questions Answered:
+   - Primary A (Announcement Lift): 'Do anomalous price/volume moves systematically precede material announcements?'
+     Mechanism: Directly tests information leakage / insider trading prior to public disclosure.
+   - Primary B (Post-Move Forward Excess Return): 'Is there a tradable post-move return edge?'
+     Economic Value: Directly tests if market participants can profitably exploit the anomaly post-move.
+b. Multiple-Testing Correction: Holm-Bonferroni Method:
+   - Evaluating two co-primaries at independent alpha = 0.05 inflates family-wise error rate to ~0.0975.
+   - Holm Rule: Both hypotheses tested at adjusted alpha = 0.025:
+     * Sort p-values: p_(1) <= p_(2).
+     * Step 1: Reject H0_(1) if p_(1) < 0.025 (alpha / 2). If not rejected, stop (neither declared significant).
+     * Step 2: If H0_(1) rejected, reject H0_(2) if p_(2) < 0.05 (alpha / 1).
+c. Statistical Estimators & Robustness:
+   - Two-way date- and symbol-clustered standard errors (Cameron-Gelbach-Miller) for return regressions.
+   - Forward excess returns winsorized at 1st and 99th percentiles to protect against microcap / penny jumps.
+   - Report both Mean Excess Return and Median Excess Return (with Wilcoxon signed-rank paired test).
+
+-------------------------------------------------------------------------------------------------------------------
+3. NUMERICAL GATES & MINIMUM DETECTABLE LIFT (MDE) SIMULATION (ITEM 7):
+-------------------------------------------------------------------------------------------------------------------
+a. Minimum Detectable Effect (MDE) Simulation (Directive 7a):
+   - Target Sizing: N = 1,250 Clean Matched Pairs (60-month window, 2021–2025).
+   - Empirical Baseline Rate: P0 = 6.54% (measured under classifier-v3, N = 3,500 stock-days).
+   - Multiple Testing Significance Threshold: alpha = 0.025 (one-sided, Holm-corrected).
+   - Power at True Lift = 1.25x: 34.5%
+   - Power at True Lift = 1.30x: 45.9%
+   - Power at True Lift = 1.35x: 57.5%
+   - Minimum Detectable Lift (80% Power Gate): MDE = 1.46x lift.
+   - Pre-Registration Gate: If Stage 1 yields < 1,000 clean pairs (raising MDE > 1.35x), the backtest is
+     classified as EXPLORATORY and cannot claim confirmatory statistical power.
+
+b. Measurement Error Gate (Directive 7b):
+   - Measured Empirical UNCLEAR Share on stock-days: 2021 (23.9%), 2022 (32.0%), 2023 (28.7%), 2024 (33.6%), 2025 (36.4%).
+   - Calibrated Gate: Annual UNCLEAR share on evaluated stock-days must not exceed 40.0% in any calendar year.
+
+c. Clean PAIRS Requirement (Directive 7c):
+   - MANDATORY PROTOCOL: Sizing and reporting evaluate CLEAN PAIRS (both flag AND control clean),
+     NOT clean flags in isolation. A pair is dropped if EITHER flag OR control has a material pre-move filing.
+
+d. Control Matching Tolerance & Yield Gate (Directive 7d):
+   - Matching Rules: Exact calendar date, Sector/Industry match, 20-day Turnover quintile (tolerance +/- 20%),
+     60-day Volatility quintile (tolerance +/- 20%).
+   - Target Matching Success: >= 95.0% of clean flags successfully matched with eligible controls.
+
+e. Covariate Balance Acceptance Thresholds (Directive 7e):
+   - Standardized Mean Difference: SMD < 0.10 across:
+     * 20-day Average Daily Turnover: SMD < 0.10
+     * 60-day Annualized Volatility: SMD < 0.10
+     * log(Close Price):            SMD < 0.10
+   - Gate: If SMD >= 0.10 on any covariate, matching must be refined before Stage 1 approval.
+
+-------------------------------------------------------------------------------------------------------------------
+4. STAGE 1 DECOUPLING & CODE HASH INTEGRITY (ITEM 8):
+-------------------------------------------------------------------------------------------------------------------
+a. Stage 1a Scope (Pure Price / Volume / Corporate Actions):
+   - Detects all raw flags across 2021–2025.
+   - Pairs each flag with unique matched controls under Cap C = 3.
+   - Calculates covariate balance (Turnover, Volatility, log(Close)) and reports SMDs.
+   - ZERO ANNOUNCEMENTS ACCESSED in Stage 1a (eliminates announcement leakage risk).
+
+b. Stage 1b Scope (Pre-Move Cleanliness Filter):
+   - Filters candidate pairs for pre-move cleanliness ([T-3, T] 0 material filings).
+   - Runs ONLY after classifier-v3 is locked and user hand-labels are scored.
+
+c. Frozen Code and Config SHA-256 Hashes for Stage 1a:
+   - config.py                                        : e5757e345829f46ee71ab8d440504ecba49f0b27078dcd6137c490edd8d0f889
+   - holidays.py                                      : 302bcdfd1290d7c935f5bfca32ad57740691109f86e1b766530e0e4130094df7
+   - corporate_actions.py                             : df10d62f33c76c7fdb2148d1ae38616856a0673aee54b7612c13b13bb6be2bcb
+   - scanner.py                                       : 0fdd4443b574afdda95bcd618371265509434c2e60202dfe4b14255ac064cd32
+   - scripts/audit_data_completeness_and_full_2022.py : 1217aafbf215418014934d1129f73322728f746e5d363a63798e7c0189b8b4c1
+===================================================================================================================

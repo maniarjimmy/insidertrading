@@ -18,6 +18,8 @@ from filings import (
     _FILINGS_CACHE,
     check_pre_announcement_radar,
     classify_catalyst,
+    classify_catalyst_v2,
+    classify_catalyst_v3,
     fetch_corporate_filings,
     fetch_event_calendar,
     get_bse_scrip_code,
@@ -210,3 +212,57 @@ def test_filings_caching_mechanism():
             mock_session.assert_not_called()
     finally:
         _FILINGS_CACHE.pop(cache_key, None)
+
+
+def test_classify_catalyst_v3_regraded_and_rules():
+    """Verify classifier-v3 precision rules on regraded rows and statutory boundaries."""
+    # 1. TRITURBINE TDS dividend fix
+    st, mat, cat = classify_catalyst_v3("Updates", "Communication To Shareholders- Intimation On Tax Deduction On Dividend")
+    assert mat == 0 and st == "NONE" and cat == "Routine Disclosure"
+
+    # 2. ACMESOLAR and HFCL routine disclosures
+    st, mat, cat = classify_catalyst_v3("General Updates", "Acme Solar Holdings Limited has informed the Exchange about submission of Newspaper Publication w.r.t. Audited Financial Results")
+    assert mat == 0 and st == "NONE" and cat == "Routine Disclosure"
+
+    st, mat, cat = classify_catalyst_v3("Analysts/Institutional Investor Meet/Con. Call Updates", "HFCL Limited has informed the Exchange about Transcript of Conference Call on the Un-audited Financial Results")
+    assert mat == 0 and st == "NONE" and cat == "Routine Disclosure"
+
+    # 3. IKS Third-Party Acquisition
+    st, mat, cat = classify_catalyst_v3("Press Release", "IKS Health Announces Agreement to Acquire TruBridge to Strengthen Access to Rural Healthcare")
+    assert mat == 1 and st == "CATALYST" and cat == "Acquisition (Third-Party)"
+
+    # 4. Open Offer under SAST Reg 3/4/5/18 (genuine acquirer disclosure not dropped)
+    st, mat, cat = classify_catalyst_v3("Acquisition", "Public Announcement under Regulation 3(1) and Regulation 4 of SEBI Takeover Regulations for Open Offer")
+    assert mat == 1 and st == "CATALYST" and cat == "Acquisition (Third-Party)"
+
+    # 5. Routine SAST Reg 29/31 (statutory disclosure dropped)
+    st, mat, cat = classify_catalyst_v3("Acquisition", "Disclosure under Regulation 29(2) of SEBI (Substantial Acquisition of Shares and Takeovers) Regulations, 2011")
+    assert mat == 0 and st == "NONE" and cat == "Routine Disclosure"
+
+    st, mat, cat = classify_catalyst_v3("Acquisition", "Disclosure under Regulation 31(1) of SEBI SAST Regulations regarding encumbrance of shares by promoter")
+    assert mat == 0 and st == "NONE" and cat == "Routine Disclosure"
+
+    # 6. Credit Rating: Upgrade vs Reaffirmation vs Downgrade
+    st, mat, cat = classify_catalyst_v3("Credit Rating", "CRISIL Ratings has upgraded its rating on bank facilities to CRISIL AA/Stable")
+    assert mat == 1 and st == "CATALYST" and cat == "Credit Rating (Upgrade)"
+
+    st, mat, cat = classify_catalyst_v3("Credit Rating", "ICRA has reaffirmed the credit rating of the company at ICRA A1+")
+    assert mat == 0 and st == "NONE" and cat == "Credit Rating (Reaffirmation)"
+
+    st, mat, cat = classify_catalyst_v3("Credit Rating", "CARE has downgraded the rating on long term bank facilities to CARE BBB")
+    assert mat == 0 and st == "CATALYST" and cat == "Credit Rating (Downgrade)"
+
+    # 7. Intra-group / JV vs Third-Party Acquisition
+    st, mat, cat = classify_catalyst_v3("Acquisition", "Incorporation of a new wholly owned subsidiary in Germany")
+    assert mat == 0 and st == "CATALYST" and cat == "Acquisition (Intra-Group/JV)"
+
+    st, mat, cat = classify_catalyst_v3("Acquisition", "Execution of definitive agreement for slump sale of manufacturing unit")
+    assert mat == 0 and st == "CATALYST" and cat == "Disinvestment"
+
+    # 8. Order Win and Production Commencement
+    st, mat, cat = classify_catalyst_v3("Award of Order / Receipt of Order", "Company bags new commercial order worth Rs 450 Cr from Indian Railways")
+    assert mat == 1 and st == "CATALYST" and cat == "Order Win"
+
+    st, mat, cat = classify_catalyst_v3("Commencement of Commercial Production", "Commencement of commercial operations at Dahej solar glass manufacturing facility")
+    assert mat == 1 and st == "CATALYST" and cat == "Production Commencement"
+

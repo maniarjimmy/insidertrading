@@ -1,0 +1,31 @@
+===================================================================================================================
+RE-ESTIMATED BASE RATE P0 UNDER CLASSIFIER-V3 (N = 3,500 STOCK-DAYS) | COMMIT: 8825201
+===================================================================================================================
+Protocol (Directives 3 & 5):
+1. Primary Outcome: Positive Unscheduled-Material Disclosures under classifier-v3 (is_material = 1).
+   - Constituent positive categories: Order Win, Third-Party Acquisition, Production Commencement,
+     Credit Rating (Upgrade), Regulatory Approval.
+   - Disinvestment, intra-group M&A, rating downgrades/reaffirmations, scheduled outcomes = is_material 0.
+2. Universe: Mid/Small Cap equities (Ranks 101–500 in nifty500.csv), 250 distinct symbols sampled.
+3. Pre-Move Clean Definition: 0 positive unscheduled-material filings in [T-3, T].
+4. Sampling Design: 700 random non-flag stock-days per calendar year (Total N = 3,500), seed = 42.
+
+1. ANNUAL BASE RATE RESULTS UNDER CLASSIFIER-V3 (ITEM 5):
+-------------------------------------------------------------------------------------------------------------------
+Year   | Sampled  | Clean Days (%)   | UNCLEAR Pre %  | 10-Day P0 (95% Wilson CI)      | 3-Day P0 (95% Wilson CI)
+-------------------------------------------------------------------------------------------------------------------
+2021   | 700      | 671 (95.9%)      |  23.9%        | 9.39% [7.41%, 11.83%]          | 3.43% [2.29%, 5.09%]
+2022   | 700      | 686 (98.0%)      |  32.0%        | 5.10% [3.69%, 7.01%]           | 2.48% [1.55%, 3.93%]
+2023   | 700      | 686 (98.0%)      |  28.7%        | 5.25% [3.81%, 7.18%]           | 1.02% [0.50%, 2.09%]
+2024   | 700      | 670 (95.7%)      |  33.6%        | 5.67% [4.16%, 7.69%]           | 1.94% [1.14%, 3.29%]
+2025   | 700      | 684 (97.7%)      |  36.4%        | 7.31% [5.59%, 9.51%]           | 2.34% [1.44%, 3.77%]
+-------------------------------------------------------------------------------------------------------------------
+TOTAL  | 3500     | 3397 (97.1%)     | --             | 6.54% [5.75%, 7.42%]           | 2.24% [1.79%, 2.79%]
+-------------------------------------------------------------------------------------------------------------------
+
+2. EMPIRICAL BASE RATE SUMMARY (DIRECTIVE 5):
+  - Re-estimated 10-Day Primary Base Rate P0 = 6.54% (95% Wilson CI: [5.75%, 7.42%]).
+  - Re-estimated 3-Day Primary Base Rate P0  = 2.24% (95% Wilson CI: [1.79%, 2.79%]).
+  - Annual 10-day P0 ranges between 5.10% (2022) and 9.39% (2021), averaging 6.54% overall.
+  - Pre-move cleanliness rate is 97.1%, confirming that mid/small-caps have clean pre-move baselines.
+===================================================================================================================

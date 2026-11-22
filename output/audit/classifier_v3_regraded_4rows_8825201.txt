@@ -1,0 +1,76 @@
+===================================================================================================================
+CLASSIFIER-V3 AUDIT: 4 REGRADED ROWS & DIRECTIVE 3 EDGE CASES | COMMIT: 8825201
+===================================================================================================================
+Protocol: Deterministic TEXT-ONLY (desc + attchmntText). Zero PDF extraction. Zero network requests.
+
+1. AUDIT OF 4 REGRADED MISMATCH ROWS (DIRECTIVE 3):
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: ACMESOLAR | Status: PASS
+  Exchange desc: General Updates
+  attchmntText:  Acme Solar Holdings Limited has informed the Exchange about submission of Newspaper Publication w.r.t. Audited Financial Results for the Quarter and Financial Year ended March 31, 2026
+  Classifier-v3: state=NONE, is_material=0, category=Routine Disclosure
+  Expected:      state=NONE, is_material=0, category=Routine Disclosure
+  Rationale:     Newspaper publication of financial results -> Routine Disclosure under Priority 1/2a
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: HFCL | Status: PASS
+  Exchange desc: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText:  HFCL Limited has informed the Exchange about Transcript of Conference Call on the Un-audited Financial Results of the Company for the 3rd Quarter and Nine Months ended December 31, 2025, of the Financial Year 2025-26
+  Classifier-v3: state=NONE, is_material=0, category=Routine Disclosure
+  Expected:      state=NONE, is_material=0, category=Routine Disclosure
+  Rationale:     Analyst concall transcript -> Routine Disclosure under Priority 1/2a
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: IKS | Status: PASS
+  Exchange desc: Press Release
+  attchmntText:  Inventurus Knowledge Solutions Limited has informed the Exchange regarding a press release dated April 23, 2026, titled "IKS Health Announces Agreement to Acquire TruBridge to Strengthen Access to Rural and Community-Based Healthcare".
+  Classifier-v3: state=CATALYST, is_material=1, category=Acquisition (Third-Party)
+  Expected:      state=CATALYST, is_material=1, category=Acquisition (Third-Party)
+  Rationale:     Press release announcing genuine third-party commercial acquisition -> Positive Unscheduled-Material
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: TRITURBINE | Status: PASS
+  Exchange desc: Updates
+  attchmntText:  Triveni Turbine Limited has informed the Exchange regarding 'Communication To Shareholders- Intimation On Tax Deduction On Dividend'.
+  Classifier-v3: state=NONE, is_material=0, category=Routine Disclosure
+  Expected:      state=NONE, is_material=0, category=Routine Disclosure
+  Rationale:     Dividend TDS / tax deduction circular to shareholders -> Routine Disclosure (TRITURBINE fix)
+-------------------------------------------------------------------------------------------------------------------
+
+2. AUDIT OF DIRECTIVE 3 BOUNDARY RULES & EDGE CASES:
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3a. Credit Rating Upgrade | Status: PASS
+  Inputs:        desc='Credit Rating' | text='CRISIL has upgraded the long-term bank facilities rating to CRISIL AA+ from CRISIL AA.'
+  Classifier-v3: state=CATALYST, is_material=1, category=Credit Rating (Upgrade)
+  Expected:      state=CATALYST, is_material=1, category=Credit Rating (Upgrade)
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3a. Credit Rating Reaffirmation | Status: PASS
+  Inputs:        desc='Credit Rating' | text='ICRA has reaffirmed the credit rating of ICRA A1+ for commercial paper.'
+  Classifier-v3: state=NONE, is_material=0, category=Credit Rating (Reaffirmation)
+  Expected:      state=NONE, is_material=0, category=Credit Rating (Reaffirmation)
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3a. Credit Rating Downgrade | Status: PASS
+  Inputs:        desc='Credit Rating' | text='Care Ratings has downgraded the long term debt instrument to CARE BBB- with negative outlook.'
+  Classifier-v3: state=CATALYST, is_material=0, category=Credit Rating (Downgrade)
+  Expected:      state=CATALYST, is_material=0, category=Credit Rating (Downgrade)
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3b. Intra-Group / Subsidiary Investment | Status: PASS
+  Inputs:        desc='Acquisition' | text='Investment in wholly owned subsidiary company to set up greenfield unit.'
+  Classifier-v3: state=CATALYST, is_material=0, category=Acquisition (Intra-Group/JV)
+  Expected:      state=CATALYST, is_material=0, category=Acquisition (Intra-Group/JV)
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3b. Disinvestment / Slump Sale | Status: PASS
+  Inputs:        desc='Acquisition' | text='Execution of definitive agreement for slump sale and divestment of chemical division.'
+  Classifier-v3: state=CATALYST, is_material=0, category=Disinvestment
+  Expected:      state=CATALYST, is_material=0, category=Disinvestment
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3c. SAST Open Offer (Reg 3/4/18) | Status: PASS
+  Inputs:        desc='Takeover Regulations' | text='Detailed public statement and open offer under Regulation 3(1) and 4 of SEBI SAST Regulations.'
+  Classifier-v3: state=CATALYST, is_material=1, category=Acquisition (Third-Party)
+  Expected:      state=CATALYST, is_material=1, category=Acquisition (Third-Party)
+-------------------------------------------------------------------------------------------------------------------
+Test Case: 3c. Routine SAST Reg 29/31 Disclosure | Status: PASS
+  Inputs:        desc='Takeover Regulations' | text='Disclosure under Regulation 31(1) and 31(2) of SEBI SAST Regulations regarding release of pledge.'
+  Classifier-v3: state=NONE, is_material=0, category=Routine Disclosure
+  Expected:      state=NONE, is_material=0, category=Routine Disclosure
+-------------------------------------------------------------------------------------------------------------------
+
+OVERALL AUDIT RESULT: ALL PASS
+===================================================================================================================
