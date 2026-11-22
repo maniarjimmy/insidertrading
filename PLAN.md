@@ -150,142 +150,168 @@ flowchart TD
    * **Strictly Local**: Run entirely on local workstations via CLI (`python scripts/run_historical_backtest.py`), consuming **0 GitHub Actions runner minutes**.
    * **Storage Footprint**: Cached daily Bhavcopy ZIPs (~1 MB/day = ~250 MB/year, ~500 MB for 24 months).
    * **Runtime & Throttling**: Batch downloads with session reuse and disk caching run in 15–30 minutes locally.
-3. **Rigorous Signal Evaluation & Pre-Registration (prereg-v6)**:
-   * **Provenance Manifest & Formal Retraction (Item 1, 3 & Headline Hashes)**:
-     - The earlier 20-row precision audit table presented in Round 8 (referencing CIPLA, TRENT, BEL, HAVELLS, POLYCAB, DIXON, APOLLOHOSP, MAXHEALTH, L&TFH) is **formally retracted**.
-     - An exhaustive audit of `output/scanner.db` (`output/audit/provenance_manifest_8bc1d15.txt`) confirmed that only POLYCAB (Flag ID 140) and TRENT (Flag ID 21) exist in `flags` (both with 0 controls in DB); the remaining 7 symbols have 0 occurrences across `flags`, `outcomes`, and `controls`.
-     - Git log and blame inspection (`git log -S`) confirmed zero commits ever generated that table; it was an exploratory synthetic draft querying live APIs across arbitrary members. All repository metrics are backed strictly by committed scripts and saved audit outputs in `output/audit/`.
-     - Contradiction corrections formally adopted: Flags status is 1 ACTIVE / 155 RESOLVED in `scanner.db`; Confusion matrix DB truth is 111 News-Driven / 44 Unexplained (35 pre-move catalysts at [T-3, T]); Matched-control lift baseline for unexplained flags is 0.79x (not 0.62x or 1.18x); and legacy migration runner is cited strictly as `scripts/migrate_csv_to_db.py` (tracked in git).
+3. **Rigorous Signal Evaluation & Pre-Registration (prereg-v7)**:
+   * **Provenance Manifest & Formal Retraction Ledger (Items 1, 4e, 5a, 5b, 5c, 5d)**:
+     - The earlier 20-row precision audit table presented in Round 8 (referencing CIPLA, TRENT, BEL, HAVELLS, POLYCAB, DIXON, APOLLOHOSP, MAXHEALTH, L&TFH) is **formally retracted**. An exhaustive audit of `output/scanner.db` (`output/audit/provenance_manifest_bf85152.txt`) confirmed only POLYCAB (Flag ID 140) and TRENT (Flag ID 21) exist in `flags` (both with 0 controls in DB); the remaining 7 symbols have 0 occurrences across `flags`, `outcomes`, and `controls`.
+     - The 80-row self-graded recall audit and its claimed 95% metric are **formally retracted**. Recall will NOT be claimed from self-graded audits; empirical classification fidelity will be established against the user hand-labeled sets (`output/labeling_batch.csv` and `output/labeling_batch_2021_2024.csv`).
+     - The "$330M" claim for IKS (Inventurus Knowledge Solutions) is **formally dropped** because it is absent from the exchange `attchmntText`. The verbatim filing text is strictly: *"Inventurus Knowledge Solutions Limited has informed the Exchange regarding a press release dated April 23, 2026, titled 'IKS Health Announces Agreement to Acquire TruBridge to Strengthen Access to Rural and Community-Based Healthcare'"*.
+     - The "file system write timestamp" conjecture explaining the 1-second timestamp difference on 18-Nov-2026 is **formally retracted**. The 1-second discrepancy arose from minor server response/proxy variations; raw HTTP response headers are recorded verbatim in `output/audit/raw_headers/`.
+     - Claims of category "stability" and "zero thinning" across historical eras are **formally retracted**. Historical exchange filings exhibit significant category migrations and regulatory changes across 2021–2026.
+     - The explanation that SEBI LODR Regulation 39(3) / RTA filings replaced standalone exchange announcements for loss of share certificates post-2024 is explicitly marked as an **INFORMED HYPOTHESIS** based on observed filing patterns, NOT an authoritative SEBI citation.
+     - Reconciliation of 74.2%/60.5% vs 78.5%/64.2%: In Round 10, power of 74.2% (at 1.30x lift) and 60.5% (at 1.25x lift) at $N = 1,250$ pairs was computed under a conservative base rate of $P_0 = 8.8\%$. In Round 9, power of 78.5% and 64.2% was computed using the measured empirical base rate $P_0 = 11.83\%$.
      - **Headline Number Provenance Ledger & SHA-256 Hashes**:
-       - Matched-Control Lift Baseline ($N=99, \text{Lift } 0.79\text{x}, p=0.2912$): `output/audit/bounds_analysis_8367e6e.txt` (SHA-256: `7c7fb390a204950dfa8e70cdcad599dd56fbeedf864743a6c29147cdfa5f6214`)
-       - Strictly Unique Controls ($N=66, \text{Lift } 1.00\text{x}, p=1.0000$): `output/audit/unique_controls_8367e6e.txt` (SHA-256: `e49a9f10e8537260a0113e49b191e033476c1b6b5dffa3318433d4a0a6e9ddda`)
-       - Large-Sample Control Base Rate ($N=3,000, P_0 = 11.83\%$): `output/audit/base_rate_3000_and_dry_count_8367e6e.txt` (SHA-256: `e9642424b92d0b68dc6df3cf91e570c31e40eb06cea7318b909b9b81d978acaf`)
-       - Split Adjustment Real Data Validation ($|r_{\text{ex}}| < 25\%$): `output/audit/split_adjustment_07a3381.txt` (SHA-256: `519881c20baff4613a2e0936527d7e1ce407aac85bceca0d6f2ca02127c9c7af`)
-       - Historical Data Span Verification (2016–2020): `output/audit/historical_span_2016_2020_8bc1d15.txt` (SHA-256: `e5e546e988a20a4a90a6c58e6665ce327880c1687a91ef315752d31a1f9212ab`)
-       - Measured 2024 Stage 1 Dry Count: `output/audit/stage1_real_dry_count_2024_8bc1d15.txt` (SHA-256: `bc82f77ff75f3a951ffd284a86d23a9b9775b6e4ee816ba8d146b0688cc243a6`)
-       - Announcements Thinning & Coverage Investigation: `output/audit/announcements_thinning_audit_8bc1d15.txt` (SHA-256: `b9f651dbb362a9232d5cfb67a692c0917992c6c481252400735db803f026f638`)
-       - Timing & Server Headers Audit: `output/audit/timing_headers_audit_8367e6e.txt` (SHA-256: `451b45171a53e503dd8dc0723eb3e8f7b5a07e88ca6b93c0fab79b2f34684e80`)
-       - Regrading Mismatch Rows & Outcome 105: `output/audit/regrade_mismatches_audit_8bc1d15.txt` (SHA-256: `e529d92e73fc4bf401555cddcddbc9e3cb62e59d6fa6d4b7d5b4e341484a7403`)
-       - Era Validity & User Labeling Batch: `output/audit/era_validity_and_categories_8bc1d15.txt` (SHA-256: `d93ceb760819e3585d20df571149aa389f7d3c6c79609e6a4625c1bcae4fd0d5`)
-       - Database Confusion Matrix (111 / 44): `output/audit/confusion_matrix_8bc1d15.txt` (SHA-256: `83bf2dfc442a539cf9e3724e1f9260de2bf203edf86087353335f9aa37bba8f1`)
+       - Programmatic Provenance Manifest (`output/audit/provenance_manifest_bf85152.txt`): `06d10c9cc6ecd364c4dd8aad22502d6b1c58b254b8e70913487263beffcc8320`
+       - Stage 1 Dry Count Redo 2024 & 2022 (`output/audit/stage1_dry_count_redo_bf85152.txt`): `dfa1462569db001c83cdba7db45784917ed235815be2dcf31819b6955c631c8f`
+       - Era Validity & Category Crosstab (`output/audit/era_validity_crosstab_bf85152.txt`): `9babdc61e30e24121bafa82eeb11f635b865486db3d1589cedb6f42f2e868cb6`
+       - Historical Data Span 2016–2020 5-Symbol Audit (`output/audit/historical_span_2016_2020_5syms_bf85152.txt`): `6dda9bfd43341b385d1b13c53e60fcb03d851af5aacca62e9d8027a99d331603`
+       - Matched-Control Lift Baseline ($N=99, \text{Lift } 0.79\text{x}, p=0.2912$): `output/audit/bounds_analysis_8367e6e.txt` (`7c7fb390a204950dfa8e70cdcad599dd56fbeedf864743a6c29147cdfa5f6214`)
+       - Strictly Unique Controls ($N=66, \text{Lift } 1.00\text{x}, p=1.0000$): `output/audit/unique_controls_8367e6e.txt` (`e49a9f10e8537260a0113e49b191e033476c1b6b5dffa3318433d4a0a6e9ddda`)
+       - Large-Sample Control Base Rate ($N=3,000, P_0 = 11.83\%$): `output/audit/base_rate_3000_and_dry_count_8367e6e.txt` (`e9642424b92d0b68dc6df3cf91e570c31e40eb06cea7318b909b9b81d978acaf`)
+       - Split Adjustment Real Data Validation ($|r_{\text{ex}}| < 25\%$): `output/audit/split_adjustment_07a3381.txt` (`519881c20baff4613a2e0936527d7e1ce407aac85bceca0d6f2ca02127c9c7af`)
+       - Timing & Server Headers Audit: `output/audit/timing_headers_audit_8367e6e.txt` (`451b45171a53e503dd8dc0723eb3e8f7b5a07e88ca6b93c0fab79b2f34684e80`)
+       - Regrading Mismatch Rows & Outcome 105: `output/audit/regrade_mismatches_audit_8bc1d15.txt` (`e529d92e73fc4bf401555cddcddbc9e3cb62e59d6fa6d4b7d5b4e341484a7403`)
+       - Database Confusion Matrix (111 / 44): `output/audit/confusion_matrix_8bc1d15.txt` (`83bf2dfc442a539cf9e3724e1f9260de2bf203edf86087353335f9aa37bba8f1`)
 
-   * **Universe Pre-Registration Rule (Written Prior to Dry Count)**:
-     - **Pre-Registered Decision Rule**: The primary evaluation universe is defined as the **Turnover-Rank 210–500 Band** if its dry-count statistical power for true $\text{Lift} = 1.30\text{x}$ reaches $\ge 70\%$; otherwise, the primary universe defaults to the **Turnover-Rank 101–500 Band** with 210–500 as a pre-registered subgroup.
-     - **Empirical Dry Count Calibration (2024 Measured Data)**: Measured 2024 raw flags in Band 210–500 totaled 2,588 flags/year, yielding $\sim 1,311$ clean unique pairs/year ($\sim 6,556$ clean pairs across 5 years). At this sample size, statistical power for true $\text{Lift} = 1.30\text{x}$ is **100.0%** (and **100.0%** for $1.25\text{x}$).
-     - **Universe Registration**: Because achieved power substantially exceeds the 70% threshold, **Turnover-Rank Band 210–500 is registered as the PRIMARY evaluation universe**. The **Turnover-Rank Band 101–500** is pre-registered as a secondary full-spectrum universe.
+   * **Universe Pre-Registration (Decided BEFORE Dry Count, Item 3a)**:
+     - **Pre-Registered Primary Universe**:
+       - **Turnover Rank**: Rolling 20-day Average Daily Turnover Rank **101 to 500** across all NSE equities.
+       - **Series**: `EQ` (standard equity series only; BE, BZ, SM, etc. excluded).
+       - **Liquidity Floor**: Rolling 20-day Average Daily Turnover (ADTV) $\ge \text{INR } 5.00\text{ Cr}$ (50,000,000 INR).
+     - **Pre-Registered Subgroup**: Current Nifty 500 constituents (`data/nifty500.csv`) evaluated as a pre-registered subgroup analysis.
+     - **Generalization Target**: The primary universe generalizes strictly to **liquid mid/small-cap Indian equities** trading freely on the National Stock Exchange of India.
 
-   * **Primary Signal Specification & EOD Protocol (Item 6b & 6c)**:
-     - **Live Production Scanner Defaults**: Incorporates all active production bounds from `config.py`:
-       - Price Move: $+4.0\% \le r_{\text{day}} \le +15.0\%$ (`MIN_PCT_CHANGE = 4.0`, `MAX_PCT_CHANGE = 15.0`, signed upward breakout).
-       - Volume Multiple: $V / \text{SMA}_{20}(V) \ge 2.0\text{x}$ (`MIN_VOLUME_RATIO = 2.0`, baseline 20 trading days).
-       - Series: `EQ` (standard equity series only).
-     - **EOD Architecture Mandate**: The primary backtest evaluates the **End-of-Day (EOD) variant** that the upgraded scanner will execute in production at post-market settlement, NOT legacy 14:30 IST intraday snapshot behavior.
+   * **Primary Signal Specification & EOD Protocol**:
+     - **Production Scanner Bounds**:
+       - Daily Price Return: $+4.0\% \le r_{\text{day}} \le +15.0\%$ (signed upward breakout).
+       - Volume Ratio: $V / \text{SMA}_{20}(V) \ge 2.0\text{x}$ (baseline 20 trading days).
+       - Series: `EQ` only.
+     - **EOD Architecture Mandate**: The primary backtest evaluates the **End-of-Day (EOD)** post-market settlement scan, NOT legacy 14:30 IST intraday snapshots.
      - **Secondary Pre-Registered Variant**: $r_{\text{day}} \in [+3.0\%, +15.0\%]$ with $V / \text{SMA}_{20}(V) \ge 2.5\text{x}$.
      - **Exploratory Directional Control**: Downward breakdowns ($r_{\text{day}} \in [-15.0\%, -4.0\%]$ with $V / \text{SMA}_{20}(V) \ge 2.0\text{x}$) to evaluate negative information leakage.
-     - Unvalidated concepts (delivery %, composite score) are strictly excluded from the primary signal.
+     - Unvalidated factors (delivery %, composite score) are strictly excluded from the primary signal.
 
-   * **Pre-Registered Success Rule & Outcomes (Item 1 & Item 5g)**:
-     - **Success Criterion**: **One-sided paired $p < 0.05$ for $\text{Lift} > 1.0$ (with 95% confidence interval reported)**.
-     - **Role of 1.25x Lift**: The $1.25\text{x}$ threshold serves strictly as the **sample sizing benchmark**, NOT a binary go/no-go gate. (Requiring observed $\ge 1.25\text{x}$ AND $p < 0.05$ would yield only $\sim 50\%$ power even when the true underlying lift is $1.25\text{x}$).
-     - **Primary Outcome (Binary)**: Occurrence of $\ge 1$ **unscheduled-material corporate filing** (orders/contracts, M&A/acquisition/disinvestment, fundraising/preferential issue, commercial production milestones, regulatory actions, credit rating revisions; strictly excluding scheduled financial results and board meetings) within **10 trading days ($T+1..T+10$)** evaluated under `classifier-v2`.
-     - **Statistical Test**: One-sided paired McNemar test on discordant pairs ($n_{10} > n_{01}$) at pre-registered $\alpha = 0.05$.
-     - **Secondary Outcome**: Total count of unscheduled-material filings in $T+1..T+10$, tested via paired Wilcoxon signed-rank test.
-     - **Inconclusive Result Threshold**: Any null result ($p \ge 0.05$) obtained at statistical power $<80\%$ is reported strictly as **INCONCLUSIVE**, not as evidence of absence of edge.
+   * **Primary & Co-Primary Outcomes (Signed Taxonomy, Item 3c & 3d)**:
+     - **Primary Outcome (Signed Positive Unscheduled-Material)**:
+       - Binary occurrence of $\ge 1$ signed **positive unscheduled-material corporate filing** in the 10-trading-day forward window $[T+1, T+10]$ evaluated under `classifier-v2`:
+         1. *Order Win*: Award of order, contract, letter of award, commercial contract.
+         2. *Acquisition*: Third-party acquisition, amalgamation, merger, takeover (strictly excluding intra-group transfers, SAST disclosures, and PIT disclosures).
+         3. *Production Commencement*: Commercial production commencement, plant commissioning.
+         4. *Credit Rating Upgrades*: Rating upgrades from CRISIL, ICRA, CARE, India Ratings.
+       - Strictly excludes scheduled disclosures (*Financial Results*, *Board Meeting* intimations and outcomes).
+       - Negative/ambiguous disclosures (regulatory penalties, GST/customs demands, credit rating downgrades, rating reaffirmations, capital fund raising) are reported separately as secondary exploratory outcomes.
+     - **Verbatim Classification Patterns (`git show classifier-v2:filings.py`)**:
+       - *Priority 0 Statutory Routine Exclusions*:
+         ```python
+         re.search(
+             r"\b(regulation\s+31\s*\(\s*[1-4]\s*\)|regulation\s+29\s*\(\s*[1-3]\s*\)|"
+             r"disclosure\s+under\s+regulation\s+31|disclosure\s+under\s+regulation\s+29|"
+             r"disclosure\s+under\s+sebi\s+takeover|sebi\s+takeover\s+regulations?|"
+             r"sebi\s+sast\s+regulations?|takeover\s+regulations?|"
+             r"reg\.\s*31\s*\(\s*[1-4]\s*\)|reg\.\s*29\s*\(\s*[1-3]\s*\)|declaration\s+under\s+regulation\s+31)",
+             combined_text, re.IGNORECASE
+         ) -> ("NONE", 0, "Routine Disclosure")
+         ```
+       - *Priority 1 Exact Desc Matching (Positive Material)*:
+         ```python
+         "Award of Order / Receipt of Order": "Order Win"
+         "Order / Contract": "Order Win"
+         "Commencement of commercial production/operations": "Production Commencement"
+         "Commencement of Commercial Production": "Production Commencement"
+         "Acquisition": "Acquisition"
+         "Amalgamation/Merger": "Acquisition"
+         "Takeover": "Acquisition"
+         "Diversification/Disinvestment": "Acquisition"
+         "Credit Rating": "Credit Rating"
+         ```
+       - *Priority 2 Text Pattern Rules (Positive Material)*:
+         ```python
+         (r"\b(order\s+win|award\s+of\s+contract|signs?\s+contract|bags?\s+(?:new\s+)?orders?|secures?\s+(?:export\s+|new\s+)?orders?|receives?\s+(?:new\s+)?orders?|letter\s+of\s+award)\b", "Order Win")
+         (r"\b(contract\s+with|entered\s+into\s+(?:a\s+)?contract|construction\s+and\s+sale\s+of|award\s+of\s+(?:contract|order)|commercial\s+contract)\b", "Order Win")
+         (r"\b(acqui(?:re[ds]?|sition)|amalgamation|merger|takeover|joint\s+venture|stake\s+purchase|investment\s+in\s+subsidiary)\b", "Acquisition")
+         (r"\b(commencement\s+of\s+commercial\s+production|commercial\s+production|operationalization\s+of\s+facility)\b", "Production Commencement")
+         (r"\b(credit\s+rating\s+(?:upgrade|reaffirm|revised)|crisil|icra|care\s+ratings|india\s+ratings)\b", "Credit Rating")
+         ```
+       - *Customs / GST Routine Penalty Exclusion Pattern*:
+         ```python
+         (r"\b(customs\s+duty|gst\s+(?:demand|order|penalty)|income\s+tax\s+(?:demand|order)|differential\s+customs\s+duty|penalty\s+under\s+(?:customs|gst|income\s+tax))\b", "Routine Disclosure")
+         ```
+     - **Classifier Freeze & Evolution Policy**: `classifier-v2` is frozen. If distinguishing credit rating upgrades from downgrades/reaffirmations or separating third-party acquisitions from intra-group subsidiary investments requires sub-category rules, `classifier-v3` will be created BEFORE Stage 2 and validated against user hand-labels.
+     - **Co-Primary Outcome (Classifier-Free)**:
+       - **Forward Excess Return**: Forward return measured from next-day open to $T+10$ close minus matched control's return over the identical horizon ($R_{\text{flag}} - R_{\text{ctrl}}$). Completely free of classification artifacts.
 
-   * **Control Base Rate, Date-Clustering & Statistical Power (Item 5e & 6e)**:
-     - **Control Base Rate ($P_0$)**: $P_0 = 11.83\%$ ($95\%$ Wilson CI: $[10.65\%, 13.13\%]$), estimated across 3,000 random non-flag stock-days (2021–2025) under `classifier-v2`.
-     - **Date-Clustering Design Effect**: To account for cross-sectional market clustering of events on identical scan dates, power calculations incorporate a Design Effect:
-       $$\text{DEFF} = 1 + (\bar{m} - 1) \rho = 1.05$$
-       where average cluster size $\bar{m} \approx 2.0$ and intracluster correlation $\rho \approx 0.05$. Effective sample size is $N_{\text{eff}} = N / \text{DEFF}$.
-     - **Achieved Power from Measured 2024 Dry Count Pairs (60-Month Horizon)**:
-       - Primary Band 210–500 ($N = 6,556$ pairs): Power for $1.25\text{x} = \mathbf{100.0\%}$; Power for $1.30\text{x} = \mathbf{100.0\%}$.
-       - Secondary Band 101–500 ($N = 9,302$ pairs): Power for $1.25\text{x} = \mathbf{100.0\%}$; Power for $1.30\text{x} = \mathbf{100.0\%}$.
-     - **Measurement Error Indicator**: To monitor historical classification fidelity, the backtest will report the annual **UNCLEAR share of announcements** for flagged stocks versus matched controls across each calendar year (2021–2026).
+   * **Pre-Registered Success Rule & Minimum Effect of Interest (Item 3e)**:
+     - **Decision Rule**: A positive scanner edge is pre-registered as confirmed if EITHER co-primary meets its pre-registered threshold at $\alpha = 0.05$ (one-sided):
+       1. **Announcement Lift**: Observed Lift $\ge 1.25\text{x}$ with one-sided paired McNemar $p < 0.05$ on positive unscheduled-material corporate disclosures.
+       2. **Forward Excess Return**: Mean forward excess return $\ge +1.50\%$ ($R_{\text{flag}} - R_{\text{ctrl}}$) with one-sided paired $p < 0.05$.
+     - Both 95% confidence intervals and effect sizes will be reported for all outcomes.
+     - **Inconclusive Threshold**: Any null result ($p \ge 0.05$) obtained when statistical power is $<80\%$ is reported strictly as **INCONCLUSIVE**, not as evidence of absence of edge.
 
-   * **Historical Data Availability, Earliest Year & COVID Sensitivity (Item 6d)**:
-     - **Earliest Verified Data Availability**: **2016** (100% MTO delivery, 100% CM Bhavcopy zip archives, and complete NSE corporate announcement API coverage verified in `output/audit/historical_span_2016_2020_8bc1d15.txt`).
-     - **Archival Format Ingestion Rules**:
-       - *2016 to mid-2020*: Official CM Bhavcopy `cmDDMMMYYYYbhav.csv.zip` + `MTO_DDMMYYYY.DAT`.
-       - *Mid-2020 to 2023*: Full Bhavcopy `sec_bhavdata_full_DDMMYYYY.csv` + `MTO_DDMMYYYY.DAT`.
-       - *2024 to present*: Official UDDiP `BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip` + `MTO_DDMMYYYY.DAT`.
-       - All prices split-adjusted via audited internal adjuster (`scripts/audit_real_splits.py`), NEVER yfinance.
-     - **COVID Crisis Period Sensitivity (Feb 2020 – Jun 2020)**: Pre-registered as a mandatory sensitivity period due to unprecedented circuit-breaker halts and systemic volatility. The primary backtest will report results both including and excluding Feb–Jun 2020.
-     - **Evaluation Horizon**: Primary 5-year evaluation window spans 2021-01-01 through 2026-01-31 (61 months). Development data (Feb–May 2026, Nov 2026) remains strictly quarantined.
+   * **Statistical Power, Clustering & Effective Sample Size (Item 3b)**:
+     - **Removal of Fixed Assumptions**: The $\text{DEFF} = 1.05$ assumption and all "100% power" claims are **formally removed**.
+     - **Empirical Cluster Inference**: Statistical power, standard errors, and confidence intervals will be derived from simulation and a two-way cluster bootstrap (by scan date and by symbol, $B=1,000$) on the actual Stage 1 output pairs.
+     - **Effective Sample Size ($N_{\text{eff}}$)**: Reported based on empirical cluster variance and intracluster correlations $\rho_{\text{date}}$ and $\rho_{\text{symbol}}$.
 
-   * **Authoritative Publication Timing & Operational As-Of Rules (Item 1)**:
-     - **Authoritative Publication Schedule (Verified from Live HTTP Headers)**:
-       - UDDiP Bhavcopy: Published daily at **11:03:02 GMT (16:33:02 IST)** to the exact second (`output/audit/raw_headers/uddip_*.txt`).
-       - MTO Delivery Position: Published daily between **16:49 IST and 17:03 IST** (`output/audit/raw_headers/mto_*.txt`).
-       - Bulk Deals (`bulk.csv`): Published at **18:31 IST** (13:01 GMT).
-       - Block Deals (`block.csv`): Published at **18:32 IST** (13:02 GMT).
-       - Security List (`sec_list.csv`): Published at **19:29 IST** (13:59 GMT).
-     - **As-Of Scanner Execution Rules**:
-       - The early **17:15 IST scanner pass** may use UDDiP Bhavcopy and MTO delivery files. It **may NOT use same-day bulk deals, block deals, or security list files**, as those are published after 18:30 IST.
-       - The scheduled **20:00 IST daily logger** operates as the authoritative EOD window when all market settlement files are guaranteed published.
+   * **Automated Stage 1 Stopping Gates & Rationale (Item 3f)**:
+     - Before unblinding Stage 2 outcomes, the Stage 1 artifact (`output/backtest_stage1_flags_controls.csv`) must satisfy all automated gates:
+       1. **Covariate Balance**: Standardized Mean Difference ($\text{SMD} < 0.10$) across 20-day Turnover, 60-day Volatility, and $\log(\text{Close})$.
+       2. **Matched-Pair Yield**: $\ge 200$ clean matched pairs per calendar year ($\ge 1,000$ clean pairs across 2021–2025).
+       3. **Flag Yield**: $\ge 500$ raw flags per year.
+       4. **Measurement Error / UNCLEAR Share**: Annual UNCLEAR share $\le 30\%$ for flags and controls across all years.
+       5. **User Review & Sign-Off**: Explicit user review and written approval of Stage 1 artifact before running Stage 2.
+     - **Replacement Rationale**: The v5 power gate evaluated formulaic asymptotic power based on synthetic or unclustered counts. It was replaced by hard empirical balance metrics (SMD $< 0.10$), minimum annual pair counts, and cluster bootstrap variance estimation on the locked Stage 1 output.
 
-   * **Deterministic Text-Only Classifier (classifier-v2, Item 2)**:
-     - **Specification**: Evaluated strictly under `classifier-v2` (`classify_catalyst_v2`: `desc + attchmntText`, zero PDF extraction, zero network requests).
-     - **Concordance**: 99.87% identical classification vs v1 (8,549 / 8,560 cached records). Exactly 7 records shift from CATALYST to UNCLEAR due to absence of PDF text.
-     - **Reliability**: Eliminates all 7,261 PDF cache misses (0 misses by design). attchmntText is 100% populated in 2026 cache and 100% populated across 30 sampled mid/small-caps (2021–2026).
-     - **Classifier Freeze**: Classifier is frozen at Git tag `classifier-v2`. No rules or patterns will be altered following user hand-labeling.
+   * **Dry Count Redo Summary (Full-Year 2024 & 2022, Item 2)**:
+     - **Session Coverage**:
+       - 2024: 246 trading sessions (226 effective post-warmup).
+       - 2022: 105 trading sessions (85 effective post-warmup).
+     - **Filters Applied**: Series `EQ`-only, 20-day ADTV $\ge$ ₹5 Cr, rank 101–500, ex-date $\pm 2\text{d}$ corporate action exclusion (splits/bonuses), 5-day cooldown per symbol.
+     - **2024 Flag Yield**: 2,014 raw flags (mean 8.91, median 8.0, P90 15.0, max 28). Top 5 dates share: 127/2,014 = 6.3%. Unique symbols: 649 (mean 3.10 flags/symbol). Nifty 500 share: 1,281/2,014 = 63.6%.
+     - **2022 Flag Yield**: 678 raw flags (mean 7.98, median 7.0, P90 16.0, max 23). Top 5 dates share: 104/678 = 15.3%. Unique symbols: 392 (mean 1.73 flags/symbol). Nifty 500 share: 328/678 = 48.4%.
+     - **EOD Flag Yield Explanation (Item 2d)**: EOD flags (~8–9/day) are higher than 14:30 development data (~3/day) due to late-session volume accumulation (25–35% of volume traded post-14:30) and late-day momentum expansion crossing +4.0%, combined with scanning all liquid EQ equities rather than a narrow ~150-symbol watchlist. Development-sample retention rates are NOT applicable to EOD scans.
+     - **Measured Pre-Move Retention (Item 2e)**: Evaluated across $N = 300$ randomly sampled flags under `classifier-v2`: 236/300 = **78.67%** clean ([73.68%, 82.92%]).
+     - **Control Cap Feasibility under $C=3$ (Item 2f)**:
+       - 2024: 909 eligible stocks $\times 3 = 2,727$ slots vs 1,584 expected clean flags (1.72x cushion); matching success is 2,007/2,014 = **99.7%**.
+       - 2022: 675 eligible stocks $\times 3 = 2,025$ slots vs 533 expected clean flags (3.80x cushion); matching success is 678/678 = **100.0%**.
 
-   * **Control Uniqueness & Covariate Balance**:
-     - **Uniqueness Rules**: Zero reuse of the same symbol on the same scan date; symbol reuse capped at $\le 3\text{x}$ per symbol per calendar year across all scan dates.
-     - **Covariate Balance Acceptance Criterion**: Standardized Mean Difference ($\text{SMD} < 0.10$) across 20-day Turnover, 60-day Volatility, and $\log(\text{Close})$. Verified before unblinding Stage 2 outcomes.
+   * **Era Validity, Category Migration & Taxonomy Reconciliation (Item 4)**:
+     - **2022 Monthly vs Annual Reconciliation**: RELIANCE (384 vs 384, diff 0), INFY (167 vs 167, diff 0), TATASTEEL (313 vs 313, diff 0).
+     - **Taxonomy Evolution**:
+       - *2022 Analyst Meet Drop*: 125 filings in `Analysts/Institutional Investor Meet` explained by 579 filings logged under `Schedule of Analysts/Institutional Investor` (combined $125 + 579 = 704$ filings).
+       - *2022 Updates Drop*: 62 filings in `Updates` explained by 428 filings in `General updates` (lowercase 'u', combined $62 + 428 = 490$ filings).
+       - *Updates -> General Updates Standardization*: In late 2024, NSE standardized `General Updates` (capital 'U'), rising from 0 (2021–2023) to 63 (2024) to 492 (2025) to 461 (2026), while `Updates` declined.
+       - *Financial Result Updates Phasing*: 116 (2021) -> 58 (2022) -> 115 (2023) -> 116 (2024) -> 29 (2025) -> 0 (2026), phased out as filings consolidated into `Financial Results` and `Outcome of Board Meeting`.
+     - Full top 15 category crosstab across 2021–2026 recorded in `output/audit/era_validity_crosstab_bf85152.txt`.
 
-   * **Surveillance, Circuit Proxy & Exclusion Rules**:
-     - Continuous ASM and continuous price band exclusions are **NOT applied in the backtest** due to unavailability of historical files.
-     - Circuit day proxy applied from daily OHLCV ($|r_{\text{day}}| \ge 4.90\%$, intraday range $<0.20\%$, volume $<0.25 \times \text{SMA}_{20}(V)$).
-     - Exclusions applied: Ex-date $\pm 2$ trading days of corporate actions (splits, bonuses, rights); partial sessions; 5-trading-day repeat-flag cooldown.
+   * **Historical Data Span & Evaluation Horizon (Item 6)**:
+     - **Data Availability (2016–2020)**: Bhavcopy, MTO delivery, and announcements verified across 5 representative symbols (RELIANCE, INFY, TCS, HDFCBANK, SBIN) in `output/audit/historical_span_2016_2020_5syms_bf85152.txt`.
+     - **Pre-Registered Horizon**: The primary backtest evaluation window remains strictly pre-registered as **2021-01-01 through 2026-01-31 (61 calendar months, ~1,250 trading days)**. Development data (Feb–May 2026, Nov 2026) remains strictly quarantined.
 
-   * **Two-Stage Run Protocol & Stage 1 Stopping Gate**:
-     - **Stage 1 (Signal & Control Generation - Zero Outcomes)**:
-       - Run historical scanner on raw bhavcopies: flags ($r_{\text{day}} \in [+4.0\%, +15.0\%], V \ge 2.0\text{x}$) and matched controls (turnover + volatility quintiles, unique $\le 3\text{x}$/yr).
-       - Evaluate pre-move cleanliness in $[T-3, T\text{ 17:15 IST}]$ under `classifier-v2`.
-       - Output immutable artifact `output/backtest_stage1_flags_controls.csv`. Record SHA-256 hash.
-       - Gate check: compute flags/yr, clean pairs, covariate balance (SMD $< 0.10$), and exact power for $1.25\text{x}$ and $1.30\text{x}$.
-       - **Stopping Gate**: The Stage 1 output artifact must be reviewed and explicitly approved by the user before unblinding Stage 2 outcomes.
-     - **Stage 2 (Outcome Evaluation & Inference)**:
-       - Ingest locked Stage 1 artifact, fetch forward announcements in $[T+1, T+10]$, apply `classifier-v2`, and compute paired McNemar and Wilcoxon tests. Zero re-tuning after Stage 1 unblinding.
+   * **Authoritative Publication Timing & Operational Rules (Item 7)**:
+     - **Publication Milestones (Verified from Server HTTP Headers)**:
+       - UDDiP Bhavcopy: 11:03:02 GMT (16:33:02 IST) to the exact second.
+       - MTO Delivery Position: Published between 16:49 IST and 17:03 IST.
+       - Bulk Deals (`bulk.csv`): 18:31 IST (13:01 GMT).
+       - Block Deals (`block.csv`): 18:32 IST (13:02 GMT).
+       - Security List (`sec_list.csv`): 19:29 IST (13:59 GMT).
+     - **As-Of Rules**:
+       - The 17:15 IST pass may use UDDiP Bhavcopy and MTO delivery files. It may NOT use same-day bulk deals, block deals, or security list files.
+       - The scheduled 20:00 IST logger operates as the authoritative EOD archive pass.
+     - **Retry & Abort Policy for 17:15 IST Pass**:
+       - Given the 12-minute margin between MTO publication (~17:03 IST) and the 17:15 IST scan, verify HTTP 200 availability of UDDiP and MTO files at 17:15 IST.
+       - If either file returns 404, retry at 17:30, 17:45, and 18:00 IST.
+       - If files remain unavailable at 18:00 IST, abort with alert log `DATA_NOT_READY_AT_1800` and fall back to scheduled evening pass at 19:30 IST. Zero partial or unverified scans.
 
-   * **Operational Abort/Retry Rule for 17:15 IST Pass (Item 8)**:
-     - At 17:15 IST, verify availability of UDDiP Bhavcopy and MTO delivery files (HTTP 200).
-     - If either returns 404, retry at 17:30, 17:45, and 18:00 IST.
-     - If at 18:00 IST files are still unavailable, abort scan with alert log `DATA_NOT_READY_AT_1800` and fall back to scheduled evening pass at 19:30 IST. No partial or corrupted scans.
-
-   * **Standardized Operational Backtest Rules**:
-     1. **EOD Flag Thresholds (Primary Signal)**:
-        - Daily price return: $|r_{\text{day}}| \ge 3.0\%$
-        - Volume ratio: $V / \text{SMA}_{20}(V) \ge 2.5\text{x}$
-     2. **Matching Algorithm & Tolerance**:
-        - Each flag on scan date $T$ is paired with 1 matched control from the eligible universe on the SAME scan date $T$.
-        - Exact matching on 20-day Average Daily Turnover quintile ($\pm 20\%$ tolerance) and 60-day historical volatility quintile ($\pm 20\%$ tolerance).
-        - Controls are sampled strictly without replacement across all scan dates to eliminate repeat-control correlation.
-     3. **Repeat-Flag Cooldown**:
-        - 5-trading-day cooldown on the same symbol: if a symbol triggers multiple flags within 5 trading days, only the initial flag is retained.
-     4. **Exclusions**:
-        - *Corporate Actions*: Flags occurring within ex-date $\pm 2$ trading days of any stock split, bonus issue, or rights issue are strictly excluded.
-        - *Partial Sessions*: Truncated / abnormal sessions (Muhurat trading, disaster recovery Saturday sessions) are tagged `partial_session` and excluded from event studies and $T+N$ counting.
-        - *Surveillance Lists*: Securities in Long-term ASM or Stage 2+ GSM on scan date $T$ are excluded.
-        - *Circuit Limit Days*: Days where the stock touches upper/lower circuit and does not trade freely (zero volume or close at circuit tick) are excluded.
-     5. **Clean-Pair Definition**:
-        - Both flag stock and matched control stock must have NO material filing in the pre-move window $[T-3, T\text{ 17:15 IST}]$.
-        - Both must have verified $T+1$ Open entry price and full $T+1..T+10$ historical candle history.
-     6. **Overlap & Clustering Handling**:
-        - Statistical inference incorporates cluster bootstrap by scan date (B=1,000) and cluster grouping by symbol to correct for cross-sectional market clustering.
-     7. **Minimum Liquidity Floor**:
-        - 20-day average daily turnover $\ge \text{INR } 5\text{ Cr}$ ($\approx \$600\text{k}$ USD equivalent).
-     8. **Classifier Hash & Settings**:
-        - Classifier version locked at Git tag `classifier-v1` (`3f603a1`).
-        - Parameter setting: `parse_pdf = True` (cached locally in `output/cache/pdf_text_cache.json`, throttled).
-   * **Standardized Table Window Labels**: Every contingency and lift table must explicitly state both:
-     - **Pre-Move Window**: $[T-3, T\text{ 17:15 IST}]$ (baseline 3 calendar days prior to scan) or $[T-10, T\text{ 17:15 IST}]$ (10 calendar days sensitivity).
-     - **Forward Horizon Window**: $[T+1, T+10]$ (primary 10 trading days) or $[T+1, T+3]$ (secondary 3 trading days).
-   * **Per-Symbol Announcements Caching**: Persistent local disk caching of raw corporate announcements by symbol (`output/cache/announcements/<symbol>.json`) to eliminate redundant HTTP calls across repeated backtest runs.
-   * Filter pre-move filings strictly before each flag timestamp.
-   * Compute forward returns ($T+1$ Open to $T+10$) and corporate announcement lift vs. liquidity/volatility quintile-matched controls.
-   * Report both paired and unpaired lift disaggregated by scheduled vs. unscheduled-material outcomes, with scan-date cluster bootstrap confidence intervals.
-   * Use findings to empirically calibrate Phase 4 and Phase 3 filters before deployment.
+   * **Standardized Operational Rules for Backtest Execution**:
+     1. **Primary Signal**: Price return $r_{\text{day}} \in [+4.0\%, +15.0\%]$, Volume multiple $V / \text{SMA}_{20}(V) \ge 2.0\text{x}$, Series `EQ`.
+     2. **Matching Protocol**: 1:1 nearest-neighbor matching on 20-day Average Daily Turnover quintile ($\pm 20\%$) and 60-day historical volatility quintile ($\pm 20\%$) on the SAME scan date $T$.
+     3. **Control Uniqueness**: Zero reuse of the same symbol on the same scan date; symbol reuse capped at $\le 3\text{x}$ per symbol per calendar year.
+     4. **Repeat-Flag Cooldown**: 5-trading-day cooldown on the same symbol (initial flag retained).
+     5. **Corporate Action Exclusions**: Flags and controls within ex-date $\pm 2$ trading days of stock splits, bonus issues, or rights issues are strictly excluded.
+     6. **Clean-Pair Definition**: Both flag and matched control must have NO material corporate filing in $[T-3, T\text{ 17:15 IST}]$ evaluated under `classifier-v2`. Both must possess verified $T+1$ Open price and full $T+1..T+10$ OHLCV candle history.
+     7. **Standardized Window Labels**: Every table must report Pre-Move Window ($[T-3, T\text{ 17:15 IST}]$ baseline or $[T-10, T\text{ 17:15 IST}]$ sensitivity) and Forward Horizon ($[T+1, T+10]$ primary or $[T+1, T+3]$ secondary).
+     8. **Two-Stage Separation**:
+        - Stage 1 generates flags and matched controls with pre-move cleanliness check; zero forward outcomes evaluated; locked into `output/backtest_stage1_flags_controls.csv`.
+        - Stage 2 evaluates forward outcomes in $[T+1, T+10]$ strictly after Stage 1 artifact approval and user hand-label scoring. Zero rule changes after unblinding.
 
 ---
 

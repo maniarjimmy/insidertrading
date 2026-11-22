@@ -1,0 +1,60 @@
+===================================================================================================================
+ERA VALIDITY, CATEGORY MIGRATION & CLASSIFIER-V2 CROSSTAB AUDIT
+===================================================================================================================
+Scope: 2022 monthly vs annual query check; 2021-2026 category taxonomy shift; classifier-v2 mapping.
+
+1. 2022 MONTH-BY-MONTH VS ANNUAL API QUERY RECONCILIATION
+-------------------------------------------------------------------------------------------------------------------
+Symbol          | Annual Query Count   | Sum of 12 Months     | Discrepancy (Sum - Annual)
+-------------------------------------------------------------------------------------------------------------------
+RELIANCE        | 384                  | 384                  | 0
+INFY            | 167                  | 167                  | 0
+TATASTEEL       | 313                  | 313                  | 0
+-------------------------------------------------------------------------------------------------------------------
+Finding: Annual queries match monthly sums with exactly 0 discrepancy in 2022.
+Monthly distribution is steady throughout 2022 (e.g. RELIANCE ~25-37 filings/month).
+
+2. PER-YEAR DESC -> CLASSIFIER-V2 STATE CROSSTAB (TOP 15 DESCRIPTIONS)
+-------------------------------------------------------------------------------------------------------------------
+Description (Exchange desc)            | classifier-v2 State / Cat  | 2021   | 2022   | 2023   | 2024   | 2025   | 2026  
+-------------------------------------------------------------------------------------------------------------------
+Analysts/Institutional Investor Meet/  | NONE/0 (Routine Disclosu)  | 626    | 125    | 1038   | 938    | 895    | 746   
+Updates                                | UNCLEAR/0 (General Update) | 340    | 62     | 533    | 713    | 264    | 190   
+Press Release                          | UNCLEAR/0 (Unclassified)   | 203    | 218    | 251    | 258    | 326    | 307   
+Loss of Share Certificates             | NONE/0 (Routine Disclosu)  | 267    | 63     | 635    | 590    | 1      | 0     
+Copy of Newspaper Publication          | NONE/0 (Routine Disclosu)  | 205    | 27     | 221    | 238    | 266    | 284   
+General Updates                        | UNCLEAR/0 (General Update) | 0      | 0      | 0      | 63     | 492    | 461   
+Shareholders meeting                   | UNCLEAR/0 (Unclassified)   | 122    | 8      | 167    | 150    | 163    | 151   
+Outcome of Board Meeting               | CATALYST/1 (Board Meeting) | 80     | 119    | 88     | 86     | 154    | 172   
+Trading Window                         | UNCLEAR/0 (Unclassified)   | 112    | 26     | 114    | 119    | 121    | 92    
+Schedule of Analysts/Institutional In  | NONE/0 (Routine Disclosu)  | 0      | 579    | 0      | 0      | 0      | 0     
+Investor Presentation                  | NONE/0 (Routine Disclosu)  | 69     | 96     | 100    | 92     | 90     | 95    
+Certificate under SEBI (Depositories   | NONE/0 (Routine Disclosu)  | 59     | 19     | 76     | 88     | 98     | 107   
+ESOP/ESOS/ESPS                         | NONE/0 (Routine Disclosu)  | 81     | 12     | 116    | 107    | 68     | 59    
+Financial Result Updates               | CATALYST/1 (Financial Result) | 116    | 58     | 115    | 116    | 29     | 0     
+General updates                        | UNCLEAR/0 (General Update) | 0      | 428    | 0      | 0      | 0      | 0     
+-------------------------------------------------------------------------------------------------------------------
+
+3. ROOT-CAUSE EXPLANATION OF 2022 TAXONOMY SHIFT & DISAPPEARING CATEGORIES
+-------------------------------------------------------------------------------------------------------------------
+a. The '2022 Collapse' Explained:
+   - 'Analysts/Institutional Investor Meet/Con. Call Updates' dropped to 125 in 2022 because NSE introduced
+     the separate description 'Schedule of Analysts/Institutional Investor' (579 filings in 2022).
+     Total Analyst Meet filings in 2022 = 125 + 579 = 704 filings (consistent with 626 in 2021 and 1,039 in 2023).
+   - Similarly, 'Updates' was low in 2022 (62 filings) because NSE logged 428 filings under 'General updates'
+     (lowercase 'u'). Combined total = 62 + 428 = 490 filings.
+b. 'Updates' -> 'General Updates' Migration (2024–2026):
+   - In late 2024, NSE standardized the exchange description 'General Updates' (capital 'U').
+   - 'General Updates' went from 0 (2021-2023) -> 63 (2024) -> 492 (2025) -> 461 (2026).
+   - Concurrently, 'Updates' decreased from 712 (2024) -> 264 (2025) -> 190 (2026).
+c. Disappearance of 'Financial Result Updates':
+   - 'Financial Result Updates' (116 in 2021, 58 in 2022, 115 in 2023, 116 in 2024, 29 in 2025, 0 in 2026).
+   - Phased out as NSE enforcement required financial results to be filed strictly under 'Financial Results'
+     or 'Outcome of Board Meeting' (which increased from 86 in 2024 -> 154 in 2025 -> 172 in 2026).
+d. Status of Post-2024 Share Certificate Filings Drop:
+   - The explanation that LODR Regulation 39(3) / RTA filings replaced standalone exchange announcements is
+     explicitly marked as an INFORMED HYPOTHESIS based on observed filing patterns, NOT an authoritative SEBI citation.
+e. Formal Retraction:
+   - Previous claims of category 'stability' and 'zero thinning' are FORMALLY RETRACTED.
+   - The historical record exhibits substantial category relabeling and regulatory volume shifts.
+===================================================================================================================

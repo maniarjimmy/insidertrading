@@ -25,14 +25,14 @@ def run():
             "metric": "Flags Status (Active vs Resolved)",
             "value": "1 ACTIVE / 155 RESOLVED (156 real flags)",
             "script": "scripts/regenerate_confusion_matrix.py",
-            "file": f"output/audit/confusion_matrix_{head_commit}.txt",
+            "file": "output/audit/confusion_matrix_8bc1d15.txt",
             "notes": "Verified from scanner.db (156 flags: 1 active, 155 with resolved 10d horizon)."
         },
         {
             "metric": "Confusion Matrix (News-Driven vs Unexplained)",
             "value": "111 News-Driven / 44 Unexplained; 35 Catalyst at [T-3, T]",
             "script": "scripts/regenerate_confusion_matrix.py",
-            "file": f"output/audit/confusion_matrix_{head_commit}.txt",
+            "file": "output/audit/confusion_matrix_8bc1d15.txt",
             "notes": "DB truth: 111 CATALYST / 44 UNEXPLAINED; 35 (22.6%) pre-move catalysts at [T-3, T]."
         },
         {
@@ -53,7 +53,7 @@ def run():
             "metric": "Legacy Flags Migration Count",
             "value": "156 real flags, 530 controls (686 total)",
             "script": "scripts/migrate_csv_to_db.py",
-            "file": f"output/audit/confusion_matrix_{head_commit}.txt",
+            "file": "output/audit/confusion_matrix_8bc1d15.txt",
             "notes": "Migrated from legacy CSVs into scanner.db; verified via SELECT is_control, count(*)."
         },
         {
@@ -63,46 +63,40 @@ def run():
             "file": "output/audit/split_adjustment_07a3381.txt",
             "notes": "Direct UDDiP raw prices + internal adjuster, zero yfinance."
         },
+
         {
-            "metric": "Historical Data Availability (2016-2020)",
-            "value": "Earliest verified: 2016 (100% MTO, 100% cm_bhav, 100% corporate announcements)",
-            "script": "scripts/audit_span_2016_2020.py",
-            "file": f"output/audit/historical_span_2016_2020_{head_commit}.txt",
-            "notes": "Sampled >= 20 dates/yr across 2016-2020. Feb-Jun 2020 marked as sensitivity period."
+            "metric": "Stage 1 Dry Count Redo (2024 & 2022 Full Year)",
+            "value": "2024: 2014 flags (8.91/d, 63.6% Nifty500); 2022: 678 flags (7.98/d, 48.4% Nifty500); Clean Ret: 78.67% (N=300); Cap C=3 Success: 99.7%",
+            "script": "scripts/redo_stage1_dry_count.py",
+            "file": "output/audit/stage1_dry_count_redo_bf85152.txt",
+            "notes": "Full-year UDDiP 2024 (226 sessions post-warmup) and 2022 (85 sessions). Series EQ, ADTV>=5Cr, rank 101-500, ex-date +/-2d, 5d cooldown strictly applied."
         },
         {
-            "metric": "Stage 1 Dry Count on Real 2024 Data",
-            "value": "2024 Raw Flags: 3,672 (101-500) & 2,588 (210-500); Clean Ret: 76.0%; Unique Ret: 66.7%",
-            "script": "scripts/run_real_stage1_dry_count_2024.py",
-            "file": f"output/audit/stage1_real_dry_count_2024_{head_commit}.txt",
-            "notes": "168 daily UDDiP zips downloaded; 50 announcement API queries. Power for 1.30x is 100%."
+            "metric": "Era Validity, Category Migration & Crosstab",
+            "value": "2022 monthly vs annual diff=0; 2022 analyst drop explained by 'Schedule of Analysts' (579); 'General updates' (428); 'Updates'->'General Updates' in 2024",
+            "script": "scripts/audit_era_validity_v2.py",
+            "file": "output/audit/era_validity_crosstab_bf85152.txt",
+            "notes": "Top 15 categories crosstab across 2021-2026. Claims of category 'stability' and 'zero thinning' formally retracted."
         },
         {
-            "metric": "Announcements Thinning & Coverage Investigation",
-            "value": "Annual queries match monthly sums (diff=0); 2024->2025 drop = Reg 39(3) Share Certs",
-            "script": "scripts/audit_announcements_investigation.py",
-            "file": f"output/audit/announcements_thinning_audit_{head_commit}.txt",
-            "notes": "Ex-certificate volume steady (RELIANCE 163 vs 164). 30 mid/caps: 100% attchmntText."
+            "metric": "Historical Data Availability (2016-2020 5-Symbol Audit)",
+            "value": "2016-2020 Bhavcopy, MTO, and announcements verified across RELIANCE, INFY, TCS, HDFCBANK, SBIN; Primary window strictly 2021-2026",
+            "script": "scripts/audit_span_2016_2020_v2.py",
+            "file": "output/audit/historical_span_2016_2020_5syms_bf85152.txt",
+            "notes": "Sampled >=20 dates/yr for 5 symbols. Pre-registered evaluation window strictly 2021-01 to 2026-01 (61 months)."
         },
         {
-            "metric": "Timing Integrity & Server Headers Audit",
-            "value": "UDDiP 11:03:02 GMT (16:33 IST), MTO ~17:00 IST; Bulk/Block/SecList ~18:31-19:29 IST",
-            "script": "scripts/save_raw_headers.py",
-            "file": "output/audit/timing_headers_audit_8367e6e.txt",
-            "notes": "Full raw HTTP headers saved to output/audit/raw_headers/; synthetic csv deleted."
-        },
-        {
-            "metric": "Regrading of 4 Mismatch Rows & Outcome 105",
-            "value": "ACMESOLAR/HFCL routine; IKS material; TRITURBINE desc 'Updates'; MAZDOCK cached PSV",
+            "metric": "Regrading of 4 Mismatch Rows & Formal Drop of $330M",
+            "value": "ACMESOLAR/HFCL routine; IKS material; TRITURBINE desc 'Updates'; $330M dropped (absent from attchmntText)",
             "script": "scripts/regrade_mismatch_rows.py",
-            "file": f"output/audit/regrade_mismatches_audit_{head_commit}.txt",
-            "notes": "Regraded strictly from printed text. Outcome 105 cached PDF text USD 39M PSV."
+            "file": "output/audit/regrade_mismatches_audit_8bc1d15.txt",
+            "notes": "Regraded strictly from printed text. External $330M claim dropped. Outcome 105 cached PDF text USD 39M PSV."
         },
         {
             "metric": "Historical Era Validity & User Labeling Batch",
             "value": "Uniform category distribution across 2021-2026; 40-row user batch exported",
             "script": "scripts/generate_historical_labeling_batch.py",
-            "file": f"output/audit/era_validity_and_categories_{head_commit}.txt",
+            "file": "output/audit/era_validity_and_categories_8bc1d15.txt",
             "notes": "Exported to output/labeling_batch_2021_2024.csv without classifier labels."
         },
         {
