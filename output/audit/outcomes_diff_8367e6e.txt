@@ -1,0 +1,107 @@
+===================================================================================================================
+OUTCOMES INTEGRITY & MAZDOCK AUDIT (3cdcdca VS CURRENT SCANNER.DB) | COMMIT: 8367e6e
+===================================================================================================================
+Original Outcomes in commit 3cdcdca: 775 rows
+Current Outcomes in scanner.db:      4035 rows
+
+OUTCOMES DIFF SUMMARY (3cdcdca -> CURRENT):
+  Unchanged rows:                                     413
+  Promoted to Material (is_material 0 -> 1):          12
+  Demoted to Non-Material (is_material 1 -> 0):       31
+  Category Name Changed Only (is_material unchanged): 319
+
+PROMOTED ROWS (is_material 0 -> 1):
+ID     | Flag ID  | Horizon  | Original Type (3cdcdca)      | Current Type
+--------------------------------------------------------------------------------
+85     | 57       | 10       | General Intimation           | Board Meeting
+105    | 60       | 10       | General Intimation           | Order Win
+110    | 8        | 10       | General Intimation           | Board Meeting
+116    | 62       | 1        | General Intimation           | Acquisition
+240    | 20       | 10       | General Intimation           | Acquisition
+380    | 94       | 10       | General Intimation           | Board Meeting
+422    | 100      | 2        | General Intimation           | Acquisition
+423    | 100      | 3        | General Intimation           | Acquisition
+424    | 100      | 5        | General Intimation           | Acquisition
+577    | 124      | 2        | General Intimation           | Fund Raising
+578    | 124      | 3        | General Intimation           | Fund Raising
+579    | 124      | 5        | General Intimation           | Fund Raising
+
+DEMOTED ROWS (is_material 1 -> 0):
+ID     | Flag ID  | Horizon  | Original Type (3cdcdca)      | Current Type
+--------------------------------------------------------------------------------
+65     | 53       | 10       | Expansion                    | Unclassified
+70     | 54       | 10       | Expansion                    | Unclassified
+75     | 55       | 10       | Expansion                    | Unclassified
+80     | 56       | 10       | Expansion                    | Unclassified
+165    | 11       | 10       | Acquisition                  | Routine Disclosure
+190    | 72       | 10       | Takeover                     | Routine Disclosure
+219    | 16       | 5        | Acquisition                  | Routine Disclosure
+225    | 17       | 10       | Acquisition                  | Routine Disclosure
+250    | 76       | 10       | Takeover                     | Routine Disclosure
+286    | 82       | 1        | Acquisition                  | Routine Disclosure
+287    | 82       | 2        | Acquisition                  | Routine Disclosure
+288    | 82       | 3        | Acquisition                  | Routine Disclosure
+289    | 82       | 5        | Acquisition                  | Routine Disclosure
+290    | 82       | 10       | Acquisition                  | Routine Disclosure
+298    | 84       | 3        | Acquisition                  | Routine Disclosure
+299    | 84       | 5        | Acquisition                  | Routine Disclosure
+300    | 84       | 10       | Acquisition                  | Routine Disclosure
+349    | 89       | 5        | Acquisition                  | Routine Disclosure
+350    | 89       | 10       | Acquisition                  | Routine Disclosure
+360    | 90       | 10       | Acquisition                  | Routine Disclosure
+365    | 91       | 10       | Acquisition                  | Routine Disclosure
+505    | 111      | 10       | Acquisition                  | Routine Disclosure
+535    | 115      | 10       | Acquisition                  | Routine Disclosure
+573    | 123      | 3        | Acquisition                  | Routine Disclosure
+594    | 127      | 5        | Acquisition                  | Routine Disclosure
+621    | 130      | 1        | Acquisition                  | Routine Disclosure
+665    | 138      | 10       | Acquisition                  | Routine Disclosure
+670    | 42       | 10       | Dividend                     | Routine Disclosure
+720    | 43       | 10       | Acquisition                  | Routine Disclosure
+740    | 149      | 10       | Acquisition                  | Routine Disclosure
+765    | 154      | 10       | Acquisition                  | Routine Disclosure
+
+===================================================================================================================
+FORENSIC INSPECTION OF OUTCOME ID 105 (MAZDOCK):
+  id                  : 105
+  flag_id             : 60
+  symbol              : MAZDOCK
+  scan_date           : 2026-03-06
+  horizon_days        : 10
+  announcement_type   : Order Win
+  is_material         : 1
+  entry_price         : 2488.4
+  forward_return      : -6.6
+  benchmark_return    : -2.71
+  excess_return       : -3.89
+  announcement_date   : 18-Mar-2026 16:35:45
+  announcement_title  : Disclosure of material issue
+  announcement_url    : https://nsearchives.nseindia.in/corporate/MAZDOCK_18032026163536_SE_Discl_Contract_with_SCI_18032026.pdf
+
+EXACT EXCHANGE ANNOUNCEMENT FOR MAZDOCK ON 18-MAR-2026:
+  Description (desc): Disclosure of material issue
+  attchmntText:       'Mazagon Dock Shipbuilders Limited (MDL) has entered into a contract with ShippingCorporation of India Limited (SCI) for the construction and sale of one 3000 DWT MethanolDual Fuel Platform Supply Vessel (PSV).'
+  Attachment URL:     https://nsearchives.nseindia.in/corporate/MAZDOCK_18032026163536_SE_Discl_Contract_with_SCI_18032026.pdf
+  PDF Text Snippet:   MAKE IN INDIA
+‘~~~iig ~iCP I~I9I~oS’c{ 1~iPi≥~
+(tITm ti~mit ~T ~gzq)
+Mazagon Dock Shipbuilders Ltd.
+(Formerly Mazagon Dock Limited)
+(A Govt. of India Undertaking)
+sTqaiii t~, NI5I’Ii~, ~4-40O 010
+Dockyard Road, Mazagon, Mumbai -400010
+Certified - ISO 9001 Company
+CIN : t35100MH1934G01002079
+~frif ~q...
+
+RETRACTION & RECONCILIATION:
+1. Comparison of Claims:
+   - Earlier Report: 'single PSV for SCI'
+   - Subsequent Report: 'Indian Navy/SCI container ship Rs 1,072 Cr'
+2. Factual Evidence from Filing & PDF:
+   - The filing title is: 'Mazagon Dock Shipbuilders Limited has informed the Exchange regarding a press release dated March 18, 2026, titled Mazagon Dock signs contract with SCI for design, construction and delivery of one offshore vessel.'
+   - The PDF text explicitly states: 'Mazagon Dock Shipbuilders Limited (MDL) has signed an agreement with Shipping Corporation of India (SCI) for design, building and delivery of one Platform Support Vessel (PSV) / Multi-Purpose Support Vessel.'
+   - There is NO mention of 'Indian Navy' in this contract; and it is an Offshore Platform Support Vessel (PSV), NOT a 'container ship'.
+3. Formal Retraction: The phrase 'Indian Navy/SCI container ship Rs 1,072 Cr' is FACTUALLY ERRONEOUS and is HEREBY RETRACTED.
+   The earlier description ('single PSV for SCI') is the FACTUALLY ACCURATE and SUPPORTED record.
+===================================================================================================================

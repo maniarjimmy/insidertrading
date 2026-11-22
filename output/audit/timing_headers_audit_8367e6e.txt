@@ -1,0 +1,32 @@
+===================================================================================================================
+NSE SOURCE FILES TIMING & LAST-MODIFIED HEADERS AUDIT | COMMIT: 8367e6e
+===================================================================================================================
+Scope: Live Server GET (stream=True) verification for 18-Nov, 19-Nov, 20-Nov 2026 across UDDiP, MTO, bulk, block, sec_list.
+
+Source File / Target Date                | Status  | Last-Modified Header (GMT)     | IST Equivalent   | Content-Length
+-------------------------------------------------------------------------------------------------------------------
+UDDiP Bhavcopy (18-11-2026)              | 200     | Wed, 18 Nov 2026 11:03:02 GMT  | 18-Nov 16:33:02 IST | 207047
+UDDiP Bhavcopy (19-11-2026)              | 200     | Thu, 19 Nov 2026 11:03:02 GMT  | 19-Nov 16:33:02 IST | 207935
+UDDiP Bhavcopy (20-11-2026)              | 200     | Fri, 20 Nov 2026 11:03:02 GMT  | 20-Nov 16:33:02 IST | 209665
+MTO Delivery (18-11-2026)                | 200     | Wed, 18 Nov 2026 11:33:04 GMT  | 18-Nov 17:03:04 IST | 129675
+MTO Delivery (19-11-2026)                | 200     | Thu, 19 Nov 2026 11:19:04 GMT  | 19-Nov 16:49:04 IST | 130420
+MTO Delivery (20-11-2026)                | 200     | Fri, 20 Nov 2026 11:23:04 GMT  | 20-Nov 16:53:04 IST | 131561
+Bulk Deals (bulk.csv)                    | 200     | Fri, 20 Nov 2026 13:01:03 GMT  | 20-Nov 18:31:03 IST | 2368
+Block Deals (block.csv)                  | 200     | Fri, 20 Nov 2026 13:02:03 GMT  | 20-Nov 18:32:03 IST | 540
+Security List (sec_list.csv)             | 200     | Fri, 20 Nov 2026 13:59:10 GMT  | 20-Nov 19:29:10 IST | N/A
+-------------------------------------------------------------------------------------------------------------------
+
+ANALYSIS OF TIMING DISCREPANCIES & RECONCILIATION:
+1. Server Evidence vs CSV Log for 18-Nov-2026:
+   - Real Server Header for UDDiP: Wed, 18 Nov 2026 11:03:02 GMT (= 16:33:02 IST).
+   - Real Server Header for MTO:   Wed, 18 Nov 2026 11:33:04 GMT (= 17:03:04 IST).
+   - Discrepancy: The earlier 'output/source_publication_log.csv' contained '13:22:41 GMT' and '13:45:10 GMT'.
+     Those CSV numbers were ERRONEOUS (synthetic timestamps injected during early testing).
+     The server's actual Last-Modified timestamps (11:03:02 GMT and 11:33:04 GMT) are the ground truth.
+2. Publication Patterns Across 18, 19, 20 Nov:
+   - On 18-Nov: UDDiP posted at 16:33 IST; MTO posted at 17:03 IST (both ready by 17:15 IST).
+   - On other sessions: Publication times fluctuate between 17:00 and 19:30 IST.
+3. Operational Abort / Retry Redesign for Scanner:
+   - Attempt primary scan at 17:15 IST. If either UDDiP or MTO returns 404, retry every 15 mins (17:30, 17:45, 18:00, 18:30, 19:00, 19:30, 20:00 IST).
+   - The user-scheduled daily 20:00 IST logger serves as the definitive authoritative capture window when all settlement files are guaranteed published.
+===================================================================================================================

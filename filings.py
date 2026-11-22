@@ -238,6 +238,25 @@ def extract_pdf_first_page_text(url: str, fetch_remote: bool = True) -> str:
     return ""
 
 
+def classify_catalyst_v2(desc: Optional[str] = None,
+                         text: Optional[str] = None,
+                         source: str = "filing") -> Tuple[str, int, str]:
+    """
+    classifier-v2: Deterministic TEXT-ONLY classifier (desc + attchmntText).
+    Zero PDF extraction, zero network requests, fully reproducible across all
+    historical eras (2021-2026).
+    """
+    return classify_catalyst(
+        desc=desc,
+        text=text,
+        source=source,
+        url=None,
+        parse_pdf=False,
+        fetch_remote_pdf=False,
+        cache_only_pdf=False,
+    )
+
+
 def classify_catalyst(desc: Optional[str] = None,
                       text: Optional[str] = None,
                       source: str = "filing",

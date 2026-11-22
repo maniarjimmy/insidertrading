@@ -8,7 +8,7 @@ from scipy.stats import binomtest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-from filings import fetch_corporate_filings, classify_catalyst, parse_filing_datetime, PDF_CACHE_MISSES
+from filings import fetch_corporate_filings, classify_catalyst_v2, parse_filing_datetime
 from holidays import get_next_trading_day, parse_date
 
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output", "scanner.db")
@@ -103,13 +103,10 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
                 continue
             adate = adt.date() if isinstance(adt, datetime) else adt
 
-            state, mat, cat = classify_catalyst(
+            state, mat, cat = classify_catalyst_v2(
                 desc=a.get("desc", ""),
                 text=a.get("attchmntText") or a.get("text", "") or "",
-                url=a.get("url", ""),
                 source="filing",
-                parse_pdf=True,
-                cache_only_pdf=True,
             )
 
             if unclear_is_material:
@@ -164,13 +161,10 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
                 continue
             adate = adt.date() if isinstance(adt, datetime) else adt
 
-            state, mat, cat = classify_catalyst(
+            state, mat, cat = classify_catalyst_v2(
                 desc=a.get("desc", ""),
                 text=a.get("attchmntText") or a.get("text", "") or "",
-                url=a.get("url", ""),
                 source="filing",
-                parse_pdf=True,
-                cache_only_pdf=True,
             )
 
             if unclear_is_material:
@@ -261,7 +255,7 @@ if __name__ == "__main__":
     bounds_lines.append("Design: Paired McNemar Test on Unexplained Flags vs Matched Controls.")
     bounds_lines.append("Clean Pair Condition: No material filing in [T-3, T] for both Flag and Matched Control.")
     bounds_lines.append("Outcome Window: T+1 .. T+10 trading days.")
-    bounds_lines.append("Classifier Version: classifier-v1 (SHA: 3f603a15c927da5d665bc72fd3215ba1abfad961) | parse_pdf = True.\n")
+    bounds_lines.append("Classifier Version: classifier-v2 (Deterministic TEXT-ONLY: desc + attchmntText, no PDF, no network).\n")
 
     bounds_lines.append("1. BASELINE ANALYSIS (UNCLEAR = Non-Material per Frozen Classifier):")
     bounds_lines.append(f"   Clean Matched Pairs: N = {b_base['clean_N']}")
@@ -274,7 +268,7 @@ if __name__ == "__main__":
     bounds_lines.append(f"   All Material Filings:     Flag {b_unclear_mat['all_mat']['pf']}% vs Ctrl {b_unclear_mat['all_mat']['pc']}% | Lift {b_unclear_mat['all_mat']['lift']}x | Odds {b_unclear_mat['all_mat']['odds']} | n10={b_unclear_mat['all_mat']['n10']}, n01={b_unclear_mat['all_mat']['n01']} | p = {b_unclear_mat['all_mat']['p_val']}")
     bounds_lines.append(f"   Unscheduled-Material:     Flag {b_unclear_mat['unsched']['pf']}% vs Ctrl {b_unclear_mat['unsched']['pc']}% | Lift {b_unclear_mat['unsched']['lift']}x | Odds {b_unclear_mat['unsched']['odds']} | n10={b_unclear_mat['unsched']['n10']}, n01={b_unclear_mat['unsched']['n01']} | p = {b_unclear_mat['unsched']['p_val']}")
     bounds_lines.append(f"   Verdict: Even under extreme upper bound treating every ambiguous filing as material, Lift is {b_unclear_mat['all_mat']['lift']:.2f}x (p={b_unclear_mat['all_mat']['p_val']:.4f}). Zero positive edge.\n")
-    bounds_lines.append(f"PDF Cache Misses (Cache-Only Mode): {len(PDF_CACHE_MISSES)}")
+    bounds_lines.append("PDF Cache Misses: 0 (TEXT-ONLY classifier-v2)")
     bounds_lines.append("=" * 90)
 
     bounds_file = os.path.join(audit_dir, f"bounds_analysis_{head_commit}.txt")
@@ -289,7 +283,7 @@ if __name__ == "__main__":
     unique_lines.append("=" * 90)
     unique_lines.append("Sampling Policy: Controls sampled strictly without replacement across ALL scan dates.")
     unique_lines.append("Eliminates potential correlation from control stock re-use.")
-    unique_lines.append("Classifier Version: classifier-v1 (SHA: 3f603a15c927da5d665bc72fd3215ba1abfad961) | parse_pdf = True.\n")
+    unique_lines.append("Classifier Version: classifier-v2 (Deterministic TEXT-ONLY: desc + attchmntText, no PDF, no network).\n")
     unique_lines.append(f"Clean Matched Pairs: N = {b_unique['clean_N']}")
     unique_lines.append(f"All Material Filings:     Flag {b_unique['all_mat']['pf']}% vs Ctrl {b_unique['all_mat']['pc']}% | Lift {b_unique['all_mat']['lift']}x | Odds {b_unique['all_mat']['odds']} | n10={b_unique['all_mat']['n10']}, n01={b_unique['all_mat']['n01']} | p = {b_unique['all_mat']['p_val']}")
     unique_lines.append(f"Unscheduled-Material:     Flag {b_unique['unsched']['pf']}% vs Ctrl {b_unique['unsched']['pc']}% | Lift {b_unique['unsched']['lift']}x | Odds {b_unique['unsched']['odds']} | n10={b_unique['unsched']['n10']}, n01={b_unique['unsched']['n01']} | p = {b_unique['unsched']['p_val']}")
@@ -297,7 +291,7 @@ if __name__ == "__main__":
     unique_lines.append(f"  All Material:       n11={b_unique['all_mat']['n11']}, n10={b_unique['all_mat']['n10']}, n01={b_unique['all_mat']['n01']}, n00={b_unique['all_mat']['n00']}")
     unique_lines.append(f"  Unscheduled Only:   n11={b_unique['unsched']['n11']}, n10={b_unique['unsched']['n10']}, n01={b_unique['unsched']['n01']}, n00={b_unique['unsched']['n00']}")
     unique_lines.append(f"Verdict: Lift is {b_unique['all_mat']['lift']:.2f}x (All Material) and {b_unique['unsched']['lift']:.2f}x (Unscheduled), p = {b_unique['all_mat']['p_val']:.4f}. Zero positive edge.")
-    unique_lines.append(f"PDF Cache Misses (Cache-Only Mode): {len(PDF_CACHE_MISSES)}")
+    unique_lines.append("PDF Cache Misses: 0 (TEXT-ONLY classifier-v2)")
     unique_lines.append("=" * 90)
 
     unique_file = os.path.join(audit_dir, f"unique_controls_{head_commit}.txt")
