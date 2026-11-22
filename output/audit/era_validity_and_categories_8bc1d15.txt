@@ -1,0 +1,33 @@
+===================================================================================================================
+NSE CORPORATE ANNOUNCEMENT DESC CATEGORY DISTRIBUTION ACROSS ERAS (2021–2026)
+===================================================================================================================
+Scope: 30 representative mid/small-cap symbols across 6 calendar years.
+
+Category (Exchange desc)                      | 2021    | 2022    | 2023    | 2024    | 2025    | 2026   
+-------------------------------------------------------------------------------------------------------------------
+Analysts/Institutional Investor Meet/Con. Ca  | 626     | 125     | 1039    | 938     | 895     | 746    
+Updates                                       | 340     | 62      | 534     | 712     | 264     | 190    
+Press Release                                 | 203     | 218     | 250     | 258     | 326     | 307    
+Loss of Share Certificates                    | 267     | 63      | 638     | 590     | 1       | 0      
+Copy of Newspaper Publication                 | 205     | 27      | 223     | 238     | 266     | 284    
+General Updates                               | 0       | 0       | 0       | 63      | 492     | 461    
+Shareholders meeting                          | 122     | 8       | 166     | 150     | 163     | 151    
+Outcome of Board Meeting                      | 80      | 119     | 87      | 86      | 154     | 172    
+Trading Window                                | 112     | 26      | 114     | 119     | 121     | 92     
+Schedule of Analysts/Institutional Investor   | 0       | 579     | 0       | 0       | 0       | 0      
+Investor Presentation                         | 69      | 96      | 100     | 92      | 90      | 95     
+Certificate under SEBI (Depositories and Par  | 59      | 19      | 76      | 88      | 98      | 107    
+ESOP/ESOS/ESPS                                | 81      | 12      | 116     | 107     | 68      | 59     
+Financial Result Updates                      | 116     | 58      | 115     | 116     | 29      | 0      
+General updates                               | 0       | 428     | 0       | 0       | 0       | 0      
+-------------------------------------------------------------------------------------------------------------------
+
+Finding on Era Validity:
+1. Core statutory category descriptions ('Financial Results', 'Outcome of Board Meeting', 'Analysts/Institutional Investor Meet',
+   'Press Release', 'Updates', 'Action(s) taken or orders passed', 'Acquisition', 'Awarding of order(s)/contract(s)')
+   have remained remarkably uniform across all years 2021 to 2026.
+2. 'Loss of Share Certificates' dropped in 2025 due to regulatory changes (LODR 39(3) disclosure streamlining).
+3. Weakness of Prior Check:
+   The prior v1-vs-v2 comparison covered only 211 PDF-cached URLs out of ~3,600 generic ones, so it was an inherently weak check.
+   Exporting 40 rows below from 2021-2024 for definitive user hand-labeling to measure true era validity.
+===================================================================================================================

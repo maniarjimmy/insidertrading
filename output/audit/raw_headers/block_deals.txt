@@ -1,0 +1,20 @@
+URL: https://archives.nseindia.com/content/equities/block.csv
+Category: Block Deals
+Target Date: 2026-11-20
+Request Time (UTC): 2026-11-22T07:18:19.156075+00:00
+Request Time (IST): 2026-11-22 12:48:19 IST
+HTTP Status: 200
+================================================================================
+RESPONSE HEADERS:
+Server: arc1dr
+X-Frame-Options: DENY, SAMEORIGIN
+X-Content-Type-Options: nosniff, nosniff
+Accept-Ranges: bytes
+ETag: W/"540-1795179723781"
+Last-Modified: Fri, 20 Nov 2026 13:02:03 GMT
+Content-Type: text/csv
+Content-Length: 540
+Date: Sun, 22 Nov 2026 07:18:22 GMT
+Connection: keep-alive
+Content-Security-Policy: default-src 'self'; script-src 'strict-dynamic' 'nonce-MC4yMDg2Mzc3MzEw' 'unsafe-inline' http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.nse.co.in https://*.nseindia.com; font-src 'self'; frame-src 'self'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.nseindia.com https://c.go-mpulse.net https://stats.g.doubleclick.net https://*.akstat.io/ https://*.akamaihd.net
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload

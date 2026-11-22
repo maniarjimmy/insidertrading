@@ -1,0 +1,138 @@
+===================================================================================================================
+REGRADING OF 4 MISMATCH ROWS & OUTCOME 105 AUDIT | COMMIT: 8bc1d15
+===================================================================================================================
+1. REGRADING ACMESOLAR, HFCL, IKS, TRITURBINE FROM PRINTED TEXT ONLY
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: ACMESOLAR | Target Date: 2026-05-09
+  Description (desc): General Updates
+  attchmntText:       Acme Solar Holdings Limited has informed the Exchange about submission of Newspaper Publication w.r.t.  Audited Financial Results for the Quarter and Financial Year ended March 31, 2026
+  Attachment URL:     https://nsearchives.nseindia.in/corporate/ACMECS_09052026133756_Intimation.pdf
+  classifier-v2:      state=NONE, is_material=0, category=Routine Disclosure
+  Text-Only Evaluation: Newspaper clipping of financial results (SEBI LODR Reg 47).
+  Prior Assistant Grade: MATERIAL (ERRONEOUS - claimed 'operational synchronization of solar capacity').
+  Correct Regraded Label: ROUTINE (is_material=0). classifier-v2 is CORRECT (True Negative).
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: HFCL | Target Date: 2026-02-10
+  Description (desc): Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText:       HFCL Limited has informed the Exchange about Transcript of Conference Call on the Un-audited Financial Results of the Company for the 3rd Quarter and Nine Months ended December 31, 2025, of the Financial Year 2025-26
+  Attachment URL:     https://nsearchives.nseindia.in/corporate/AHMED_10022026213429_HFCL_STX_Transcript_10022026.pdf
+  classifier-v2:      state=NONE, is_material=0, category=Routine Disclosure
+  Text-Only Evaluation: Earnings call transcript (SEBI LODR Reg 30(6)).
+  Prior Assistant Grade: MATERIAL (ERRONEOUS - claimed 'advance purchase order for optical fiber cables').
+  Correct Regraded Label: ROUTINE (is_material=0). classifier-v2 is CORRECT (True Negative).
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: IKS | Target Date: 2026-04-23
+  Description (desc): Press Release
+  attchmntText:       Inventurus Knowledge Solutions Limited has informed the Exchange regarding a press release dated April 23, 2026, titled "IKS Health Announces Agreement to Acquire TruBridge to Strengthen Access to Rural and Community-Based Healthcare".
+  Attachment URL:     https://nsearchives.nseindia.in/corporate/IKS2006_23042026215302_PressRelease_Revised.pdf
+  classifier-v2:      state=CATALYST, is_material=1, category=Acquisition
+  Text-Only Evaluation: Press release announcing $330M acquisition of TruBridge to expand US healthcare presence.
+  Prior Assistant Grade: ROUTINE (ERRONEOUS - claimed 'nominal internal subsidiary creation').
+  Correct Regraded Label: MATERIAL (is_material=1). classifier-v2 is CORRECT (True Positive).
+-------------------------------------------------------------------------------------------------------------------
+SYMBOL: TRITURBINE | Target Date: 2026-02-05
+  Description (desc): Updates
+  attchmntText:       Triveni Turbine Limited has informed the Exchange regarding 'Communication To Shareholders- Intimation On Tax Deduction On Dividend'.
+  Attachment URL:     https://nsearchives.nseindia.in/corporate/TRITURBINE_05022026170205_TDSCommunicationtoShareholder.pdf
+  classifier-v2:      state=CATALYST, is_material=1, category=Board Meeting
+  Text-Only Evaluation: Standard circular to shareholders regarding TDS tax deductions on dividend payments.
+  Description Resolution: Exchange 'desc' is 'Updates', NOT 'Board Meeting'. Prior report misstated desc.
+  Classifier Mechanism: Triggered by 'dividend' keyword inside combined text -> matched Board Meeting text pattern.
+  Correct Regraded Label: ROUTINE (is_material=0). classifier-v2 is FALSE POSITIVE on scheduled/Board Meeting.
+-------------------------------------------------------------------------------------------------------------------
+
+2. MAZDOCK OUTCOME 105 AUDIT & CACHE INSPECTION
+-------------------------------------------------------------------------------------------------------------------
+Target URL: https://nsearchives.nseindia.in/corporate/MAZDOCK_18032026163536_SE_Discl_Contract_with_SCI_18032026.pdf
+Is URL in output/cache/pdf_text_cache.json? True
+Cached PDF Text: MAKE IN INDIA
+‘~~~iig ~iCP I~I9I~oS’c{ 1~iPi≥~
+(tITm ti~mit ~T ~gzq)
+Mazagon Dock Shipbuilders Ltd.
+(Formerly Mazagon Dock Limited)
+(A Govt. of India Undertaking)
+sTqaiii t~, NI5I’Ii~, ~4-40O 010
+Dockyard Road, Mazagon, Mumbai -400010
+Certified - ISO 9001 Company
+CIN : t35100MH1934G01002079
+~frif ~qi~: SEC/BSENSEDISCL/82/2025-26
+ReL No.:
+~i~: i8March2O26
+Date:
+Subject: Disclosure under Regulation 30 of SEBI (LODR) Regulations, 2015 — Signing of
+contract with SCI.
+Dear Sir! Madam,
+In terms of Regulation 30 of the SEBI (LODR) Regulations, 2015, we wish to inform that
+Mazagon Dock Shipbuilders Limited (MDL) has entered into a contract with Shipping
+Corporation of India Limited (SCI) for the construction and sale of one 3000 DWT Methanol
+Dual Fuel Platform Supply Vessel (PSV). The contract value is approxffnately USD 39 million.
+The vessel will be constructed and delivered as per the mutually agreed contractual schedule
+between the parties.
+The above contract is in the ordinary course of business of the Company. However, the
+disclosure is being made considering the materiality of the contract in terms of Regulation 30
+of the SEBI (LODR) Regulations, 2015.
+This is for your information and record.
+Thanking You,
+Yours Faithfully,
+For MAZAGON DOCK SHIPBUILDERS LIMITED
+Lalatendu Acharya
+Company Secretary and Compliance officer
+t~ (Design) +91 (22) 2373 8159
+Fax (Material)+91(22) 2373 8151
+(Finance)+91(22) 2373 8338
+12704102
+To To
+BSE Limited
+Phiroze Jeejeebhoy Towers
+Dalal Street
+Mumbai— 400 001
+Scrip Code: 543237
+National Stock Exchange of India Limited
+Exchange Plaza, C-i, Block G
+Bandra Kurla Complex
+Bandra (E), Mumbai -400051
+NSE Symbol: MAZDOCK
+QIRQS
+A OEP~TMENT OF
+NOlAN REGISflR OF
+SlOPPING
+~~Pr +91(22) 2376 2000
+Phone +91(22) 2376 3000
++91(22) 2376 4000
+(Proj-C) +91(22) 2373 8147
+(East Yd.) +91 (22) 2373 8333
+www.mazdock.com
+Website : www.mazdock.com
+
+3. CATEGORIES & PATTERNS FEEDING PRIMARY (UNSCHEDULED) OUTCOME
+-------------------------------------------------------------------------------------------------------------------
+Under the pre-registered protocol, PRIMARY outcome = Unscheduled Material Catalysts only.
+The 6 constituent categories and their exact rule patterns are:
+1. Order Win:
+   - Desc: 'Awarding of order(s)/contract(s)'
+   - Regex: r'\b(order\s+win|bagged\s+(?:an?\s+)?order|contract\s+award|awarded\s+(?:a\s+)?contract|received\s+order|loa\b|letter\s+of\s+award|epc\s+contract|commercial\s+order)\b'
+2. Acquisition:
+   - Desc: 'Acquisition'
+   - Regex: r'\b(acquisition|takeover|acquires|to\s+acquire|amalgamation|merger|slump\s+sale)\b'
+   - Exemption: SAST Reg 29/31 statutory filings are filtered to Routine.
+3. Capacity Expansion:
+   - Desc: 'Commencement of commercial production/operations'
+   - Regex: r'\b(capacity\s+expansion|expansion\s+of\s+capacity|commercial\s+production|plant\s+commissioning|commercial\s+operations|new\s+facility|new\s+plant|doubling\s+capacity)\b'
+4. Regulatory Action:
+   - Desc: 'Action(s) initiated or orders passed', 'Search/Seizure'
+   - Regex: r'\b(sebi\s+order|usfda|form\s+483|warning\s+letter|search\s+and\s+seizure|cbi\s+raid|ed\s+raid|income\s+tax\s+search|gst\s+demand|show\s+cause\s+notice|penalty\s+imposed|license\s+cancell?ed|adjudication\s+order)\b'
+5. Fund Raising:
+   - Desc: 'Qualified Institutional Placement', 'Preferential Issue'
+   - Regex: r'\b(qualified\s+institutional\s+placement|qip\b|preferential\s+allotment|rights\s+issue|fund\s+raising|raising\s+of\s+funds|issuance\s+of\s+warrants|fccb)\b'
+6. Credit Rating Revision:
+   - Desc: 'Credit Rating', 'Revision in Credit Rating'
+   - Regex: r'\b(credit\s+rating\s+(?:upgrade|downgrade|revised|assigned)|rating\s+upgrade|rating\s+downgrade|crisil|icra|care\s+ratings?|india\s+ratings?)\b'
+
+EXCLUDED SCHEDULED CATEGORIES (Secondary Analysis Only):
+- Financial Results: desc 'Financial Results', regex r'\b(financial\s+results|audited\s+results|unaudited\s+results|q[1-4]\s+results)\b'
+- Board Meeting:     desc 'Board Meeting', regex r'\b(board\s+meeting|outcome\s+of\s+board|dividend|bonus\s+issue|stock\s+split|buyback)\b'
+
+Classifier Freeze Decision:
+- TRITURBINE TDS dividend over-trigger falls into 'Board Meeting', which is EXCLUDED from PRIMARY outcome.
+- To maintain strict protocol integrity prior to user labeling, classifier is FROZEN at tag 'classifier-v2'.
+===================================================================================================================

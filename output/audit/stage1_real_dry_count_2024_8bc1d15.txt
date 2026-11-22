@@ -1,0 +1,50 @@
+===================================================================================================================
+STAGE 1 DRY COUNT ON REAL 2024 DATA | MEASURED COUNTS & POWER
+===================================================================================================================
+Script Path: scripts/run_real_stage1_dry_count_2024.py
+Bhavcopy Source: Official NSE UDDiP Archive (https://archives.nseindia.com/content/cm/)
+Files Downloaded: 168 daily UDDiP bhavcopy zip archives cached to output/cache/bhavcopy/2024/
+Primary Signal Parameters: r_day in [+4.0%, +15.0%], Volume >= 2.0x SMA20(Volume), Series EQ.
+
+1. MONTHLY RAW FLAG COUNTS FOR 2024 (FLAGS ONLY, ZERO FORWARD OUTCOMES)
+-------------------------------------------------------------------------------------------------------------------
+Month      | Trading Days   | Band 101-500 Flags     | Band 210-500 Flags     | Sample Flagged Symbols (First 5)
+-------------------------------------------------------------------------------------------------------------------
+2024-01    | 21             | 40                     | 22                     | POLYMED, SKIPPER, USHAMART, IMFA, ARE&M
+2024-02    | 21             | 521                    | 357                    | CARERATING, SKIPPER, AVANTIFEED, BIRLACORPN, TIDEWATER
+2024-03    | 18             | 227                    | 150                    | MUNJALSHOW, IRISDOREME, BODALCHEM, BGRENERGY, KELLTONTEC
+2024-04    | 20             | 547                    | 374                    | MIDHANI, DELTACORP, RAMCOCEM, SUDARSCHEM, MAHLIFE
+2024-05    | 21             | 398                    | 278                    | PRIVISCL, SANOFI, AEROFLEX, AVANTIFEED, HPL
+2024-06    | 19             | 682                    | 500                    | LICHSGFIN, SKIPPER, JTLIND, ABSLAMC, NAM-INDIA
+2024-07    | 22             | 610                    | 446                    | VOLTAMP, SOLARA, TIPSINDLTD, GODREJAGRO, TTKPRESTIG
+2024-08    | 21             | 549                    | 391                    | TVTODAY, PLAZACABLE, NEULANDLAB, ROSSARI, LLOYDSME
+2024-09    | 5              | 98                     | 70                     | MUNJALSHOW, AEGISLOG, PATELENG, SATINDLTD, TEXINFRA
+-------------------------------------------------------------------------------------------------------------------
+TOTAL 2024 | 168            | 3672                   | 2588                   | First 10: POLYMED, SKIPPER, USHAMART, IMFA, ARE&M, EKC, TIDEWATER, RADHIKAJWE, ADFFOODS, CLEAN
+
+2. MEASURED RETENTION RATES & CLEAN PAIR PROJECTIONS
+-------------------------------------------------------------------------------------------------------------------
+a. Pre-Move Clean Retention: 76.0%
+   - Basis: Measured across 50 real corporate announcement API queries on 2024 flags.
+   - Prior reported 72.5% was an analytical estimate from development flags; measured value is 76.0%.
+b. Unique Control Retention: 66.7%
+   - Basis: Strict 1-to-1 unique control matching from development dataset (66 unique / 99 total = 66.7%).
+   - Prior reported 90% was based on loose 3x reuse cap; under strict uniqueness retention is 66.7%.
+
+PROJECTED CLEAN MATCHED PAIRS (5-YEAR / 60-MONTH HORIZON 2021-2025):
+  - Band 101-500: ~1860 pairs/year -> ~9302 clean pairs across 5 years.
+  - Band 210-500: ~1311 pairs/year -> ~6556 clean pairs across 5 years.
+
+3. STATISTICAL POWER ANALYSIS WITH DATE-CLUSTERING DESIGN EFFECT
+-------------------------------------------------------------------------------------------------------------------
+Parameters: Control Base Rate P0 = 11.83% (measured N=3,000), alpha = 0.05 (one-sided).
+Date Clustering: Design Effect DEFF = 1 + (m_bar - 1) * rho = 1.05 (average cluster m_bar ~ 2.0, rho ~ 0.05).
+Turnover-Rank Band        | 5-Yr Clean Pairs   | Power (Lift=1.25x)   | Power (Lift=1.30x)   | Meets >= 70% Benchmark?
+-------------------------------------------------------------------------------------------------------------------
+Ranks 101-500 (Mid/Small) | 9302               | 100.0              % | 100.0              % | YES (High Power)
+Ranks 210-500 (Extended)  | 6556               | 100.0              % | 100.0              % | YES
+-------------------------------------------------------------------------------------------------------------------
+
+PRE-REGISTRATION DECISION RULE:
+  Band 210-500 power for 1.30x >= 70%: PRIMARY universe is registered as Band 210-500.
+===================================================================================================================

@@ -1,0 +1,20 @@
+URL: https://archives.nseindia.com/archives/equities/mto/MTO_19112026.DAT
+Category: MTO
+Target Date: 2026-11-19
+Request Time (UTC): 2026-11-22T07:18:18.224528+00:00
+Request Time (IST): 2026-11-22 12:48:18 IST
+HTTP Status: 200
+================================================================================
+RESPONSE HEADERS:
+Server: nsewebsite
+X-Frame-Options: DENY, SAMEORIGIN
+X-Content-Type-Options: nosniff, nosniff
+Accept-Ranges: bytes
+ETag: W/"130420-1795087144193"
+Last-Modified: Thu, 19 Nov 2026 11:19:04 GMT
+Content-Type: application/octet-stream
+Content-Length: 130420
+Date: Sun, 22 Nov 2026 07:18:21 GMT
+Connection: keep-alive
+Content-Security-Policy: default-src 'self'; script-src 'strict-dynamic' 'nonce-MC4yMDg2Mzc3MzEw' 'unsafe-inline' http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.nse.co.in https://*.nseindia.com; font-src 'self'; frame-src 'self'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.nseindia.com https://c.go-mpulse.net https://stats.g.doubleclick.net https://*.akstat.io/ https://*.akamaihd.net
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload

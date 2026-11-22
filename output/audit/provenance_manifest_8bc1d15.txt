@@ -1,0 +1,113 @@
+=====================================================================================================================================================================
+PROGRAMMATIC AUDIT PROVENANCE MANIFEST & RETRACTION LEDGER | COMMIT: 8bc1d15
+=====================================================================================================================================================================
+Metric / Finding                                 | Script (git ls-files)                      | Output File & SHA-256                                                 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Flags Status (Active vs Resolved)                | scripts/regenerate_confusion_matrix.py [TRACKED] | output/audit/confusion_matrix_8bc1d15.txt (sha256: 83bf2dfc442a539c...)
+Confusion Matrix (News-Driven vs Unexplained)    | scripts/regenerate_confusion_matrix.py [TRACKED] | output/audit/confusion_matrix_8bc1d15.txt (sha256: 83bf2dfc442a539c...)
+Matched-Control Lift Baseline (classifier-v2)    | scripts/recalc_bounds_and_unique.py [TRACKED] | output/audit/bounds_analysis_8367e6e.txt (sha256: 7c7fb390a204950d...)
+Matched-Control Lift Strictly Unique (classifie  | scripts/recalc_bounds_and_unique.py [TRACKED] | output/audit/unique_controls_8367e6e.txt (sha256: e49a9f10e8537260...)
+Legacy Flags Migration Count                     | scripts/migrate_csv_to_db.py [TRACKED]     | output/audit/confusion_matrix_8bc1d15.txt (sha256: 83bf2dfc442a539c...)
+Split Adjustment on Raw UDDiP Prices             | scripts/audit_real_splits.py [TRACKED]     | output/audit/split_adjustment_07a3381.txt (sha256: 519881c20baff461...)
+Historical Data Availability (2016-2020)         | scripts/audit_span_2016_2020.py [TRACKED]  | output/audit/historical_span_2016_2020_8bc1d15.txt (sha256: e5e546e988a20a4a...)
+Stage 1 Dry Count on Real 2024 Data              | scripts/run_real_stage1_dry_count_2024.py [TRACKED] | output/audit/stage1_real_dry_count_2024_8bc1d15.txt (sha256: bc82f77ff75f3a95...)
+Announcements Thinning & Coverage Investigation  | scripts/audit_announcements_investigation.py [TRACKED] | output/audit/announcements_thinning_audit_8bc1d15.txt (sha256: b9f651dbb362a923...)
+Timing Integrity & Server Headers Audit          | scripts/save_raw_headers.py [TRACKED]      | output/audit/timing_headers_audit_8367e6e.txt (sha256: 451b45171a53e503...)
+Regrading of 4 Mismatch Rows & Outcome 105       | scripts/regrade_mismatch_rows.py [TRACKED] | output/audit/regrade_mismatches_audit_8bc1d15.txt (sha256: e529d92e73fc4bf4...)
+Historical Era Validity & User Labeling Batch    | scripts/generate_historical_labeling_batch.py [TRACKED] | output/audit/era_validity_and_categories_8bc1d15.txt (sha256: d93ceb760819e358...)
+Large-Sample Control Base Rate P0 (N=3,000)      | scripts/estimate_base_rate_3000_and_dry_count.py [TRACKED] | output/audit/base_rate_3000_and_dry_count_8367e6e.txt (sha256: e9642424b92d0b68...)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DETAILED VERIFICATION, DB TRUTH & CORRECTION NOTES:
+- Flags Status (Active vs Resolved):
+    Claimed Value: 1 ACTIVE / 155 RESOLVED (156 real flags)
+    Script:        scripts/regenerate_confusion_matrix.py (Tracked: True)
+    Output File:   output/audit/confusion_matrix_8bc1d15.txt
+    SHA-256:       83bf2dfc442a539cf9e3724e1f9260de2bf203edf86087353335f9aa37bba8f1
+    Audit Notes:   Verified from scanner.db (156 flags: 1 active, 155 with resolved 10d horizon).
+
+- Confusion Matrix (News-Driven vs Unexplained):
+    Claimed Value: 111 News-Driven / 44 Unexplained; 35 Catalyst at [T-3, T]
+    Script:        scripts/regenerate_confusion_matrix.py (Tracked: True)
+    Output File:   output/audit/confusion_matrix_8bc1d15.txt
+    SHA-256:       83bf2dfc442a539cf9e3724e1f9260de2bf203edf86087353335f9aa37bba8f1
+    Audit Notes:   DB truth: 111 CATALYST / 44 UNEXPLAINED; 35 (22.6%) pre-move catalysts at [T-3, T].
+
+- Matched-Control Lift Baseline (classifier-v2):
+    Claimed Value: N=99 clean pairs, Lift 0.79x, p=0.2912 (Flag 30.3% vs Ctrl 38.4%)
+    Script:        scripts/recalc_bounds_and_unique.py (Tracked: True)
+    Output File:   output/audit/bounds_analysis_8367e6e.txt
+    SHA-256:       7c7fb390a204950dfa8e70cdcad599dd56fbeedf864743a6c29147cdfa5f6214
+    Audit Notes:   Paired McNemar test on 99 matched pairs under deterministic classifier-v2.
+
+- Matched-Control Lift Strictly Unique (classifier-v2):
+    Claimed Value: N=66 unique clean pairs, Lift 1.00x, p=1.0000 (Flag 31.8% vs Ctrl 31.8%)
+    Script:        scripts/recalc_bounds_and_unique.py (Tracked: True)
+    Output File:   output/audit/unique_controls_8367e6e.txt
+    SHA-256:       e49a9f10e8537260a0113e49b191e033476c1b6b5dffa3318433d4a0a6e9ddda
+    Audit Notes:   Strictly unique controls (1:1 matching without control symbol reuse).
+
+- Legacy Flags Migration Count:
+    Claimed Value: 156 real flags, 530 controls (686 total)
+    Script:        scripts/migrate_csv_to_db.py (Tracked: True)
+    Output File:   output/audit/confusion_matrix_8bc1d15.txt
+    SHA-256:       83bf2dfc442a539cf9e3724e1f9260de2bf203edf86087353335f9aa37bba8f1
+    Audit Notes:   Migrated from legacy CSVs into scanner.db; verified via SELECT is_control, count(*).
+
+- Split Adjustment on Raw UDDiP Prices:
+    Claimed Value: 5 real splits/bonuses ex-date |r| < 25% (COCHINSHIP, CANBK, BPCL, etc.)
+    Script:        scripts/audit_real_splits.py (Tracked: True)
+    Output File:   output/audit/split_adjustment_07a3381.txt
+    SHA-256:       519881c20baff4613a2e0936527d7e1ce407aac85bceca0d6f2ca02127c9c7af
+    Audit Notes:   Direct UDDiP raw prices + internal adjuster, zero yfinance.
+
+- Historical Data Availability (2016-2020):
+    Claimed Value: Earliest verified: 2016 (100% MTO, 100% cm_bhav, 100% corporate announcements)
+    Script:        scripts/audit_span_2016_2020.py (Tracked: True)
+    Output File:   output/audit/historical_span_2016_2020_8bc1d15.txt
+    SHA-256:       e5e546e988a20a4a90a6c58e6665ce327880c1687a91ef315752d31a1f9212ab
+    Audit Notes:   Sampled >= 20 dates/yr across 2016-2020. Feb-Jun 2020 marked as sensitivity period.
+
+- Stage 1 Dry Count on Real 2024 Data:
+    Claimed Value: 2024 Raw Flags: 3,672 (101-500) & 2,588 (210-500); Clean Ret: 76.0%; Unique Ret: 66.7%
+    Script:        scripts/run_real_stage1_dry_count_2024.py (Tracked: True)
+    Output File:   output/audit/stage1_real_dry_count_2024_8bc1d15.txt
+    SHA-256:       bc82f77ff75f3a951ffd284a86d23a9b9775b6e4ee816ba8d146b0688cc243a6
+    Audit Notes:   168 daily UDDiP zips downloaded; 50 announcement API queries. Power for 1.30x is 100%.
+
+- Announcements Thinning & Coverage Investigation:
+    Claimed Value: Annual queries match monthly sums (diff=0); 2024->2025 drop = Reg 39(3) Share Certs
+    Script:        scripts/audit_announcements_investigation.py (Tracked: True)
+    Output File:   output/audit/announcements_thinning_audit_8bc1d15.txt
+    SHA-256:       b9f651dbb362a9232d5cfb67a692c0917992c6c481252400735db803f026f638
+    Audit Notes:   Ex-certificate volume steady (RELIANCE 163 vs 164). 30 mid/caps: 100% attchmntText.
+
+- Timing Integrity & Server Headers Audit:
+    Claimed Value: UDDiP 11:03:02 GMT (16:33 IST), MTO ~17:00 IST; Bulk/Block/SecList ~18:31-19:29 IST
+    Script:        scripts/save_raw_headers.py (Tracked: True)
+    Output File:   output/audit/timing_headers_audit_8367e6e.txt
+    SHA-256:       451b45171a53e503dd8dc0723eb3e8f7b5a07e88ca6b93c0fab79b2f34684e80
+    Audit Notes:   Full raw HTTP headers saved to output/audit/raw_headers/; synthetic csv deleted.
+
+- Regrading of 4 Mismatch Rows & Outcome 105:
+    Claimed Value: ACMESOLAR/HFCL routine; IKS material; TRITURBINE desc 'Updates'; MAZDOCK cached PSV
+    Script:        scripts/regrade_mismatch_rows.py (Tracked: True)
+    Output File:   output/audit/regrade_mismatches_audit_8bc1d15.txt
+    SHA-256:       e529d92e73fc4bf401555cddcddbc9e3cb62e59d6fa6d4b7d5b4e341484a7403
+    Audit Notes:   Regraded strictly from printed text. Outcome 105 cached PDF text USD 39M PSV.
+
+- Historical Era Validity & User Labeling Batch:
+    Claimed Value: Uniform category distribution across 2021-2026; 40-row user batch exported
+    Script:        scripts/generate_historical_labeling_batch.py (Tracked: True)
+    Output File:   output/audit/era_validity_and_categories_8bc1d15.txt
+    SHA-256:       d93ceb760819e3585d20df571149aa389f7d3c6c79609e6a4625c1bcae4fd0d5
+    Audit Notes:   Exported to output/labeling_batch_2021_2024.csv without classifier labels.
+
+- Large-Sample Control Base Rate P0 (N=3,000):
+    Claimed Value: P0 = 11.83% [10.65%, 13.13%] across 2021-2025 non-flag stock-days
+    Script:        scripts/estimate_base_rate_3000_and_dry_count.py (Tracked: True)
+    Output File:   output/audit/base_rate_3000_and_dry_count_8367e6e.txt
+    SHA-256:       e9642424b92d0b68dc6df3cf91e570c31e40eb06cea7318b909b9b81d978acaf
+    Audit Notes:   3,000 stock-days sampled under classifier-v2 (600/year).
+
+=====================================================================================================================================================================

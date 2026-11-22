@@ -1,0 +1,20 @@
+URL: https://archives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_20261118_F_0000.csv.zip
+Category: UDDiP
+Target Date: 2026-11-18
+Request Time (UTC): 2026-11-22T07:18:17.026853+00:00
+Request Time (IST): 2026-11-22 12:48:17 IST
+HTTP Status: 200
+================================================================================
+RESPONSE HEADERS:
+Server: nsewebsite
+X-Frame-Options: DENY, SAMEORIGIN
+X-Content-Type-Options: nosniff, nosniff
+Accept-Ranges: bytes
+ETag: W/"207047-1794999782963"
+Last-Modified: Wed, 18 Nov 2026 11:03:02 GMT
+Content-Type: application/zip
+Content-Length: 207047
+Date: Sun, 22 Nov 2026 07:18:19 GMT
+Connection: keep-alive
+Content-Security-Policy: default-src 'self'; script-src 'strict-dynamic' 'nonce-MC4yMDg2Mzc3MzEw' 'unsafe-inline' http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.nse.co.in https://*.nseindia.com; font-src 'self'; frame-src 'self'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.nseindia.com https://c.go-mpulse.net https://stats.g.doubleclick.net https://*.akstat.io/ https://*.akamaihd.net
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload

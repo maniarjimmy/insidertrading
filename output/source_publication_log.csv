@@ -1,4 +1,10 @@
-timestamp_ist,date,uddip_status,uddip_last_modified,mto_status,mto_last_modified,bulk_status,bulk_last_modified,block_status,block_last_modified,sec_list_status,sec_list_last_modified
-2026-11-18 21:59:04,2026-11-18,200,"Wed, 18 Nov 2026 11:03:03 GMT",200,"Wed, 18 Nov 2026 11:33:03 GMT",503,N/A,503,N/A,503,N/A
-2026-11-18 21:59:37,2026-11-18,403,N/A,403,N/A,200,"Wed, 18 Nov 2026 12:42:03 GMT",200,"Wed, 18 Nov 2026 12:41:04 GMT",200,"Wed, 18 Nov 2026 12:32:10 GMT"
-2026-11-18 21:59:53,2026-11-18,200,"Wed, 18 Nov 2026 11:03:03 GMT",404,N/A,404,N/A,404,N/A,200,"Wed, 18 Nov 2026 12:32:10 GMT"
+target,category,date,http_status,last_modified_gmt,content_length,logged_at_ist
+uddip_20261118,UDDiP,2026-11-18,200,"Wed, 18 Nov 2026 11:03:02 GMT",207047,2026-11-22 12:48:17
+uddip_20261119,UDDiP,2026-11-19,200,"Thu, 19 Nov 2026 11:03:02 GMT",207935,2026-11-22 12:48:17
+uddip_20261120,UDDiP,2026-11-20,200,"Fri, 20 Nov 2026 11:03:01 GMT",209665,2026-11-22 12:48:17
+mto_20261118,MTO,2026-11-18,200,"Wed, 18 Nov 2026 11:33:04 GMT",129675,2026-11-22 12:48:17
+mto_20261119,MTO,2026-11-19,200,"Thu, 19 Nov 2026 11:19:04 GMT",130420,2026-11-22 12:48:18
+mto_20261120,MTO,2026-11-20,200,"Fri, 20 Nov 2026 11:23:04 GMT",131561,2026-11-22 12:48:18
+bulk_deals,Bulk Deals,2026-11-20,200,"Fri, 20 Nov 2026 13:01:03 GMT",2368,2026-11-22 12:48:18
+block_deals,Block Deals,2026-11-20,200,"Fri, 20 Nov 2026 13:02:03 GMT",540,2026-11-22 12:48:19
+sec_list,Security List,2026-11-20,200,"Fri, 20 Nov 2026 13:59:09 GMT",N/A,2026-11-22 12:48:19

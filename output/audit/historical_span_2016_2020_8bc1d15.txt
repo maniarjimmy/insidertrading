@@ -1,0 +1,23 @@
+===================================================================================================================
+HISTORICAL EXCHANGE DATA AVAILABILITY AUDIT (2016–2020) | >= 20 DATES/YR
+===================================================================================================================
+Scope: Sampling 20 trading dates per year for MTO delivery, CM Bhavcopy, sec_bhavdata, and corporate filings.
+
+Year   | Dates   | MTO Delivery   | cm_bhav.csv.zip  | sec_bhavdata   | Announcements (RELIANCE / INFY / TCS)
+-------------------------------------------------------------------------------------------------------------------
+2016   | 20      | 20/20 (100%)   | 20/20 (100%)     | 0/20 (0%)      | 84 / 81 / 135
+2017   | 20      | 19/20 (95%)    | 19/20 (95%)      | 0/20 (0%)      | 108 / 153 / 175
+2018   | 20      | 19/20 (95%)    | 19/20 (95%)      | 0/20 (0%)      | 154 / 166 / 238
+2019   | 20      | 17/20 (85%)    | 17/20 (85%)      | 2/20 (10%)     | 126 / 204 / 233
+2020   | 20      | 18/20 (90%)    | 18/20 (90%)      | 20/20 (100%)   | 226 / 197 / 294
+-------------------------------------------------------------------------------------------------------------------
+FINDINGS & PRE-REGISTRATION RULES:
+1. Earliest Verified Data Availability: 2016 (100% MTO, 100% CM Bhavcopy, 100% Corporate Announcements).
+2. Ingestion Format Transition:
+   - 2016 to mid-2020: Use cmDDMMMYYYYbhav.csv.zip + MTO_DDMMYYYY.DAT.
+   - Mid-2020 to Dec-2023: Use sec_bhavdata_full_DDMMYYYY.csv + MTO_DDMMYYYY.DAT.
+   - Jan-2024 to present: Use UDDiP BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip + MTO.
+3. COVID Crisis Period Sensitivity (Feb 2020 – Jun 2020):
+   - Massive circuit-breaker volatility and market anomalies.
+   - Pre-registered as a mandatory sensitivity period (report main backtest with and without Feb–Jun 2020).
+===================================================================================================================

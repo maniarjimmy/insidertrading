@@ -1,0 +1,21 @@
+URL: https://archives.nseindia.com/archives/equities/mto/MTO_18112026.DAT
+Category: MTO
+Target Date: 2026-11-18
+Request Time (UTC): 2026-11-22T07:18:17.927157+00:00
+Request Time (IST): 2026-11-22 12:48:17 IST
+HTTP Status: 200
+================================================================================
+RESPONSE HEADERS:
+Server: arc2dr
+X-Frame-Options: DENY, SAMEORIGIN
+X-Content-Type-Options: nosniff, nosniff
+Accept-Ranges: bytes
+ETag: W/"129675-1795001584623"
+Last-Modified: Wed, 18 Nov 2026 11:33:04 GMT
+Content-Type: application/octet-stream
+Content-Length: 129675
+Date: Sun, 22 Nov 2026 07:18:20 GMT
+Connection: keep-alive
+Content-Security-Policy: default-src 'self'; script-src 'strict-dynamic' 'nonce-MC4yMDg2Mzc3MzEw' 'unsafe-inline' http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.nse.co.in https://*.nseindia.com; font-src 'self'; frame-src 'self'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.nseindia.com https://c.go-mpulse.net https://stats.g.doubleclick.net https://*.akstat.io/ https://*.akamaihd.net
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload
+Set-Cookie: _abck=545525FAAF2B4677B355A4665F883200~-1~YAAQBhzFF0I1YdmhAQAARMUeAhB4+bvKqpbfFx+WArodI97XIxhB+NozAfC08YAFxvQOv8HhybDJUqg0w2ojjsJ3UIZbDaHkIaTDsCiyJD5K8j1ma0iG98EQIswBHStCHAJJEBJFtgQvqzI405i4bAhWKa2XERzMBH29ruLdMgTv2a2Z7gBZfuJzs+SDqhHxQgbvimftwe+Ks5733u2JEzCoDPrcsf0cBw1xD4BKVpR09o/jZ3V0n/KX9YD2D8lpbVyaa+pskDzyY2wXerdjV1QFNGaBzbfqtiVbIHo5D7NChWDJBUUm9OcJI83i65Ixac7QL2mipvv9Zi4kCn+q2V8RJDIic7rLP7vXfb2D8vyAMEqdDHSqvB+GiJqz7+KKNzLixMacvUs+htjz6xSrbGFKmXEHiW5V88oKohVXWZ1pncUe2QTSBwkyu+mRr9IbozfnFDzuAVzusA==~-1~-1~-1~-1~-1; Domain=.nseindia.com; Path=/; Expires=Mon, 22 Nov 2027 07:18:20 GMT; Max-Age=31536000; Secure, bm_sz=E36B137D663638F8623DD44B2B4D7225~YAAQBhzFF0M1YdmhAQAARMUeAgEf2AVlFwOkErokN7J4ju3hFwPafOI7X2xQKWS58jBwePcgvr1hj0AduZuof8gENHV6RkoecxZANlbjNB1nLfK80JWAbQPsbP3OHZgpRMq7HCrPWywrasWLXIW1ThIQ/O3buLfHvpHli4KsRwxmMSdHWh7dnZtBPhLhx6eEgFBxX4G01MvsoAVmjbmP8HPTAR6T9UAOR+kGVy/pJSrwDcYI2VylQ/CfvKN+J4q4x33zsho/vRNkYhE3B7KPRvH/czcLMVTks5VEhN++qUFCOWWVqXb2ZBJOtUwDZyEYq2WnrL166Z6B4Pt0P2ToSZvh/fympaYmZSW/eg==~3422516~4534337; Domain=.nseindia.com; Path=/; Expires=Sun, 22 Nov 2026 11:18:20 GMT; Max-Age=14400
