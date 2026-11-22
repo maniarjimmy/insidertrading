@@ -8,7 +8,7 @@ from scipy.stats import binomtest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-from filings import fetch_corporate_filings, classify_catalyst, parse_filing_datetime
+from filings import fetch_corporate_filings, classify_catalyst, parse_filing_datetime, PDF_CACHE_MISSES
 from holidays import get_next_trading_day, parse_date
 
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output", "scanner.db")
@@ -38,10 +38,13 @@ def get_announcements(sym):
     try:
         serializable = []
         for a in ann:
-            c = dict(a)
-            if "dt" in c:
-                c["dt"] = None
-            serializable.append(c)
+            serializable.append({
+                "symbol": a.get("symbol", sym),
+                "date_str": a.get("date_str", "") or a.get("an_dt", ""),
+                "desc": a.get("desc", ""),
+                "attchmntText": a.get("attchmntText") or a.get("text", "") or "",
+                "url": a.get("url") or a.get("attchmntFile", "") or "",
+            })
         with open(cache_file, "w", encoding="utf-8") as f:
             json.dump(serializable, f)
     except Exception:
@@ -100,12 +103,20 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
                 continue
             adate = adt.date() if isinstance(adt, datetime) else adt
 
-            if unclear_is_material:
-                is_mat = 1 if a.get("catalyst_state") in ("CATALYST", "UNCLEAR") else 0
-            else:
-                is_mat = 1 if a.get("is_material") == 1 else 0
+            state, mat, cat = classify_catalyst(
+                desc=a.get("desc", ""),
+                text=a.get("attchmntText") or a.get("text", "") or "",
+                url=a.get("url", ""),
+                source="filing",
+                parse_pdf=True,
+                cache_only_pdf=True,
+            )
 
-            cat = a.get("category", "")
+            if unclear_is_material:
+                is_mat = 1 if state in ("CATALYST", "UNCLEAR") else 0
+            else:
+                is_mat = 1 if mat == 1 else 0
+
             is_unsched = (cat not in ("Financial Results", "Board Meeting")) if is_mat else False
 
             if t_minus_3 <= adate <= scan_dt:
@@ -153,12 +164,20 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
                 continue
             adate = adt.date() if isinstance(adt, datetime) else adt
 
-            if unclear_is_material:
-                is_mat = 1 if a.get("catalyst_state") in ("CATALYST", "UNCLEAR") else 0
-            else:
-                is_mat = 1 if a.get("is_material") == 1 else 0
+            state, mat, cat = classify_catalyst(
+                desc=a.get("desc", ""),
+                text=a.get("attchmntText") or a.get("text", "") or "",
+                url=a.get("url", ""),
+                source="filing",
+                parse_pdf=True,
+                cache_only_pdf=True,
+            )
 
-            cat = a.get("category", "")
+            if unclear_is_material:
+                is_mat = 1 if state in ("CATALYST", "UNCLEAR") else 0
+            else:
+                is_mat = 1 if mat == 1 else 0
+
             is_unsched = (cat not in ("Financial Results", "Board Meeting")) if is_mat else False
 
             if t_minus_3 <= adate <= scan_dt:
@@ -173,6 +192,7 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
         pairs.append({
             "flag_sym": flag_sym,
             "ctrl_sym": ctrl_sym,
+            "scan_date": sdate_str,
             "flag_pre": flag_pre,
             "ctrl_pre": ctrl_pre,
             "flag_fwd_all": flag_fwd_all,
@@ -180,6 +200,8 @@ def evaluate_pairs(unclear_is_material: bool = False, enforce_unique_controls: b
             "flag_fwd_unsched": flag_fwd_unsched,
             "ctrl_fwd_unsched": ctrl_fwd_unsched,
         })
+
+    conn.close()
 
     df = pd.DataFrame(pairs)
     clean = df[(~df["flag_pre"]) & (~df["ctrl_pre"])].copy()
@@ -245,13 +267,14 @@ if __name__ == "__main__":
     bounds_lines.append(f"   Clean Matched Pairs: N = {b_base['clean_N']}")
     bounds_lines.append(f"   All Material Filings:     Flag {b_base['all_mat']['pf']}% vs Ctrl {b_base['all_mat']['pc']}% | Lift {b_base['all_mat']['lift']}x | Odds {b_base['all_mat']['odds']} | n10={b_base['all_mat']['n10']}, n01={b_base['all_mat']['n01']} | p = {b_base['all_mat']['p_val']}")
     bounds_lines.append(f"   Unscheduled-Material:     Flag {b_base['unsched']['pf']}% vs Ctrl {b_base['unsched']['pc']}% | Lift {b_base['unsched']['lift']}x | Odds {b_base['unsched']['odds']} | n10={b_base['unsched']['n10']}, n01={b_base['unsched']['n01']} | p = {b_base['unsched']['p_val']}")
-    bounds_lines.append("   Verdict: No evidence of a positive edge (paired p=0.2912, Lift=0.79x; Unscheduled p=0.2430, Lift=0.69x).\n")
+    bounds_lines.append(f"   Verdict: No evidence of a positive edge (paired p={b_base['all_mat']['p_val']:.4f}, Lift={b_base['all_mat']['lift']:.2f}x; Unscheduled p={b_base['unsched']['p_val']:.4f}, Lift={b_base['unsched']['lift']:.2f}x).\n")
 
     bounds_lines.append("2. UPPER BOUND (BOUND A: UNCLEAR = Material, Broad Upper Bound):")
     bounds_lines.append(f"   Clean Matched Pairs: N = {b_unclear_mat['clean_N']}")
     bounds_lines.append(f"   All Material Filings:     Flag {b_unclear_mat['all_mat']['pf']}% vs Ctrl {b_unclear_mat['all_mat']['pc']}% | Lift {b_unclear_mat['all_mat']['lift']}x | Odds {b_unclear_mat['all_mat']['odds']} | n10={b_unclear_mat['all_mat']['n10']}, n01={b_unclear_mat['all_mat']['n01']} | p = {b_unclear_mat['all_mat']['p_val']}")
     bounds_lines.append(f"   Unscheduled-Material:     Flag {b_unclear_mat['unsched']['pf']}% vs Ctrl {b_unclear_mat['unsched']['pc']}% | Lift {b_unclear_mat['unsched']['lift']}x | Odds {b_unclear_mat['unsched']['odds']} | n10={b_unclear_mat['unsched']['n10']}, n01={b_unclear_mat['unsched']['n01']} | p = {b_unclear_mat['unsched']['p_val']}")
-    bounds_lines.append("   Verdict: Even under extreme upper bound treating every ambiguous filing as material, Lift is 1.03x (p=1.000).\n")
+    bounds_lines.append(f"   Verdict: Even under extreme upper bound treating every ambiguous filing as material, Lift is {b_unclear_mat['all_mat']['lift']:.2f}x (p={b_unclear_mat['all_mat']['p_val']:.4f}). Zero positive edge.\n")
+    bounds_lines.append(f"PDF Cache Misses (Cache-Only Mode): {len(PDF_CACHE_MISSES)}")
     bounds_lines.append("=" * 90)
 
     bounds_file = os.path.join(audit_dir, f"bounds_analysis_{head_commit}.txt")
@@ -273,7 +296,8 @@ if __name__ == "__main__":
     unique_lines.append("Contingency Table Breakdown:")
     unique_lines.append(f"  All Material:       n11={b_unique['all_mat']['n11']}, n10={b_unique['all_mat']['n10']}, n01={b_unique['all_mat']['n01']}, n00={b_unique['all_mat']['n00']}")
     unique_lines.append(f"  Unscheduled Only:   n11={b_unique['unsched']['n11']}, n10={b_unique['unsched']['n10']}, n01={b_unique['unsched']['n01']}, n00={b_unique['unsched']['n00']}")
-    unique_lines.append("Verdict: Lift is exactly 1.00x (All Material) and 0.92x (Unscheduled), p = 1.000. Zero positive edge.")
+    unique_lines.append(f"Verdict: Lift is {b_unique['all_mat']['lift']:.2f}x (All Material) and {b_unique['unsched']['lift']:.2f}x (Unscheduled), p = {b_unique['all_mat']['p_val']:.4f}. Zero positive edge.")
+    unique_lines.append(f"PDF Cache Misses (Cache-Only Mode): {len(PDF_CACHE_MISSES)}")
     unique_lines.append("=" * 90)
 
     unique_file = os.path.join(audit_dir, f"unique_controls_{head_commit}.txt")

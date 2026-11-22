@@ -1,0 +1,17 @@
+=========================================================================================================
+ANNOUNCEMENT CACHE REDESIGN AUDIT (RAW FIELDS ONLY) | COMMIT: 777779d
+=========================================================================================================
+Total Announcement Cache Files: 174
+Previous Cached Keys (with classifier outputs): ['symbol', 'date_str', 'dt', 'desc', 'text', 'url', 'catalyst_state', 'is_material', 'category', 'source']
+Sample Stored Classifier Outputs: catalyst_state=NONE, is_material=0, category=Routine Disclosure
+
+Redesigned Cached Keys (RAW FIELDS ONLY): ['symbol', 'date_str', 'desc', 'attchmntText', 'url']
+Total Records Migrated across 174 symbol cache files: 8560
+Removed Fields: ['catalyst_state', 'is_material', 'category', 'dt', 'source']
+Retained Raw Exchange Fields: ['symbol', 'date_str', 'desc', 'attchmntText', 'url']
+
+ARCHITECTURAL GUARANTEE:
+1. Zero classifier outputs are stored in announcement cache.
+2. Catalyst classification is computed dynamically at analysis time using the frozen tagged classifier (classifier-v1).
+3. Decouples raw exchange data ingestion from evolving or versioned classification rules.
+=========================================================================================================

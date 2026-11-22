@@ -1,0 +1,22 @@
+==========================================================================================
+PAIRED STATISTICAL LIFT & SENSITIVITY BOUNDS ANALYSIS | COMMIT: 777779d
+==========================================================================================
+Design: Paired McNemar Test on Unexplained Flags vs Matched Controls.
+Clean Pair Condition: No material filing in [T-3, T] for both Flag and Matched Control.
+Outcome Window: T+1 .. T+10 trading days.
+Classifier Version: classifier-v1 (SHA: 3f603a15c927da5d665bc72fd3215ba1abfad961) | parse_pdf = True.
+
+1. BASELINE ANALYSIS (UNCLEAR = Non-Material per Frozen Classifier):
+   Clean Matched Pairs: N = 97
+   All Material Filings:     Flag 32.99% vs Ctrl 37.11% | Lift 0.89x | Odds 0.83 | n10=20, n01=24 | p = 0.6516
+   Unscheduled-Material:     Flag 18.56% vs Ctrl 24.74% | Lift 0.75x | Odds 0.71 | n10=15, n01=21 | p = 0.405
+   Verdict: No evidence of a positive edge (paired p=0.6516, Lift=0.89x; Unscheduled p=0.4050, Lift=0.75x).
+
+2. UPPER BOUND (BOUND A: UNCLEAR = Material, Broad Upper Bound):
+   Clean Matched Pairs: N = 47
+   All Material Filings:     Flag 61.7% vs Ctrl 61.7% | Lift 1.0x | Odds 1.0 | n10=10, n01=10 | p = 1.0
+   Unscheduled-Material:     Flag 61.7% vs Ctrl 61.7% | Lift 1.0x | Odds 1.0 | n10=10, n01=10 | p = 1.0
+   Verdict: Even under extreme upper bound treating every ambiguous filing as material, Lift is 1.00x (p=1.0000). Zero positive edge.
+
+PDF Cache Misses (Cache-Only Mode): 7261
+==========================================================================================

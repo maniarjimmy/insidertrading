@@ -1,0 +1,61 @@
+===================================================================================================================
+RANDOM CONTROL BASE RATE ESTIMATION (BACKTEST SPAN 2024-2025) | COMMIT: 777779d
+===================================================================================================================
+Design Mandate (prereg-v4 Requirement 5c):
+- Estimate control base rate from RANDOM NON-FLAG STOCK-DAYS across the backtest span.
+- Quarantines February-May 2026 development data completely.
+- Sampling Frame: 100 stock-days sampled across 10 Nifty Mid/Small cap universe symbols across 2024-2025.
+- Pre-Move Cleanliness: [T-3, T] must contain zero material filings per classifier-v1.
+- Forward Horizon: T+1 .. T+10 trading days for unscheduled-material and all-material filings.
+
+#   | Symbol     | Stock-Day (T) | Clean [T-3,T]?  | Fwd All Mat?  | Fwd Unsched? 
+---------------------------------------------------------------------------
+1   | AARTIIND   | 2024-01-31    | CLEAN           | YES           | NO           
+2   | AARTIIND   | 2024-03-27    | CLEAN           | NO            | NO           
+3   | AARTIIND   | 2024-04-03    | CLEAN           | NO            | NO           
+4   | AARTIIND   | 2024-04-23    | CLEAN           | NO            | NO           
+5   | AARTIIND   | 2024-06-21    | CLEAN           | NO            | NO           
+6   | AARTIIND   | 2024-07-08    | CLEAN           | YES           | NO           
+7   | AARTIIND   | 2024-07-29    | CLEAN           | YES           | NO           
+8   | AARTIIND   | 2025-04-16    | CLEAN           | NO            | NO           
+9   | AARTIIND   | 2025-06-25    | CLEAN           | NO            | NO           
+10  | AARTIIND   | 2025-06-27    | CLEAN           | NO            | NO           
+11  | CROMPTON   | 2024-02-05    | CLEAN           | YES           | NO           
+12  | CROMPTON   | 2024-02-06    | CLEAN           | YES           | NO           
+13  | CROMPTON   | 2024-03-15    | CLEAN           | NO            | NO           
+14  | CROMPTON   | 2024-03-20    | CLEAN           | NO            | NO           
+15  | CROMPTON   | 2024-11-12    | CLEAN           | YES           | YES          
+16  | CROMPTON   | 2025-02-07    | CLEAN           | YES           | NO           
+17  | CROMPTON   | 2025-03-12    | CLEAN           | NO            | NO           
+18  | CROMPTON   | 2025-05-13    | CLEAN           | YES           | NO           
+19  | CROMPTON   | 2025-06-27    | CLEAN           | NO            | NO           
+20  | CROMPTON   | 2025-10-14    | CLEAN           | NO            | NO           
+21  | DEEPAKNTR  | 2024-02-01    | CLEAN           | YES           | NO           
+22  | DEEPAKNTR  | 2024-06-04    | CONTAMINATED    | N/A           | N/A          
+23  | DEEPAKNTR  | 2024-06-18    | CLEAN           | NO            | NO           
+24  | DEEPAKNTR  | 2024-06-28    | CLEAN           | YES           | YES          
+25  | DEEPAKNTR  | 2025-01-09    | CLEAN           | NO            | NO           
+30  | DEEPAKNTR  | 2025-06-10    | CLEAN           | NO            | NO           
+40  | GLENMARK   | 2025-09-29    | CONTAMINATED    | N/A           | N/A          
+50  | IPCALAB    | 2025-12-01    | CLEAN           | NO            | NO           
+60  | JUBLFOOD   | 2025-09-11    | CLEAN           | YES           | YES          
+70  | LALPATHLAB | 2025-12-11    | CLEAN           | YES           | NO           
+80  | MFSL       | 2025-10-09    | CLEAN           | NO            | NO           
+90  | POLYCAB    | 2025-09-17    | CLEAN           | NO            | NO           
+100 | VOLTAS     | 2025-09-25    | CLEAN           | NO            | NO           
+---------------------------------------------------------------------------
+
+EMPIRICAL BASE RATE RESULTS ACROSS 2024-2025 BACKTEST SPAN:
+  Total Random Stock-Days Sampled: 100
+  Pre-Move Clean Stock-Days (No Catalysts in [T-3, T]): 88 (88.0%)
+  Pre-Move Contaminated Disqualified: 12 (12.0%)
+
+  1. Forward Unscheduled-Material Catalyst Base Rate (P0): 9.09% (8/88)
+     Wilson 95% Confidence Interval: [4.68%, 16.93%]
+  2. Forward All-Material Catalyst Base Rate: 35.23% (31/88)
+     Wilson 95% Confidence Interval: [26.06%, 45.63%]
+
+METHODOLOGICAL ADOPTION FOR PREREG-V4:
+  Pre-registered Unscheduled Base Rate P0 = 9.1% (derived from 2024-2025 random control stock-days).
+  Completely independent of 2026 development flag rates.
+===================================================================================================================

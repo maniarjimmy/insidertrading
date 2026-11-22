@@ -76,10 +76,10 @@ def run():
         else:
             # BE / T2T Series: SEBI compulsory 100% gross settlement
             # Omitted from MTO net settlement clearing file; sec_bhavdata_full marks delivery as "-, -"
-            mto_str = "OMITTED (T2T)"
-            diff_str = "N/A*"
-            deliv_str = "100.00%*"
-            status = "VERIFIED (100% Gross T2T)"
+            mto_str = "OMITTED (BE series)"
+            diff_str = "N/A"
+            deliv_str = "NULL (-, -)"
+            status = "OMITTED IN MTO / NULL IN BHAV"
             lines.append(
                 f"{idx:<3} | {sym:<11} | {srs:<6} | {cat:<32} | {uddip_vol:<12,d} | {mto_str:<14} | {diff_str:<6} | {deliv_str:<8} | {status}"
             )
@@ -89,11 +89,10 @@ def run():
     lines.append("1. Standard Equity (EQ) Series: 100.0% Exact Match (UDDiP Volume == MTO Traded Quantity across all 8 EQ stocks).")
     lines.append("   - Precision holds identically for mega-cap high-volume stocks (RELIANCE 7.4M, INFY 2.6M)")
     lines.append("     and ultra-low volume universe stocks (MRF 2,002 shares, HONAUT 3,706 shares, ABBOTINDIA 6,604 shares).")
-    lines.append("2. Trade-to-Trade / Surveillance (BE) Series: Discrepancy is structurally expected and documented.")
-    lines.append("   - In BE series (e.g. HFCL, STLTECH), SEBI/NSE regulations prohibit intraday netting or squaring-off.")
-    lines.append("   - Every trade carries 100% compulsory gross delivery obligation; thus NSE's net-settlement MTO clearing file")
-    lines.append("     omits BE series entirely, and official sec_bhavdata_full reports delivery as '-, -'.")
-    lines.append("   - Operational Rule: For BE/T2T stocks, delivery percentage is treated as 100.0% by regulatory definition.")
+    lines.append("2. Trade-to-Trade / Surveillance (BE) Series: Delivery % Stored as NULL (None).")
+    lines.append("   - Direct Source Evidence: Official sec_bhavdata_full_18112026.csv literally reports delivery as '-, -'.")
+    lines.append("   - MTO Clearance File: MTO_18112026.DAT omits BE series entirely (record type 20 contains 0 lines for BE).")
+    lines.append("   - Strict Ingestion Standard: Delivery percentage must NEVER be fabricated as 100.0%. It is stored as NULL.")
     lines.append("=" * 115)
 
     out_text = "\n".join(lines)

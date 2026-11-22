@@ -1,0 +1,16 @@
+==========================================================================================
+STRICTLY UNIQUE CONTROLS (WITHOUT REPLACEMENT) PAIRED ANALYSIS | COMMIT: 777779d
+==========================================================================================
+Sampling Policy: Controls sampled strictly without replacement across ALL scan dates.
+Eliminates potential correlation from control stock re-use.
+Classifier Version: classifier-v1 (SHA: 3f603a15c927da5d665bc72fd3215ba1abfad961) | parse_pdf = True.
+
+Clean Matched Pairs: N = 64
+All Material Filings:     Flag 34.38% vs Ctrl 31.25% | Lift 1.1x | Odds 1.15 | n10=15, n01=13 | p = 0.8506
+Unscheduled-Material:     Flag 15.62% vs Ctrl 17.19% | Lift 0.91x | Odds 0.9 | n10=9, n01=10 | p = 1.0
+Contingency Table Breakdown:
+  All Material:       n11=7, n10=15, n01=13, n00=29
+  Unscheduled Only:   n11=1, n10=9, n01=10, n00=44
+Verdict: Lift is 1.10x (All Material) and 0.91x (Unscheduled), p = 0.8506. Zero positive edge.
+PDF Cache Misses (Cache-Only Mode): 7261
+==========================================================================================

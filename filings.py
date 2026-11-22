@@ -186,6 +186,7 @@ MATERIAL_TEXT_PATTERNS = [
 
 _PDF_TEXT_CACHE_PATH = os.path.join(os.path.dirname(__file__), "output", "cache", "pdf_text_cache.json")
 _PDF_TEXT_CACHE: Optional[Dict[str, str]] = None
+PDF_CACHE_MISSES: List[Dict[str, str]] = []
 
 
 def _load_pdf_text_cache() -> Dict[str, str]:
@@ -242,7 +243,8 @@ def classify_catalyst(desc: Optional[str] = None,
                       source: str = "filing",
                       url: Optional[str] = None,
                       parse_pdf: bool = True,
-                      fetch_remote_pdf: bool = True) -> Tuple[str, int, str]:
+                      fetch_remote_pdf: bool = True,
+                      cache_only_pdf: bool = False) -> Tuple[str, int, str]:
     """
     Unified classifier for corporate filings and news headlines.
     Rule Sequence:
@@ -300,7 +302,17 @@ def classify_catalyst(desc: Optional[str] = None,
         "announcement",
     ]
     if parse_pdf and url and any(g in clean_desc.lower() for g in generic_descs):
-        pdf_text = extract_pdf_first_page_text(url, fetch_remote=fetch_remote_pdf)
+        if cache_only_pdf:
+            cache = _load_pdf_text_cache()
+            if url in cache:
+                pdf_text = cache[url]
+            else:
+                PDF_CACHE_MISSES.append({"desc": clean_desc, "url": url})
+                logger.warning("PDF cache miss in cache-only mode for URL %s (desc: %s)", url, clean_desc)
+                pdf_text = ""
+        else:
+            pdf_text = extract_pdf_first_page_text(url, fetch_remote=fetch_remote_pdf)
+
         if pdf_text:
             pdf_combined = f"{clean_desc} {pdf_text}".lower()
             for pattern, cat_name in ROUTINE_TEXT_PATTERNS:

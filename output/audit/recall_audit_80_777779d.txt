@@ -1,0 +1,674 @@
+===================================================================================================================
+SELF-GRADED 80-ROW CLASSIFIER RECALL AUDIT | COMMIT: 777779d | SEED: 42
+===================================================================================================================
+EXPLICIT AUDIT METHODOLOGY & STATUS DISCLAIMER:
+1. This is a SELF-GRADED audit conducted entirely by the assistant for exploratory validation.
+2. This audit DOES NOT claim empirical recall or user-validated ground truth.
+3. Ground-truth recall awaits the user's independent hand-labeling of 'output/labeling_batch.csv'.
+4. Sampling Frame: 80 announcements sampled from ambiguous/miss-prone categories
+   ('General Updates', 'Updates', 'Disclosure of material issue', 'Press Release', 'Intimation', 'UNCLEAR')
+   belonging to Flag and Control cohorts across 2026. Stratified with max 2 filings per symbol.
+
+#   | Sym        | Cohort  | Date        | Auto Verdict (State/Mat/Cat)     | Self-Grade | Match?
+-------------------------------------------------------------------------------------------------------------------
+1   | MGL        | CONTROL | 2026-04-16  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+2   | NAVINFLUOR | CONTROL | 2026-04-29  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+3   | SHRIRAMFIN | FLAG    | 2026-01-14  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+4   | RBLBANK    | FLAG    | 2026-01-13  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+5   | WOCKPHARMA | FLAG    | 2026-05-04  | CATALYST/1/Financial Result      | MATERIAL   | YES   
+6   | HINDZINC   | FLAG    | 2026-03-04  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+7   | HINDZINC   | FLAG    | 2026-03-10  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+8   | JPPOWER    | FLAG    | 2026-02-27  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+9   | APTUS      | CONTROL | 2026-06-03  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+10  | RADICO     | FLAG    | 2026-05-19  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+11  | GLAND      | CONTROL | 2026-04-21  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+12  | SHRIRAMFIN | FLAG    | 2026-01-23  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+13  | CROMPTON   | CONTROL | 2026-01-20  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+14  | TATATECH   | CONTROL | 2026-01-07  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+15  | POLYCAB    | FLAG    | 2026-02-12  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+16  | MOTILALOFS | FLAG    | 2026-06-08  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+17  | INOXINDIA  | FLAG    | 2026-02-19  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+18  | PPLPHARMA  | CONTROL | 2026-01-29  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+19  | ZFCVINDIA  | FLAG    | 2026-04-22  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+20  | SAPPHIRE   | FLAG    | 2026-01-13  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+21  | SAPPHIRE   | FLAG    | 2026-01-12  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+22  | KAYNES     | FLAG    | 2026-05-29  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+23  | CROMPTON   | CONTROL | 2026-04-01  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+24  | TRENT      | FLAG    | 2026-05-13  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+25  | MANAPPURAM | CONTROL | 2026-03-14  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+26  | WELCORP    | FLAG    | 2026-05-22  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+27  | RRKABEL    | FLAG    | 2026-05-30  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+28  | RBLBANK    | FLAG    | 2026-02-16  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+29  | JSL        | FLAG    | 2026-04-27  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+30  | CENTRALBK  | CONTROL | 2026-05-31  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+31  | JSWENERGY  | FLAG    | 2026-01-20  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+32  | AFFLE      | CONTROL | 2026-01-12  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+33  | THERMAX    | FLAG    | 2026-03-31  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+34  | TORNTPOWER | FLAG    | 2026-01-09  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+35  | KIRLOSENG  | CONTROL | 2026-01-16  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+36  | VEDL       | FLAG    | 2026-01-29  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+37  | GLAND      | CONTROL | 2026-03-06  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+38  | POLYCAB    | FLAG    | 2026-01-16  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+39  | HUDCO      | FLAG    | 2026-05-15  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+40  | HAL        | FLAG    | 2026-05-22  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+41  | BLS        | CONTROL | 2026-05-11  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+42  | SAMMAANCAP | FLAG    | 2026-01-27  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+43  | BHARATCOAL | CONTROL | 2026-06-01  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+44  | HAL        | FLAG    | 2026-02-18  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+45  | ONESOURCE  | FLAG    | 2026-03-04  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+46  | MGL        | CONTROL | 2026-05-31  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+47  | LT         | FLAG    | 2026-01-28  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+48  | SAMMAANCAP | FLAG    | 2026-03-05  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+49  | INDIANB    | FLAG    | 2026-06-01  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+50  | MOTILALOFS | FLAG    | 2026-04-29  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+51  | AAVAS      | CONTROL | 2026-04-20  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+52  | TTML       | FLAG    | 2026-06-05  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+53  | SIEMENS    | FLAG    | 2026-05-26  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+54  | CLEANMAX   | CONTROL | 2026-04-16  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+55  | ACMESOLAR  | CONTROL | 2026-05-09  | NONE/0/Routine Disclosu          | MATERIAL   | MISMATCH
+56  | WAAREEENER | FLAG    | 2026-03-10  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+57  | ANGELONE   | CONTROL | 2026-01-15  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+58  | TRIVENI    | FLAG    | 2026-06-04  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+59  | GRAVITA    | CONTROL | 2026-02-25  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+60  | HFCL       | CONTROL | 2026-02-10  | NONE/0/Routine Disclosu          | MATERIAL   | MISMATCH
+61  | PREMIERENE | CONTROL | 2026-06-06  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+62  | CLEANMAX   | CONTROL | 2026-05-12  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+63  | MANKIND    | FLAG    | 2026-05-19  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+64  | BELRISE    | CONTROL | 2026-03-18  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+65  | GRAVITA    | CONTROL | 2026-05-19  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+66  | SOBHA      | FLAG    | 2026-01-21  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+67  | WAAREEENER | FLAG    | 2026-03-20  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+68  | TRENT      | FLAG    | 2026-01-05  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+69  | PGHH       | FLAG    | 2026-03-17  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+70  | PGHH       | FLAG    | 2026-05-28  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+71  | CENTRALBK  | CONTROL | 2026-01-12  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+72  | ACMESOLAR  | CONTROL | 2026-05-08  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+73  | IKS        | FLAG    | 2026-04-23  | CATALYST/1/Acquisition           | ROUTINE    | MISMATCH
+74  | NEULANDLAB | FLAG    | 2026-02-09  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+75  | ZENTEC     | FLAG    | 2026-02-02  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+76  | TECHM      | FLAG    | 2026-04-16  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+77  | TATACONSUM | FLAG    | 2026-05-17  | UNCLEAR/0/Unclassified           | ROUTINE    | YES   
+78  | TRITURBINE | FLAG    | 2026-02-05  | CATALYST/1/Board Meeting         | ROUTINE    | MISMATCH
+79  | FIVESTAR   | CONTROL | 2026-06-10  | NONE/0/Routine Disclosu          | ROUTINE    | YES   
+80  | CUB        | CONTROL | 2026-01-23  | UNCLEAR/0/General Update         | ROUTINE    | YES   
+-------------------------------------------------------------------------------------------------------------------
+
+SUMMARY OF ASSISTANT SELF-GRADED AUDIT (N = 80):
+  True Positives  (Auto=1, Grade=MATERIAL): 1
+  True Negatives  (Auto=0, Grade=ROUTINE):  75
+  False Negatives (Auto=0, Grade=MATERIAL): 2
+  False Positives (Auto=1, Grade=ROUTINE):  2
+  Observed Agreement Rate: 95.0%
+
+DETAILED ROW-BY-ROW EVIDENCE & TRANSCRIPTS:
+-------------------------------------------------------------------------------------------------------------------
+Row 01 | Symbol: MGL (CONTROL) | Date: 2026-04-16 17:45:22
+  Description: Shareholders meeting
+  attchmntText: Mahanagar Gas Limited has informed the Exchange regarding Notice of Postal Ballot
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 02 | Symbol: NAVINFLUOR (CONTROL) | Date: 2026-04-29 20:33:56
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Pursuant to Regulation 30 read with Schedule III of SEBI (Listing Obligations and Disclosure Requirements) Regulations, ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: Routine analyst/investor meeting presentation or audio recording.)
+  Audit Alignment: YES
+Row 03 | Symbol: SHRIRAMFIN (FLAG) | Date: 2026-01-14 18:59:32
+  Description: General Updates
+  attchmntText: Shriram Finance Limited has informed the Exchange about General Updates
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 04 | Symbol: RBLBANK (FLAG) | Date: 2026-01-13 19:53:31
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: RBL Bank Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 05 | Symbol: WOCKPHARMA (FLAG) | Date: 2026-05-04 15:44:41
+  Description: Press Release
+  attchmntText: Pursuant to Regulation 30 of the Listing Regulations, please find enclosed Press Release on theAudited Financial Results...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=CATALYST, is_material=1, category=Financial Results
+  Assistant Self-Grade: MATERIAL (Rationale: Scheduled financial results / dividend / corporate action.)
+  Audit Alignment: YES
+Row 06 | Symbol: HINDZINC (FLAG) | Date: 2026-03-04 10:44:31
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Hindustan Zinc Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 07 | Symbol: HINDZINC (FLAG) | Date: 2026-03-10 18:41:17
+  Description: Press Release
+  attchmntText: Hindustan Zinc Limited has informed the Exchange regarding a press release dated March 10, 2026, titled "Hindustan Zinc ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 08 | Symbol: JPPOWER (FLAG) | Date: 2026-02-27 17:32:59
+  Description: Corporate Insolvency Resolution Process
+  attchmntText: Jaiprakash Power Ventures Limited has informed the Exchange about filing of application under Section 7 of IBC, 2016 for...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 09 | Symbol: APTUS (CONTROL) | Date: 2026-06-03 17:26:15
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Aptus Value Housing Finance India Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 10 | Symbol: RADICO (FLAG) | Date: 2026-05-19 17:45:32
+  Description: Updates
+  attchmntText: Radico Khaitan Limited has informed the Exchange regarding 'Annual Secretarial Compliance Report for the Financial Year ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 11 | Symbol: GLAND (CONTROL) | Date: 2026-04-21 17:16:29
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Gland Pharma Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 12 | Symbol: SHRIRAMFIN (FLAG) | Date: 2026-01-23 21:18:32
+  Description: Action(s) taken or orders passed
+  attchmntText: Shriram Finance Limited has informed the Exchange about Action(s) taken or orders passed
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 13 | Symbol: CROMPTON (CONTROL) | Date: 2026-01-20 15:29:39
+  Description: Product launch
+  attchmntText: Crompton Greaves Consumer Electricals Limited has informed the Exchange about Product launch
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 14 | Symbol: TATATECH (CONTROL) | Date: 2026-01-07 12:50:57
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Tata Technologies Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 15 | Symbol: POLYCAB (FLAG) | Date: 2026-02-12 09:54:40
+  Description: General Updates
+  attchmntText: Polycab India Limited has informed the Exchange about Analyst(s) / Investor(s) meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 16 | Symbol: MOTILALOFS (FLAG) | Date: 2026-06-08 19:49:07
+  Description: General Updates
+  attchmntText: Motilal Oswal Financial Services Limited has informed the Exchange about General Updates- Incorporation of Wholly-Owned ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 17 | Symbol: INOXINDIA (FLAG) | Date: 2026-02-19 16:26:43
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: INOX India Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 18 | Symbol: PPLPHARMA (CONTROL) | Date: 2026-01-29 00:02:02
+  Description: Change in Management
+  attchmntText: Changes in Senior Management Personnel ( SMP ) and Key Managerial Personnel ( KMP ) of the Company
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 19 | Symbol: ZFCVINDIA (FLAG) | Date: 2026-04-22 18:54:50
+  Description: General Updates
+  attchmntText: ZF Commercial Vehicle Control Systems India Limited has informed the Exchange about General Updates
+  PDF Text Snippet: • 
+ 
+ 
+ ZF Group 
+ ZF Commercial Vehicle Control Systems India Limited 
+ (Formerly known as WABCO INDIA Limited) 
+ Plot ...
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: Routine administrative personnel / compliance change.)
+  Audit Alignment: YES
+Row 20 | Symbol: SAPPHIRE (FLAG) | Date: 2026-01-13 18:55:10
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Sapphire Foods India Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 21 | Symbol: SAPPHIRE (FLAG) | Date: 2026-01-12 18:29:39
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Sapphire Foods India Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 22 | Symbol: KAYNES (FLAG) | Date: 2026-05-29 17:24:49
+  Description: Resignation
+  attchmntText: Kaynes Technology India Limited has informed the Exchange regarding Resignation of Mr Heinz Franz Moitzi as Non- Executi...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 23 | Symbol: CROMPTON (CONTROL) | Date: 2026-04-01 15:50:07
+  Description: Action(s) taken or orders passed
+  attchmntText: Crompton Greaves Consumer Electricals Limited has informed the Exchange about Action(s) taken or orders passed
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 24 | Symbol: TRENT (FLAG) | Date: 2026-05-13 10:49:07
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Trent Limited has informed the Exchange about Intimation of schedule of Analyst / Institutional Investors Meetings.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 25 | Symbol: MANAPPURAM (CONTROL) | Date: 2026-03-14 13:06:52
+  Description: Action(s) taken or orders passed
+  attchmntText: Manappuram Finance Limited has informed the Exchange about Action(s) taken or orders passed
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 26 | Symbol: WELCORP (FLAG) | Date: 2026-05-22 20:03:02
+  Description: Resignation
+  attchmntText: Welspun Corp Limited has informed the Exchange regarding Resignation of  Mr. Satish Patil as Chief Digital and Informati...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 27 | Symbol: RRKABEL (FLAG) | Date: 2026-05-30 12:47:46
+  Description: Change in Director(s)
+  attchmntText: R R Kabel Limited has informed the Exchange regarding Change in Director(s) of the company.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 28 | Symbol: RBLBANK (FLAG) | Date: 2026-02-16 16:11:39
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: RBL Bank Limited has informed the Exchange about Investor Meet.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 29 | Symbol: JSL (FLAG) | Date: 2026-04-27 20:24:19
+  Description: Updates
+  attchmntText: Jindal Stainless Limited has informed the Exchange regarding 'Disclosure in terms of the Chapter XIV - Centralized Datab...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 30 | Symbol: CENTRALBK (CONTROL) | Date: 2026-05-31 20:09:40
+  Description: Retirement
+  attchmntText: Central Bank of India has informed the Exchange about Retirement
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 31 | Symbol: JSWENERGY (FLAG) | Date: 2026-01-20 18:41:16
+  Description: General Updates
+  attchmntText: JSW Energy Limited has informed the Exchange about Power Purchase agreement for 1,600 MW with West Bengal DISCOM
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 32 | Symbol: AFFLE (CONTROL) | Date: 2026-01-12 11:26:10
+  Description: Updates
+  attchmntText: Affle 3i Limited has informed the Exchange regarding 'Allotment of shares to Company's ESOP Trust'.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 33 | Symbol: THERMAX (FLAG) | Date: 2026-03-31 10:33:27
+  Description: Action(s) taken or orders passed
+  attchmntText: Thermax Limited has informed the Exchange about Action(s) taken or orders passed
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 34 | Symbol: TORNTPOWER (FLAG) | Date: 2026-01-09 21:50:01
+  Description: News Verification
+  attchmntText: The Exchange has sought clarification from Torrent Power Limited with respect to recent news item captioned Torrent Powe...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 35 | Symbol: KIRLOSENG (CONTROL) | Date: 2026-01-16 19:28:00
+  Description: Shareholders meeting
+  attchmntText: Kirloskar Oil Engines Limited has submitted the Exchange a copy Srutinizers report of  Postal Ballot. Further, the compa...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 36 | Symbol: VEDL (FLAG) | Date: 2026-01-29 16:07:04
+  Description: Resignation
+  attchmntText: Vedanta Limited has informed the Exchange regarding Resignation of Ms Madhu Srivastava as CHRO and SMP of the company w....
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 37 | Symbol: GLAND (CONTROL) | Date: 2026-03-06 16:01:20
+  Description: Action(s) taken or orders passed
+  attchmntText: Gland Pharma Limited has informed the Exchange about Order passed by the GST Authority
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 38 | Symbol: POLYCAB (FLAG) | Date: 2026-01-16 20:54:02
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Polycab India Limited has informed the Exchange about Link of Recording
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 39 | Symbol: HUDCO (FLAG) | Date: 2026-05-15 18:13:04
+  Description: General Updates
+  attchmntText: Housing & Urban Development Corporation Limited has informed the Exchange about General Updates- Investor Presentation u...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: Routine analyst/investor meeting presentation or audio recording.)
+  Audit Alignment: YES
+Row 40 | Symbol: HAL (FLAG) | Date: 2026-05-22 11:23:29
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Hindustan Aeronautics Limited has informed the Exchange about Transcript
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 41 | Symbol: BLS (CONTROL) | Date: 2026-05-11 20:03:17
+  Description: Sale or disposal
+  attchmntText: BLS International Services Limited has informed the Exchange that Reired BLS International Services Private Limited (Who...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 42 | Symbol: SAMMAANCAP (FLAG) | Date: 2026-01-27 20:04:17
+  Description: Updates
+  attchmntText: Sammaan Capital Limited has informed the Exchange regarding 'we hereby certify that our Company has made timely payment ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 43 | Symbol: BHARATCOAL (CONTROL) | Date: 2026-06-01 14:09:11
+  Description: Monthly Business Updates
+  attchmntText: Disclosure under Regulation 30 of SEBI (Listing Obligations and Disclosure Requirements), Regulations 2015- Provisional ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 44 | Symbol: HAL (FLAG) | Date: 2026-02-18 16:24:44
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Hindustan Aeronautics Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 45 | Symbol: ONESOURCE (FLAG) | Date: 2026-03-04 18:57:57
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Onesource Specialty Pharma Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 46 | Symbol: MGL (CONTROL) | Date: 2026-05-31 15:39:44
+  Description: Retirement
+  attchmntText: Mahanagar Gas Limited has informed the Exchange about Retirement
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 47 | Symbol: LT (FLAG) | Date: 2026-01-28 18:48:10
+  Description: Updates
+  attchmntText: Larsen & Toubro Limited has informed the Exchange regarding 'Analyst Presentation.- Q3 / 9M FY26'.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 48 | Symbol: SAMMAANCAP (FLAG) | Date: 2026-03-05 13:36:59
+  Description: Updates
+  attchmntText: Sammaan Capital Limited has informed the Exchange regarding 'Pursuant to the applicable provisions of the Listing Regula...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 49 | Symbol: INDIANB (FLAG) | Date: 2026-06-01 20:06:21
+  Description: General Updates
+  attchmntText: Indian Bank has informed the Exchange about Revision in Benchmark Rates
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 50 | Symbol: MOTILALOFS (FLAG) | Date: 2026-04-29 19:01:01
+  Description: General Updates
+  attchmntText: The Board of Directors of the Company has approved the request received from the certain members of the Promoter Group f...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 51 | Symbol: AAVAS (CONTROL) | Date: 2026-04-20 15:02:05
+  Description: Resignation of Director/KMP/SMP
+  attchmntText: Aavas Financiers Limited has informed the Exchange about Resignation of Director/KMP/SMP
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 52 | Symbol: TTML (FLAG) | Date: 2026-06-05 21:16:40
+  Description: Shareholders meeting
+  attchmntText: Tata Teleservices (Maharashtra) Limited has informed the Exchange regarding Proceedings of Annual General Meeting held o...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 53 | Symbol: SIEMENS (FLAG) | Date: 2026-05-26 13:41:00
+  Description: Extension of Annual General Meeting
+  attchmntText: Siemens Limited has informed the Exchange about extension of Annual General Meeting
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 54 | Symbol: CLEANMAX (CONTROL) | Date: 2026-04-16 20:26:30
+  Description: Amendment to AOA/MOA
+  attchmntText: Clean Max Enviro Energy Solutions Limited has informed the Exchange regarding the Amendment to AOA/MOA of the company.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 55 | Symbol: ACMESOLAR (CONTROL) | Date: 2026-05-09 13:38:34
+  Description: General Updates
+  attchmntText: Acme Solar Holdings Limited has informed the Exchange about submission of Newspaper Publication w.r.t.  Audited Financia...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: MATERIAL (Rationale: Scheduled financial results / dividend / corporate action.)
+  Audit Alignment: MISMATCH
+Row 56 | Symbol: WAAREEENER (FLAG) | Date: 2026-03-10 18:29:28
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Waaree Energies Limited has informed the Exchange about Schedule of Analyst/Investor Meet scheduled to be held on Friday...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 57 | Symbol: ANGELONE (CONTROL) | Date: 2026-01-15 18:34:43
+  Description: Amendment to AOA/MOA
+  attchmntText: Angel One Limited has informed the Exchange regarding the Amendment to AOA/MOA of the company.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 58 | Symbol: TRIVENI (FLAG) | Date: 2026-06-04 18:55:58
+  Description: General Updates
+  attchmntText: Triveni Engineering & Industries Limited has informed the Exchange about General Updates - Material update in connection...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 59 | Symbol: GRAVITA (CONTROL) | Date: 2026-02-25 21:58:22
+  Description: Capacity addition
+  attchmntText: Gravita India Limited has informed the Exchange about Capacity addition
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 60 | Symbol: HFCL (CONTROL) | Date: 2026-02-10 21:35:51
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: HFCL Limited has informed the Exchange about Transcript of Conference Call on the Un-audited Financial Results of the Co...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: MATERIAL (Rationale: Scheduled financial results / dividend / corporate action.)
+  Audit Alignment: MISMATCH
+Row 61 | Symbol: PREMIERENE (CONTROL) | Date: 2026-06-06 23:31:13
+  Description: Shareholders meeting
+  attchmntText: Premier Energies Limited has informed the Exchange regarding Notice of Postal Ballot
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 62 | Symbol: CLEANMAX (CONTROL) | Date: 2026-05-12 21:25:34
+  Description: General Updates
+  attchmntText: Clean Max Enviro Energy Solutions Limited has informed the Exchange about General Updates - Shareholders  Letter for FY2...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 63 | Symbol: MANKIND (FLAG) | Date: 2026-05-19 19:21:46
+  Description: Cessation
+  attchmntText: Mankind Pharma Limited has informed the Exchange regarding Cessation of Mr Pramod Gokhale as Other of the company w.e.f....
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 64 | Symbol: BELRISE (CONTROL) | Date: 2026-03-18 17:36:58
+  Description: Press Release
+  attchmntText: Belrise Industries Limited has informed the Exchange regarding a press release dated March 18, 2026, titled " Press Rele...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 65 | Symbol: GRAVITA (CONTROL) | Date: 2026-05-19 17:11:58
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Gravita India Limited has informed the Exchange about utcome of meeting
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 66 | Symbol: SOBHA (FLAG) | Date: 2026-01-21 17:50:50
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Sobha Limited has informed the Exchange about the transcript of Conference Call held on January 17, 2026.
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: Routine analyst/investor meeting presentation or audio recording.)
+  Audit Alignment: YES
+Row 67 | Symbol: WAAREEENER (FLAG) | Date: 2026-03-20 20:39:09
+  Description: Appointment
+  attchmntText: Waaree Energies Limited has informed the Exchange regarding Appointment of Mr Jignesh Rathod as Whole - Time Director an...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 68 | Symbol: TRENT (FLAG) | Date: 2026-01-05 14:59:18
+  Description: General Updates
+  attchmntText: Trent Limited has informed the Exchange about Reminder letter to shareholders to Dematerialise the Shares
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 69 | Symbol: PGHH (FLAG) | Date: 2026-03-17 14:50:36
+  Description: Resignation
+  attchmntText: Procter & Gamble Hygiene and Health Care Limited has informed the Exchange regarding Resignation of Mr. Srinivas Maruthi...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 70 | Symbol: PGHH (FLAG) | Date: 2026-05-28 13:43:06
+  Description: Appointment
+  attchmntText: Procter & Gamble Hygiene and Health Care Limited has informed the Exchange regarding Appointment of Mr  as Chief Financi...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 71 | Symbol: CENTRALBK (CONTROL) | Date: 2026-01-12 17:35:21
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Central Bank of India has informed the Exchange about Schedule of meet with the Analysts/Investors on 16th January, 2026
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 72 | Symbol: ACMESOLAR (CONTROL) | Date: 2026-05-08 01:22:54
+  Description: Press Release
+  attchmntText: Acme Solar Holdings Limited has informed the Exchange regarding a press release dated May 07, 2026, titled "Press Releas...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 73 | Symbol: IKS (FLAG) | Date: 2026-04-23 21:53:23
+  Description: Press Release
+  attchmntText: Inventurus Knowledge Solutions Limited has informed the Exchange regarding a press release dated April 23, 2026, titled ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=CATALYST, is_material=1, category=Acquisition
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: MISMATCH
+Row 74 | Symbol: NEULANDLAB (FLAG) | Date: 2026-02-09 17:49:06
+  Description: Press Release (Revised)
+  attchmntText: Neuland Laboratories Limited has informed the Exchange regarding a revised press release dated February 09, 2026, titled...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 75 | Symbol: ZENTEC (FLAG) | Date: 2026-02-02 21:55:40
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Zen Technologies Limited has informed the Exchange about Link of Recording
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 76 | Symbol: TECHM (FLAG) | Date: 2026-04-16 17:02:29
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Tech Mahindra Limited has informed the Exchange about Schedule of meet
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 77 | Symbol: TATACONSUM (FLAG) | Date: 2026-05-17 19:34:11
+  Description: Shareholders meeting
+  attchmntText: TATA CONSUMER PRODUCTS LIMITED has informed the Exchange regarding Notice of Annual General Meeting to be held on Jun 10...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=Unclassified
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+Row 78 | Symbol: TRITURBINE (FLAG) | Date: 2026-02-05 17:03:14
+  Description: Updates
+  attchmntText: Triveni Turbine Limited has informed the Exchange regarding 'Communication To Shareholders- Intimation On Tax Deduction ...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=CATALYST, is_material=1, category=Board Meeting
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: MISMATCH
+Row 79 | Symbol: FIVESTAR (CONTROL) | Date: 2026-06-10 13:02:36
+  Description: Analysts/Institutional Investor Meet/Con. Call Updates
+  attchmntText: Intimation of Schedule of Investor/Analyst meetings under the SEBI (Listing Obligations and Disclosure Requirements), Re...
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=NONE, is_material=0, category=Routine Disclosure
+  Assistant Self-Grade: ROUTINE (Rationale: Routine analyst/investor meeting presentation or audio recording.)
+  Audit Alignment: YES
+Row 80 | Symbol: CUB (CONTROL) | Date: 2026-01-23 16:39:43
+  Description: General Updates
+  attchmntText: Our Bank has opened a new Branch in Jhansi Uttar Pradesh
+  PDF Text Snippet: [None / Not Cached]
+  Classifier Verdict: state=UNCLEAR, is_material=0, category=General Update
+  Assistant Self-Grade: ROUTINE (Rationale: General corporate communication / routine administrative update.)
+  Audit Alignment: YES
+
+===================================================================================================================
+END OF SELF-GRADED AUDIT REPORT. Does not substitute for user ground-truth labeling.
+===================================================================================================================
