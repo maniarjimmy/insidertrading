@@ -214,3 +214,46 @@ def test_real_corporate_actions_uddip():
         re_adj = adjust_price_for_corporate_actions(adj, [act])
         assert re_adj[0]["close"] == adj[0]["close"], f"Double adjustment guard failed to no-op for {sym}"
 
+
+def test_flat_ex_date_price_does_not_misfire():
+    """
+    Assert that when price genuinely doesn't move across ex-date on an adjusted basis
+    (adjusted return = 0.0%), the double-adjustment guard does NOT misfire and correctly
+    applies the backward split adjustment.
+    """
+    mock_action = {
+        "symbol": "FLATCO",
+        "action_type": "SPLIT",
+        "ratio": 2.0,
+        "ex_date": "2026-03-25",
+    }
+
+    # Raw prices drop exactly 2.0x (from 200.0 to 100.0), meaning adjusted return is exactly 0.0%
+    flat_candles = [
+        {"date": "2026-03-24", "open": 200.0, "high": 205.0, "low": 195.0, "close": 200.0, "volume": 1000},
+        {"date": "2026-03-25", "open": 100.0, "high": 102.0, "low": 98.0, "close": 100.0, "volume": 2000},
+    ]
+
+    adjusted = adjust_price_for_corporate_actions(flat_candles, [mock_action])
+    assert len(adjusted) == 2
+
+    # Pre-split candle must be adjusted to 100.0 (200.0 / 2.0)
+    assert adjusted[0]["close"] == 100.0
+    assert adjusted[0]["adj_factor"] == 2.0
+    assert adjusted[1]["close"] == 100.0
+    assert adjusted[1]["adj_factor"] == 1.0
+
+    # Economic return across ex-date is exactly 0.0%
+    adj_ret = ((adjusted[1]["close"] - adjusted[0]["close"]) / adjusted[0]["close"]) * 100.0
+    assert adj_ret == 0.0
+
+    # Conversely, if candles are already adjusted (100.0 -> 100.0 in raw input),
+    # the guard MUST fire and refuse to divide by 2 again (no-op)
+    already_adjusted_candles = [
+        {"date": "2026-03-24", "open": 100.0, "high": 102.0, "low": 98.0, "close": 100.0, "volume": 2000},
+        {"date": "2026-03-25", "open": 100.0, "high": 102.0, "low": 98.0, "close": 100.0, "volume": 2000},
+    ]
+    no_op_result = adjust_price_for_corporate_actions(already_adjusted_candles, [mock_action])
+    assert no_op_result[0]["close"] == 100.0, "Guard failed to no-op on already adjusted flat series"
+
+

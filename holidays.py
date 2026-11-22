@@ -33,6 +33,7 @@ PARTIAL_SESSIONS: Set[str] = {
     "2024-05-18",  # Saturday Disaster Recovery site failover live trading
     "2024-11-01",  # Muhurat Trading 2024 (1-hour evening session: 18:00 - 19:15 IST)
     "2025-10-21",  # Muhurat Trading 2025 (Diwali Laxmi Pujan 1-hour session)
+    "2026-11-08",  # Muhurat Trading 2026 (Sunday Diwali Laxmi Pujan 1-hour evening session)
 }
 
 # In-memory cache of loaded trading holidays (ISO string: "YYYY-MM-DD")
