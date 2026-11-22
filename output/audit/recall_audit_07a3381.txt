@@ -1,0 +1,217 @@
+==============================================================================================================
+CLASSIFIER RECALL AUDIT (40 SEEDED NONE/UNCLEAR FILINGS) | COMMIT: 07a3381
+==============================================================================================================
+Sampling Design: Seeded Random Sample (seed=42), Stratified by Desc Category, Flag + Control Cohorts.
+Max Filings Per Symbol: 2 | Standard: User Hand-Labeling Protocol (graded on attchmntText / PDF).
+Classifier Version: classifier-v1 (frozen) | parse_pdf = True.
+
+HEADLINE METRICS (Excluding Title-Only Filings):
+  Total Evaluable Filings Graded: 40
+  True Negatives (Routine / Non-Material correctly classified NONE/UNCLEAR): 40 (100.0%)
+  False Negatives (Material filings missed by classifier): 0 (0.0%)
+  False Negative Rate (FN Rate): 0.00% (95% Wilson CI: [0.00%, 8.76%])
+  Implied Classifier Sensitivity / Recall: 100.00%
+
+#   | Cohort  | Symbol     | Date              | Category / Desc                | Verdict  | GT       | Status
+--------------------------------------------------------------------------------------------------------------
+1   | CONTROL | SHREECEM   | 2026-03-24 13:26:17 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: SHREE CEMENT LIMITED has informed the Exchange about receipt of demand order from the Office of Mining Engineer, Department of Mines & Geolo
+    URL:  https://nsearchives.nseindia.in/corporate/SHREECEM_24032026132532_NSE_BSE_Demand_order_240326.pdf
+    Reason: Standard statutory / procedural disclosure
+
+2   | FLAG    | SAPPHIRE   | 2026-04-22 18:57:29 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Sapphire Foods India Limited has informed the Exchange about receipt of order from Hon ble Regional Director for shifting of registered offi
+    URL:  https://nsearchives.nseindia.in/corporate/SAPPHIRE_22042026185718_NSE.pdf
+    Reason: Standard statutory / procedural disclosure
+
+3   | FLAG    | SIGNATURE  | 2026-05-01 15:07:28 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Signatureglobal (India) Limited has informed the Exchange about revision in ESG Rating
+    URL:  https://nsearchives.nseindia.in/corporate/SGLOBAL_01052026150711_covesgratingsigned.pdf
+    Reason: Standard statutory / procedural disclosure
+
+4   | FLAG    | NIVABUPA   | 2026-05-08 17:20:31 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Niva Bupa Health Insurance Company Limited has informed the Exchange about Audited IFRS Financial Statements for the financial year ended Ma
+    URL:  https://nsearchives.nseindia.in/corporate/MAXBUPA_08052026172005_Disclosure30Board_meeting_Financials_08052026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+5   | CONTROL | PINELABS   | 2026-06-03 16:49:57 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Pine Labs Limited has informed the Exchange about Investor and Analyst Day 2026
+    URL:  https://nsearchives.nseindia.in/corporate/PINELABS_03062026164850_InvestorAnalystdayIntimationfinal.pdf
+    Reason: Standard statutory / procedural disclosure
+
+6   | FLAG    | TATACONSUM | 2026-03-25 17:23:46 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: TATA CONSUMER PRODUCTS LIMITED has informed the Exchange about Reminder letters to shareholders for claiming unclaimed dividends
+    URL:  https://nsearchives.nseindia.in/corporate/Sukhvinder_25032026172337_SE_Intimation_IEPF_Reminder_Letters_sd.pdf
+    Reason: Standard statutory / procedural disclosure
+
+7   | FLAG    | TRIVENI    | 2026-05-14 12:26:12 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Triveni Engineering & Industries Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/TRIVENI_14052026122603_POSTPONE_CON_CALL_MAR26.pdf
+    Reason: Standard statutory / procedural disclosure
+
+8   | CONTROL | DEEPAKNTR  | 2026-04-01 11:02:10 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Deepak Nitrite Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/DEEPAKNTR_01042026110143_NSE-DPL_ORDER-1-4-26.pdf
+    Reason: Standard statutory / procedural disclosure
+
+9   | CONTROL | AFFLE      | 2026-05-09 18:45:28 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Affle 3i Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/AFFLE_09052026184302_ContactdetailsofAuthoisedOfficialstodeterminemateriality_Affle_3i.pdf
+    Reason: Standard statutory / procedural disclosure
+
+10  | CONTROL | CUB        | 2026-03-05 15:34:48 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Our Bank has opened a new Branch on March 05, 2026 at Gondal, Rajkot District, Gujarat and as on date the Bank has 918 branches
+    URL:  https://nsearchives.nseindia.in/corporate/CUB_05032026153330_CUBNewBranchOpening918.pdf
+    Reason: Standard statutory / procedural disclosure
+
+11  | CONTROL | VMM        | 2026-04-14 13:14:33 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Vishal Mega Mart Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/VMMP2024_14042026131400_Regulation_30_Disclosure_April_14_2026_Signed.pdf
+    Reason: Standard statutory / procedural disclosure
+
+12  | CONTROL | TATATECH   | 2026-04-14 19:41:27 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Tata Technologies Limited has informed the Exchange about Authorization of Key Managerial Personnel to Determine Materiality of Events or In
+    URL:  https://nsearchives.nseindia.in/corporate/TTLNSE_14042026194119_SE_Intimation_Reg_30_5__S.pdf
+    Reason: Standard statutory / procedural disclosure
+
+13  | CONTROL | AVANTIFEED | 2026-04-01 17:24:50 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Avanti Feeds Limited has informed the Exchange about the investment in Thai Union Feedmill Ecuador S.A.S.
+    URL:  https://nsearchives.nseindia.in/corporate/AVANTIFEEDS_01042026172435_intimation.pdf
+    Reason: Standard statutory / procedural disclosure
+
+14  | CONTROL | CUB        | 2026-02-09 19:28:22 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Approval of RBI for appointment of Shri R Vijay Anandh (DIN: 09656376) (currently Executive Director), as the MD & CEO of the Bank w.e.f May
+    URL:  https://nsearchives.nseindia.in/corporate/CUB_09022026192708_CUBRBIApprovalMDCEOSD.pdf
+    Reason: Standard statutory / procedural disclosure
+
+15  | FLAG    | JSWENERGY  | 2026-01-06 14:59:43 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: JSW Energy Limited has informed the Exchange about Assignment of Credit Rating - O2 Renewable Energy VII Private Limited
+    URL:  https://nsearchives.nseindia.in/corporate/AJAYJSWEL_06012026145004_ExchangeCommunicationO2RenewableEnergyVIIPrivateLimitedSd.pdf
+    Reason: Standard statutory / procedural disclosure
+
+16  | CONTROL | INOXWIND   | 2026-02-13 16:43:22 | General Updates                | NONE     | ROUTINE  | TN (Correct)
+    Text: Inox Wind Limited has informed the Exchange about grant of Stock Options under the  Inox Wind - Employee Stock Option Scheme 2024
+    URL:  https://nsearchives.nseindia.in/corporate/INOXWIND_13022026164255_IWL_OutcomeofBM_13022025.pdf
+    Reason: Standard statutory / procedural disclosure
+
+17  | CONTROL | INOXWIND   | 2026-02-18 18:53:38 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Inox Wind Limited has informed the Exchange about transmission of shares inter-se amongst the Promoter Group Members
+    URL:  https://nsearchives.nseindia.in/corporate/INOXWIND_18022026185249_IWL_IntimationFor_transmission.pdf
+    Reason: Standard statutory / procedural disclosure
+
+18  | CONTROL | MANAPPURAM | 2026-04-21 17:13:06 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Manappuram Finance Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/MANAPPURAM_21042026171227_Open_Offer_Close.pdf
+    Reason: Standard statutory / procedural disclosure
+
+19  | CONTROL | BELRISE    | 2026-05-25 12:48:34 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Belrise Industries Limited has informed the Exchange about General Updates on Key performance indicators of the Company for the quarter and 
+    URL:  https://nsearchives.nseindia.in/corporate/BELRISE_25052026124817_BELRISE_Intimation_of_KPI_March_2026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+20  | FLAG    | TRIVENI    | 2026-05-29 16:52:21 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Triveni Engineering & Industries Limited has informed the Exchange about General Updates about appointment of Cost Auditors of the company f
+    URL:  https://nsearchives.nseindia.in/corporate/TRIVENI_29052026165213_TEIL_OUTCOME_BM_MAR26.pdf
+    Reason: Standard statutory / procedural disclosure
+
+21  | FLAG    | NH         | 2026-05-22 22:27:05 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Narayana Hrudayalaya Ltd. has informed the Exchange about the approval by the Board of directors and recommending to the shareholders for is
+    URL:  https://nsearchives.nseindia.in/corporate/Narayana_22052026222658_NHLSEOutcomeBM22052026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+22  | FLAG    | HINDCOPPER | 2026-05-10 11:56:25 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Hindustan Copper Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/HINDCOPPERMKD_10052026115605_Reg30_AppointmentofShriGDGupta.pdf
+    Reason: Standard statutory / procedural disclosure
+
+23  | FLAG    | SHRIRAMFIN | 2026-01-14 18:59:32 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Shriram Finance Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/Mathew_14012026185857_BSENSEEGMVotingResultsScrutinizerreport.pdf
+    Reason: Standard statutory / procedural disclosure
+
+24  | FLAG    | MINDACORP  | 2026-01-06 12:28:34 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Minda Corporation Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/MINDACORP_06012026122747_IntimationtoSTX.pdf
+    Reason: Standard statutory / procedural disclosure
+
+25  | FLAG    | PETRONET   | 2026-03-12 13:00:40 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Petronet LNG Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/PETRONET_12032026130026_replytoNSEBSEforpaymentofpenalty.pdf
+    Reason: Standard statutory / procedural disclosure
+
+26  | CONTROL | REDINGTON  | 2026-02-24 16:15:35 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Redington Limited has informed the Exchange about Re-domiciliation of wholly owned subsidiary
+    URL:  https://nsearchives.nseindia.in/corporate/Abhinandhanan_24022026161516_RIML_Redomsd.pdf
+    Reason: Standard statutory / procedural disclosure
+
+27  | CONTROL | VMM        | 2026-04-16 12:55:19 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Vishal Mega Mart Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/VMMP2024_16042026125409_Regulation_30_Disclosure_April_16_2026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+28  | FLAG    | MSUMI      | 2026-04-13 15:59:27 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Motherson Sumi Wiring India Limited has informed the Exchange about Disclosure under Regulation 30 (LODR)
+    URL:  https://nsearchives.nseindia.in/corporate/MSWIL_13042026155918_Disclosure.pdf
+    Reason: Standard statutory / procedural disclosure
+
+29  | FLAG    | POLYCAB    | 2026-03-20 17:49:25 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Polycab India Limited has informed the Exchange about Analyst(s)/Investor(s) meet
+    URL:  https://nsearchives.nseindia.in/corporate/POLYCAB_20032026174913_Intimationtostockexchange.pdf
+    Reason: Standard statutory / procedural disclosure
+
+30  | FLAG    | JSL        | 2026-02-13 18:34:11 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Jindal Stainless Limited has informed the Exchange about the Corporate Presentation
+    URL:  https://nsearchives.nseindia.in/corporate/JSL_13022026183342_JSLSEintimationsd.pdf
+    Reason: Standard statutory / procedural disclosure
+
+31  | FLAG    | LAURUSLABS | 2026-02-20 18:54:12 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Laurus Labs Limited has informed the Exchange about ESG Score given by SES ESG Research Private Limited
+    URL:  https://nsearchives.nseindia.in/corporate/LAURUSLABS_20022026185330_IntimationOfESG.pdf
+    Reason: Standard statutory / procedural disclosure
+
+32  | CONTROL | TIINDIA    | 2026-02-05 17:57:27 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Tube Investments of India Limited has informed the Exchange about General Updates - Intimation on submission of application for reclassifica
+    URL:  https://nsearchives.nseindia.in/corporate/TIINDIA_05022026175721_Reg31AReclasificationofAGPLBSENSE.pdf
+    Reason: Standard statutory / procedural disclosure
+
+33  | CONTROL | HFCL       | 2026-03-28 19:35:08 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: HFCL Limited has informed the Exchange about General Updates - Issuance of Corporate Guarantee on behalf of HTL Limited, a subsidiary of the
+    URL:  https://nsearchives.nseindia.in/corporate/AHMED_28032026193415_STX_HTL_Guarantee_28032026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+34  | FLAG    | SYNGENE    | 2026-05-21 17:54:01 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Syngene International Limited has informed the Exchange about reminder letter to the Shareholders for claiming Unclaimed Dividends and updat
+    URL:  https://nsearchives.nseindia.in/corporate/SYNGENE2_21052026175315_SEIntimationIEPF.pdf
+    Reason: Standard statutory / procedural disclosure
+
+35  | CONTROL | KPITTECH   | 2026-01-18 13:48:39 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: KPIT Technologies Limited has informed the Exchange about Update on request received from Promoters on Reclassification.
+    URL:  https://nsearchives.nseindia.in/corporate/KPITTECH_18012026134704_CompanyUpdate_Signed.pdf
+    Reason: Standard statutory / procedural disclosure
+
+36  | CONTROL | CLEANMAX   | 2026-03-18 09:07:35 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Clean Max Enviro Energy Solutions Limited has informed the Exchange about Shareholders  Letter dated Q3 FY2026
+    URL:  https://nsearchives.nseindia.in/corporate/CLEANMAX_18032026090658_Shareholderlettersign.pdf
+    Reason: Standard statutory / procedural disclosure
+
+37  | FLAG    | SOBHA      | 2026-01-03 17:19:12 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Sobha Limited has informed the exchange about Operational Update Q3 FY 2025-26.
+    URL:  https://nsearchives.nseindia.in/corporate/SOBHA_03012026171836_SOBHA_Operational_Update_Q3_FY_2026.pdf
+    Reason: Standard statutory / procedural disclosure
+
+38  | CONTROL | PINELABS   | 2026-02-20 18:05:58 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Pine Labs Limited has informed the Exchange about General Updates
+    URL:  https://nsearchives.nseindia.in/corporate/PINELABS_20022026180545_Agya_Intimation_PLL_.pdf
+    Reason: Standard statutory / procedural disclosure
+
+39  | CONTROL | RECLTD     | 2026-01-09 17:37:11 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Intimation of sale and transfer of Project specific SPVs/Subsidiaries.
+    URL:  https://nsearchives.nseindia.in/corporate/RECLTD_09012026173632_Signed_Intimation_of_sale_and_transfer_of_project_specific_SPVs.pdf
+    Reason: Standard statutory / procedural disclosure
+
+40  | FLAG    | TATAPOWER  | 2026-06-10 20:49:02 | General Updates                | UNCLEAR  | ROUTINE  | TN (Correct)
+    Text: Tata Power Company Limited has informed the Exchange about Integrated Annual Report for the Financial Year 2025-26
+    URL:  https://nsearchives.nseindia.in/corporate/VPTPCL_10062026204852_Annual_Report_FY26.pdf
+    Reason: Standard statutory / procedural disclosure
+
+==============================================================================================================

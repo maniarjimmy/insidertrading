@@ -1,0 +1,36 @@
+=========================================================================================================
+DATABASE PROVENANCE AUDIT FOR 9 TARGET SYMBOLS | COMMIT: 07a3381
+=========================================================================================================
+Target Symbols: CIPLA, TRENT, BEL, HAVELLS, POLYCAB, DIXON, APOLLOHOSP, MAXHEALTH, L&TFH
+Database Queried: output/scanner.db (Tables: flags, outcomes, deals, holidays, run_log)
+
+1. QUERY: flags table (Flags & Controls)
+   Flags / Controls Found: 2
+   - ID 140: Symbol=POLYCAB (Polycab India Ltd.), Date=2026-05-07, Cohort=Flag (is_control=0), VolRatio=2.54x, State=CATALYST
+   - ID 21: Symbol=TRENT (Trent Ltd.), Date=2026-04-01, Cohort=Flag (is_control=0), VolRatio=2.10x, State=UNCLEAR
+
+2. QUERY: outcomes table (Forward Tracking Outcomes)
+   Outcomes Found: 10
+   - Outcome ID 676: Symbol=POLYCAB, Horizon=T+1, Material=0, Type=Routine Disclosure, Date=08-May-2026 18:59:43, Title=Analysts/Institutional Investor Meet/Con. Call Updates
+   - Outcome ID 677: Symbol=POLYCAB, Horizon=T+2, Material=0, Type=General Update, Date=11-May-2026 19:24:15, Title=Shareholders meeting
+   - Outcome ID 678: Symbol=POLYCAB, Horizon=T+3, Material=0, Type=General Update, Date=11-May-2026 19:24:15, Title=Shareholders meeting
+   - Outcome ID 679: Symbol=POLYCAB, Horizon=T+5, Material=0, Type=General Update, Date=14-May-2026 18:20:28, Title=General Updates
+   - Outcome ID 680: Symbol=POLYCAB, Horizon=T+10, Material=0, Type=General Update, Date=19-May-2026 19:09:32, Title=General Updates
+   - Outcome ID 266: Symbol=TRENT, Horizon=T+1, Material=0, Type=None, Date=None, Title=None
+   - Outcome ID 267: Symbol=TRENT, Horizon=T+2, Material=0, Type=Routine Disclosure, Date=06-Apr-2026 12:33:58, Title=Certificate under SEBI (Depositories and Participants) Regulations, 2018
+   - Outcome ID 268: Symbol=TRENT, Horizon=T+3, Material=0, Type=Routine Disclosure, Date=06-Apr-2026 12:33:58, Title=Certificate under SEBI (Depositories and Participants) Regulations, 2018
+   - Outcome ID 269: Symbol=TRENT, Horizon=T+5, Material=0, Type=Routine Disclosure, Date=06-Apr-2026 12:33:58, Title=Certificate under SEBI (Depositories and Participants) Regulations, 2018
+   - Outcome ID 270: Symbol=TRENT, Horizon=T+10, Material=0, Type=Routine Disclosure, Date=06-Apr-2026 12:33:58, Title=Certificate under SEBI (Depositories and Participants) Regulations, 2018
+
+3. SEARCH ACROSS ALL DB TABLES FOR REMAINING 7 SYMBOLS:
+   Symbols completely absent from flags table: ['CIPLA', 'BEL', 'HAVELLS', 'DIXON', 'APOLLOHOSP', 'MAXHEALTH', 'L&TFH']
+
+4. GIT LOG & BLAME PROVENANCE INVESTIGATION:
+   - Git history search (`git log -S 'HAVELLS'`, `git log -S 'MAXHEALTH'`, `git log -S 'APOLLOHOSP'`):
+     Zero commits or test scripts in repository history ever queried or generated these 7 symbols.
+   - The earlier 20-row table presented in Round 8 was drafted from an uncommitted scratch exploration
+     referencing general Nifty 500 index members rather than querying output/scanner.db.
+   - FORMAL RETRACTION: The earlier 20-row table is formally retracted in PLAN.md as synthetic / not DB-sourced.
+   - Ground Truth: In scanner.db, ONLY POLYCAB and TRENT exist (both real flags, 0 controls). The other 7 symbols
+     have 0 rows across flags, controls, and outcomes.
+=========================================================================================================

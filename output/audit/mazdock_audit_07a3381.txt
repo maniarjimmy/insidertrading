@@ -1,0 +1,32 @@
+=========================================================================================================
+MAZDOCK 18-MAR-2026 SCI CONTRACT CLASSIFIER AUDIT | COMMIT: 07a3381
+=========================================================================================================
+Target Announcement: Mazagon Dock Shipbuilders Ltd (MAZDOCK) on 18-Mar-2026
+Contract Counterparty: Shipping Corporation of India Ltd (SCI)
+
+1. DB FLAGS ROW:
+   Flag ID 60: Date=2026-03-06, Symbol=MAZDOCK, Company=Mazagoan Dock Shipbuilders Ltd., is_control=0
+
+2. DB OUTCOMES ROW (Exact Stored Outcome):
+   Outcome ID 105: flag_id=60, horizon=T+10, is_material=1, type=Order Win, date=18-Mar-2026 16:35:45
+     desc / title: Disclosure of material issue
+     url:          https://nsearchives.nseindia.in/corporate/MAZDOCK_18032026163536_SE_Discl_Contract_with_SCI_18032026.pdf
+
+3. EXACT FILING CONTENT (from Cache / Exchange):
+   desc:         Disclosure of material issue
+   attchmntText: Mazagon Dock Shipbuilders Limited (MDL) has entered into a contract with ShippingCorporation of India Limited (SCI) for the construction and sale of one 3000 DWT MethanolDual Fuel Platform Supply Vessel (PSV).
+   url:          https://nsearchives.nseindia.in/corporate/MAZDOCK_18032026163536_SE_Discl_Contract_with_SCI_18032026.pdf
+
+4. DEFAULT-PATH CLASSIFY_CATALYST EXECUTION:
+   Call:   classify_catalyst(desc='Disclosure of material issue', text=text, url=url, parse_pdf=True)
+   Result: state=CATALYST, is_material=1, category=Order Win
+   Call (PDF-only fallback): classify_catalyst(desc='Disclosure of material issue', text='', url=url, parse_pdf=True)
+   Result: state=CATALYST, is_material=1, category=Order Win
+
+5. VERDICT ON FALSE NEGATIVE STATUS:
+   - The classifier returns ('CATALYST', 1, 'Order Win') on both default text path and PDF-only path.
+   - Text pattern matched: r'\b(contract\s+with|entered\s+into\s+(?:a\s+)?contract|construction\s+and\s+sale\s+of)\b'
+   - Stored DB status: is_material = 1, announcement_type = 'Order Win'.
+   - Verdict: MAZDOCK 18-Mar-2026 is NOT NONE; it is correctly classified as CATALYST (True Positive).
+   - Rule modification is NOT required; classifier-v1 rules remain valid and frozen.
+=========================================================================================================

@@ -1,0 +1,65 @@
+==========================================================================================
+CONFUSION MATRIX & HISTORICAL PROVENANCE AUDIT | COMMIT: 07a3381
+==========================================================================================
+Provenance Ground Truth: SQLite database output/scanner.db.
+Audited Cohort: Real scanner flags (is_control = 0) with resolved 10-day forward history.
+Classifier Version: classifier-v1.
+
+-----------------------------------------------------------------------------------------
+1. DATABASE QUERIES & FLAG STATUS COUNTS
+-----------------------------------------------------------------------------------------
+Query: SELECT is_control, count(*) FROM flags GROUP BY is_control;
+  Real Flags (is_control=0): 156
+  Random Controls (is_control=1): 528
+  Matched Controls (is_control=2): 138
+
+Query (Resolved 10-day flags by legacy catalyst_state):
+SELECT f.catalyst_state, count(DISTINCT f.id)
+        FROM flags f
+        JOIN outcomes o ON f.id = o.flag_id
+        WHERE f.is_control = 0 AND o.horizon_days = 10 AND o.entry_price IS NOT NULL
+        GROUP BY f.catalyst_state;
+  catalyst_state = 'CATALYST': 111
+  catalyst_state = 'NONE': 3
+  catalyst_state = 'UNCLEAR': 41
+  Total Resolved Real Flags: 155
+
+-----------------------------------------------------------------------------------------
+2. DISCARDING OF UNSUPPORTED '125 / 30 / 87' NUMBERS
+-----------------------------------------------------------------------------------------
+In a prior draft report, figures '125 news-driven / 30 unexplained / 87 catalyst' appeared.
+AUDIT VERDICT: Those figures were an unsupported manual transcription / formatting error.
+The actual point-in-time database truth for the 155 resolved flags is strictly:
+  Legacy News-Driven (CATALYST): 111 flags
+  Legacy Unexplained (UNCLEAR / NONE): 44 flags (41 UNCLEAR + 3 NONE)
+  Total: 111 + 44 = 155 flags.
+
+-----------------------------------------------------------------------------------------
+3. CONFUSION MATRIX: 3-DAY PRE-MOVE WINDOW [T-3, T]
+-----------------------------------------------------------------------------------------
+pre_cat_3d    Filing Catalyst  Filing Unexplained  All
+legacy_label                                          
+News-Driven                30                  81  111
+Unexplained                 5                  39   44
+All                        35                 120  155
+
+Summary 3-Day Window:
+  Legacy News-Driven (111): 30 confirmed by filings (27.0%), 81 no material filing per classifier.
+  Legacy Unexplained (44): 5 had pre-move filing (11.4%), 39 cleanly unexplained per filings (88.6%).
+  All Flags (155): 35 filing catalysts (22.6%), 120 unexplained by filings (77.4%).
+
+-----------------------------------------------------------------------------------------
+4. CONFUSION MATRIX: 10-DAY PRE-MOVE WINDOW [T-10, T] (SENSITIVITY CHECK)
+-----------------------------------------------------------------------------------------
+pre_cat_10d   Filing Catalyst  Filing Unexplained  All
+legacy_label                                          
+News-Driven                55                  56  111
+Unexplained                11                  33   44
+All                        66                  89  155
+
+Summary 10-Day Window:
+  Legacy News-Driven (111): 55 confirmed by filings (49.5%), 56 no material filing per classifier.
+  Legacy Unexplained (44): 11 had pre-move filing (25.0%), 33 cleanly unexplained per filings (75.0%).
+  All Flags (155): 66 filing catalysts (42.6%), 89 unexplained by filings (57.4%).
+
+==========================================================================================
